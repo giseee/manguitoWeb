@@ -1,0 +1,46 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(255, 255, 255);
+  color: rgb(247, 155, 64);
+  padding: 10px 20px;
+  align-items: center;
+  height: 120px;
+
+}
+.menu-right {
+  font-size: 30px;
+  display: flex;
+  padding-top: 0.5em;
+}
+.logo  img{
+  width: 200px;
+  height: 100px;
+  display: flex;
+  filter: drop-shadow(1px 1px 1px rgba(235, 232, 232, 0.233));
+  padding-left: 30px;
+
+}
+.menu-right .name{
+  padding-top: .8em;
+}
+
+header>nav>ul {
+  display: flex;
+  list-style-type: none;
+  gap: 15px;
+}
+ul li{
+  font-size: 20px;
+}
+ul > li>a {
+  text-decoration: none;
+  color: rgb(247, 155, 64);
+  font-family:Oswald;
+}
+.menu .nav-item .nav-link:hover {
+  color: rgb(20, 11, 1);
+}
+header .name h2 {
+  font-family:Oswald;
+}

@@ -1,0 +1,138 @@
+
+.banner-principal {
+  display:flex;
+  flex-direction: column;
+  background:url('/assets/img/cuidados.jpg'),rgba(216, 190, 190, 0.356);
+  background-blend-mode: color;
+  box-sizing: border-box;
+  height: 80vh;
+  background-size:cover;
+  background-repeat: no-repeat;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  justify-content: center;
+  font-size: large;
+  color:  rgb(255, 255, 255);
+  padding: 7%;
+}
+
+.services{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-transform: uppercase;
+  font-size: 50px;
+  padding-top: 0.5em;
+
+}
+
+.formulario{
+padding: 10em 10em 10em 10em;
+background-color: rgb(230, 189, 148);
+
+}
+
+.banner-principal .info-foto {
+  color:  rgb(68, 65, 63);
+  font-size: xx-large;
+
+}
+.banner-principal .info-foto p {
+  justify-content: center;
+  color: rgb(0, 0, 0);
+  justify-content: flex-end;
+  font-size: 50px;
+}
+
+
+
+.links a{
+margin-left: 4px;
+color: white;
+}
+.input-buscar{
+
+  height: auto;
+  display:flex;
+  justify-content: center;
+  padding: 200px;
+
+
+}
+.input-buscar{
+
+border: 2px rgb(8, 8, 8); }
+
+footer{
+  background-color:  rgb(247, 155, 64);
+  padding-top: .5em;
+}
+.proyectos{
+  width: 20em;
+  height: 25em;
+  justify-content: center;
+  padding-left: 6em;
+  padding-right: .5em;
+  padding-bottom: 10em;
+
+}
+.proyectos .card{
+  margin-right: 1em;
+
+
+}
+.proyectos .card img{
+height: 15em;
+
+}
+.proyectos .card-title{
+  display: flex;
+  padding-top: 10em;
+  color: beige;
+
+
+}
+.proyectos .btn{
+  background-color:  rgb(247, 155, 64);
+}
+.manguitos{
+  display: block;
+  align-items: center;
+
+}
+.manguitos .btn{
+
+  background-color:  rgb(247, 155, 64);
+  padding-bottom: .5em;
+}
+.manguitos input {
+  width:10em;
+
+}
+.fotos {
+  display: flex;
+  height: 370px;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: .5em;
+  width: 400px;
+  padding-left: .5em;
+  margin-right: 0%;
+  padding-top: 0.5em;
+  }
+.card-t, .Unnombre{
+
+      padding-top: 10em;
+
+      align-items:center;
+
+  }
+  .Unnombre{
+  display: flex;
+      padding-top: 10em;
+
+      flex-direction: column;
+      justify-content: center;
+
+  }
