@@ -13,45 +13,22 @@
 
   </section>
   <section class="Unnombre">
-    <h3>Categorias</h3>
-
-    <div>
-      <span> Arte </span><span> Video </span><span> Ejercicios</span>
-    </div>
-    <br>
-    <br>
+  <ul class="Categorias">
+    <li class="nav-item"><a href="/arte" class="nav-link btn btn-outline-success" title="Home">Arte</a></li>
+    <li class="nav-item"><a href="/ingenieria" class="nav-link btn btn-outline-success" title="Registrate">Ingenieria</a></li>
+    <li class="nav-item"><a href="/video" class="nav-link btn btn-outline-success">Videos</a>
+    </li>
+  </ul>
   </section>
   <section class="proyectos">
-    <div class="btn-group" role="group" aria-label="">
-      <div class="card">
-        <img src="assets/img/sillones.jpg" class="card-img" alt="card-img-overlay">
-        <div class="card-img-overlay">
-          <h5 class="card-title">Sofás</h5>
-          <p class="card-text">Los mejores Sofás.</p>
-          <button type="button" class="btn">1 Manguito</button>
-          <p class="card-text">Last updated 3 mins ago</p>
-        </div>
+    <!-- for para recorrer el arreglo de emprendimientos --->
+      <div *ngFor="let emprendimiento of emprendimientos">
+        <img [src]="emprendimiento.banner" alt="image">
+        <h2>{{emprendimiento.nombreEmprendimiento}}</h2>
+        <h2>{{emprendimiento.descripcion}}</h2>
+        <small>{{emprendimiento.categorias}}</small>
+        <h3>{{emprendimiento.manguitosRecibidos}}</h3>
       </div>
-      <div class="card">
-        <img src="assets/img/card.jfif" class="card-img" alt="card-img-overlay">
-        <div class="card-img-overlay">
-          <h5 class="card-title">Shreck</h5>
-          <p class="card-text">Las películas más exitosas de toda la historia.</p>
-          <button type="button" class="btn">1 Manguito</button>
-          <p class="card-text">Last updated 3 mins ago</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="assets/img/perros.jfif" class="card-img" alt="card-img-overlay">
-        <div class="card-img-overlay">
-          <h5 class="card-title">Perros</h5>
-          <p class="card-text">El Boyero de Berna tiene una expectativa de vida muy baja, de entre 6 y 8 años.</p>
-          <button type="button" class="btn">1 Manguito</button>
-          <p class="card-text">Last updated 3 mins ago</p>
-        </div>
-
-      </div>
-    </div>
   </section>
 
 </main>
