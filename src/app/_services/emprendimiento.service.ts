@@ -1,0 +1,41 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Emprendimiento } from '../_models/emprendimiento';
+import { environment as env } from 'src/environments/environments';
+@Injectable({
+  providedIn: 'root'
+})
+export class EmprendimientoService {
+
+  constructor(private http: HttpClient) { }
+
+  /*obtenerDatos(): Observable<any> {
+    return this.http.get('http://localhost:8080/api/emprendimientos');
+  }*/
+
+  getAll() {
+      return this.http.get<Emprendimiento[]>(`${env.url}/api/emprendimientos`);
+  }
+
+  getPorID(id: String) {
+      return this.http.get<Emprendimiento[]>(`${env.url}/api/usuario/emprendimiento/` + id);
+  }
+  public postEmprendimientoById(id: String, emprendimiento:Emprendimiento) {
+
+      return this.http.post(`${env.url}/api/usuario/alta/` + id, emprendimiento, { observe: 'response' })
+  }
+
+  public delEmprendimientoById(id: Number) {
+      return this.http.delete(`${env.url}/api/delete/` + id, { observe: 'response' })
+  }
+
+  putEmprendimiento(id: String, emprendimiento: Emprendimiento) {
+      return this.http.put<Emprendimiento>(`${env.url}/api/emprendimiento/` + id, emprendimiento)
+  }
+
+  getEmprendimiento(id: String) {
+      return this.http.get<Emprendimiento>(`${env.url}/api/emprendimientos/` + id);
+  }
+
+}

@@ -1,70 +1,10 @@
-.formulario {
-  padding: 10em 10em 10em 10em;
-  background-color: rgb(230, 189, 148);
-
+form {
+  width: 200px;
+  height: 200px;
+  align-items: center;
+  padding-top: 10%;
+  padding-bottom: .5em;
+  background-color: rgba(236, 189, 134, 0.911);
+  padding-left: .5em;
 }
 
-.container {
-  height: 100%;
-  align-content: center;
-}
-
-.card {
-  height: 370px;
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 400px;
-  background-color: rgba(0, 0, 0, 0.5) !important;
-  padding-top: 0.5em;
-}
-
-
-
-.card-header h3 {
-  color: rgb(247, 155, 64);
-  display: flex;
-  justify-content: center;
-}
-
-
-
-.input-group-prepend span {
-  width: 50px;
-  background-color: rgb(253, 252, 251);
-  ;
-  color: black;
-  border: 0 !important;
-}
-
-input:focus {
-  outline: 0 0 0 0 !important;
-  box-shadow: 0 0 0 0 !important;
-
-}
-
-.remember {
-  color: white;
-}
-
-.remember input {
-  width: 20px;
-  height: 20px;
-  margin-left: 15px;
-  margin-right: 5px;
-}
-
-.login_btn {
-  color: black;
-  background-color: rgb(247, 155, 64);
-  width: 100px;
-}
-
-.login_btn:hover {
-  color: black;
-  background-color: white;
-}
-
-.links a {
-  margin-left: 4px;
-  color: white;
-}

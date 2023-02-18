@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  url: 'proyectoJavaSpring',
+  url: 'http://localhost:8080/',
   url_usuario: "",
   url_servicio: "",
 };

@@ -11,8 +11,7 @@
   font-family: Georgia, 'Times New Roman', Times, serif;
   justify-content: center;
   font-size: large;
-  color:  rgb(255, 255, 255);
-  padding: 7%;
+  color:  rgb(253, 252, 252);
 }
 
 .services{
@@ -67,72 +66,7 @@ border: 2px rgb(8, 8, 8); }
 footer{
   background-color:  rgb(247, 155, 64);
   padding-top: .5em;
+  padding-bottom: 0%;
+  background-position-y: end;
 }
-.proyectos{
-  width: 20em;
-  height: 25em;
-  justify-content: center;
-  padding-left: 6em;
-  padding-right: .5em;
-  padding-bottom: 10em;
 
-}
-.proyectos .card{
-  margin-right: 1em;
-
-
-}
-.proyectos .card img{
-height: 15em;
-
-}
-.proyectos .card-title{
-  display: flex;
-  padding-top: 10em;
-  color: beige;
-
-
-}
-.proyectos .btn{
-  background-color:  rgb(247, 155, 64);
-}
-.manguitos{
-  display: block;
-  align-items: center;
-
-}
-.manguitos .btn{
-
-  background-color:  rgb(247, 155, 64);
-  padding-bottom: .5em;
-}
-.manguitos input {
-  width:10em;
-
-}
-.fotos {
-  display: flex;
-  height: 370px;
-  margin-top: auto;
-  margin-bottom: auto;
-  padding: .5em;
-  width: 400px;
-  padding-left: .5em;
-  margin-right: 0%;
-  padding-top: 0.5em;
-  }
-.card-t, .Unnombre{
-
-      padding-top: 10em;
-
-      align-items:center;
-
-  }
-  .Unnombre{
-  display: flex;
-      padding-top: 10em;
-
-      flex-direction: column;
-      justify-content: center;
-
-  }
