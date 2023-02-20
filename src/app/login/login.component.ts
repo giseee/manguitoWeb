@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 
 
 import { AuthenticationService } from '../_services/authentication.service';
+import { Usuario } from '../_models/usuario';
 
 @Component({
   selector: 'app-login',
@@ -14,15 +15,16 @@ import { AuthenticationService } from '../_services/authentication.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  nombreUser:string="";
-  password:string="";
+  usuario: Usuario = {
+    nombre: '', password: ''
+  };
 
   constructor(private authService: AuthenticationService, private router: Router) {}
 
   ngOnInit() {}
 
   onSubmit() {
-    this.authService.login(this.nombreUser, this.password)
+    this.authService.login(this.usuario.nombre, this.usuario.password)
       .subscribe(
         () => {
           // Login successful, redirect to home page

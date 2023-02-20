@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment as env } from 'src/environments/environments';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs';
+import { User } from '../_models';
 
 
 
@@ -13,16 +14,15 @@ import { catchError } from 'rxjs';
 export class UsuarioService {
   constructor(private http: HttpClient) { }
 
-  public crearUsuario(usuario:Usuario){
-      return this.http.post(`${env.url}/api/usuario`, usuario, {observe: 'response'})
+  public crearUsuario({ usuario }: { usuario: User; }): any {
+      return this.http.post <User>(`${env.url}/api/public/register`, usuario)
   }
   public getUsuarioById(id:String) {
     return this.http.get<Usuario>(`${env.url}/api/usuario/`+id);
 
   }
   public putUsuarioById(id:String, usuario:Usuario){
-
-    return this.http.put(`${env.url}/api/usuario/`+id, usuario, {observe: 'response'})
+    return this.http.put(`${env.url}/api/usuario/`+id, usuario)
   }
 
 

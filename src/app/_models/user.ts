@@ -1,19 +1,11 @@
 export class User {
-  id: number;
-  username: string;
+  id?: number;
+  nombre: string;
   password: string;
-  firstName: string;
-  lastName: string;
-  token?: string;
 
-  constructor(id: number=0,username: string="",password: string="",firstName: string="",lastName: string="",token: string=""){
-      this.id =id;
-      this.username=username;
+  constructor(nombre: string="",password: string=""){
+      this.nombre=nombre;
       this.password=password;
-      this.firstName=firstName;
-      this.lastName=lastName;
-      this.token=token;
-
 
   }
 

@@ -14,6 +14,7 @@ import { EmprendimientoComponent } from './emprendimiento/emprendimiento.compone
 import { CategoriaComponent } from './categoria/categoria.component';
 import { ListarCategoriasComponent } from './listar-categorias/listar-categorias.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { RegistroUserComponent } from './registro-user/registro-user.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CategoriaComponent,
     ListarCategoriasComponent,
     DashboardComponent,
+    RegistroUserComponent,
 
   ],
   imports: [

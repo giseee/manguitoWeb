@@ -19,7 +19,7 @@ export class RegistroComponent {
   constructor(private usuarioService:UsuarioService) { }
 
   onSubmit(formulario: NgForm){
-    if(formulario.valid){
+    /*if(formulario.valid){
       this.usuario.setNombre(formulario.value.nombre);
       this.usuario.setApellido(formulario.value.apellido);
       this.usuario.setDireccion(formulario.value.direccion);
@@ -36,7 +36,7 @@ export class RegistroComponent {
       else {this.mensaje = "El usuario no fue generado porque ya existe ese nombre de usuario, por favor intente con otro"}
     this.usuario = new Usuario();
     this.loading = false;
-    });
+    });*/
   }
 
 

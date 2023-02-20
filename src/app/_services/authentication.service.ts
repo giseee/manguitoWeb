@@ -21,9 +21,9 @@ export class AuthenticationService {
     sessionStorage.removeItem(this.TOKEN_KEY);
   }
 
-  login(username: string, password: string): Observable<void> {
+  login(nombreUser: string, password: string): Observable<void> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const credentials = { username: username, password: password };
+    const credentials = { nombre: nombreUser, password: password };
 
     return this.http
       .post<{ token: string }>(this.loginUrl, credentials, { headers })
@@ -35,7 +35,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem(this.TOKEN_KEY);
   }
 
   isLoggedIn(): boolean {
