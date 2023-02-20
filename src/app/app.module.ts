@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,9 @@ import { NavComponent } from './nav/nav.component';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { EmprendimientoComponent } from './emprendimiento/emprendimiento.component';
+import { CategoriaComponent } from './categoria/categoria.component';
+import { ListarCategoriasComponent } from './listar-categorias/listar-categorias.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,11 @@ import { EmprendimientoComponent } from './emprendimiento/emprendimiento.compone
     NavComponent,
     LoginComponent,
     RegistroComponent,
-    EmprendimientoComponent
+    EmprendimientoComponent,
+    CategoriaComponent,
+    ListarCategoriasComponent,
+    DashboardComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -27,7 +34,8 @@ import { EmprendimientoComponent } from './emprendimiento/emprendimiento.compone
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

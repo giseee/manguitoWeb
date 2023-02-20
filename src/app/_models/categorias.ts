@@ -1,7 +1,9 @@
 export class Categorias {
-  nombre: String;
+  id:number=0;
+  nombreCategoria: string;
   constructor(nombre: string = "") {
-    this.nombre = nombre;
+    this.nombreCategoria = nombre;
+    this.id=this.id +1 ;
   }
 
 

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { waitForAsync } from '@angular/core/testing';
+import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
-import { Usuario } from '../_models/usuario';
+
+import { FormsModule } from '@angular/forms';
 
 
-import { AuthenticationService } from '../_services';
+import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -13,55 +14,20 @@ import { AuthenticationService } from '../_services';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-    usuario:Usuario=new Usuario()
-    loading = false;
-    submitted = false;
-    //returnUrl: string;
-    error = '';
+  nombreUser:string="";
+  password:string="";
 
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
-    constructor(
+  ngOnInit() {}
 
-        private route: ActivatedRoute,
-        private router: Router,
-     //   private authenticationService: AuthenticationService
-    ) { }
-
-    ngOnInit() {
-
-
-        // elimino las credenciales del usuario, si es que existen
-    //    this.authenticationService.logout();
-
-      //  this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    }
-
-
-    onSubmit() {
-        this.submitted = true;
-
-        // Valido que el formulario sea valido antes del submit
-        if (this.usuario.nombreUsuario !="" && this.usuario.password!="" ) {
-
-
-            this.error ="";
-        this.loading = true;
-    /*    this.authenticationService.login(this.usuario.nombreUsuario as string, this.usuario.password as string)
-            .pipe(first())
-
-            .subscribe(
-                data => {
-                    this.router.navigate([this.returnUrl]);
-                    this.loading = false;
-                    this.submitted = false;
-                },
-                error => {
-                    this.error = 'Nombre de usuario o Contraseña incorrectas';
-                    this.loading = false;
-                    this.submitted = false;
-                    window.onbeforeunload = (event) => {
-                        event.preventDefault();
-                     }
-                });
-    } */}}
+  onSubmit() {
+    this.authService.login(this.nombreUser, this.password)
+      .subscribe(
+        () => {
+          // Login successful, redirect to home page
+          this.router.navigate(['/dashboard']);
+        }
+      );
+  }
 }

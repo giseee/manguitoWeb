@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Emprendimiento } from '../_models/emprendimiento';
-import { Usuario } from '../_models/usuario';
 import { EmprendimientoService } from '../_services/emprendimiento.service'
+
 
 @Component({
   selector: 'app-emprendimiento',
@@ -10,7 +10,6 @@ import { EmprendimientoService } from '../_services/emprendimiento.service'
 })
 export class EmprendimientoComponent {
   emprendimientos : any;
-
 
 constructor(private servicio: EmprendimientoService) { }
 

@@ -10,9 +10,6 @@ export class EmprendimientoService {
 
   constructor(private http: HttpClient) { }
 
-  /*obtenerDatos(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/emprendimientos');
-  }*/
 
   getAll() {
       return this.http.get<Emprendimiento[]>(`${env.url}/api/emprendimientos`);

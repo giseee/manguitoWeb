@@ -1,0 +1,37 @@
+
+<h2>Categorías</h2>
+
+<div class="row">
+  <div class="col-md-6">
+    <form #form="ngForm" (submit)="onSubmit(form)">
+      <div class="form-group">
+        <label for="categoryName">Nombre</label>
+        <input type="text" class="form-control" id="categoryName" [(ngModel)]="newCategory.nombreCategoria" name="name">
+      </div>
+      <button class="btn btn-primary" type="submit">Agregar</button>
+    </form>
+
+<div class="list-group">
+  <button type="button" class="list-group-item list-group-item-action" *ngFor="let category of categorias">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{ category.nombreCategoria}}</h5>
+      <div>
+        <button class="btn btn-sm btn-outline-primary mr-2" (click)="editCategory(category)">Editar</button>
+        <button class="btn btn-sm btn-danger" (click)="deleteCategory(category)">Eliminar</button>
+      </div>
+    </div>
+    <small>ID: {{ category.id }}</small>
+  </button>
+</div>
+</div>
+<div *ngIf="editing">
+  <h3>Editar categoría</h3>
+  <form (ngSubmit)="onUpdateCategory()">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="categoryToEdit.nombreCategoria" name="name">
+    </div>
+    <button type="submit" class="btn btn-primary mr-2">Guardar</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+  </form>
+</div>

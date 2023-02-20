@@ -1,46 +1,44 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-import { environment as env } from 'src/environments/environments';
-
-
-import { Usuario } from '../_models/usuario';
-
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthenticationService {
+  private loginUrl = 'http://localhost:8080/api/public/authenticate';
+  private readonly TOKEN_KEY = 'access_token';
+  constructor(private http: HttpClient) {}
 
-    private currentUsuarioSubject: BehaviorSubject<Usuario>;
-
-    public currentUsuario: Observable<Usuario>;
-
-    constructor(private http: HttpClient) {
-        this.currentUsuarioSubject = new BehaviorSubject<Usuario>(JSON.parse(localStorage.getItem('currentUsuario') as string));
-        this.currentUsuario = this.currentUsuarioSubject.asObservable();
+  setToken(token: string): void {
+    if (token) {
+      sessionStorage.setItem(this.TOKEN_KEY, token);
     }
+  }
 
-    public get currentUsuarioValue(): Usuario {
-        return this.currentUsuarioSubject.value;
-    }
+  removeToken(): void {
+    sessionStorage.removeItem(this.TOKEN_KEY);
+  }
 
-    login(nombreUsuario: string, password: string) {
-        return this.http.post<any>(`${env.url}/auth`, { nombreUsuario, password })
-            .pipe(map(credentials => {
+  login(username: string, password: string): Observable<void> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const credentials = { username: username, password: password };
 
-                if (credentials && credentials.token) {
+    return this.http
+      .post<{ token: string }>(this.loginUrl, credentials, { headers })
+      .pipe(
+        map((response) => {
+          localStorage.setItem('access_token', response.token);
+        })
+      );
+  }
 
-                    localStorage.setItem('currentUsuario', JSON.stringify(credentials));
-                    this.currentUsuarioSubject.next(credentials);
-                }
+  logout() {
+    localStorage.removeItem('access_token');
+  }
 
-                return credentials;
-            }));
-    }
-
-    logout() {
-
-        localStorage.removeItem('currentUsuario');
-        this.currentUsuarioSubject.next(null as any);
-    }
+  isLoggedIn(): boolean {
+    return localStorage.getItem('access_token') !== null;
+  }
 }

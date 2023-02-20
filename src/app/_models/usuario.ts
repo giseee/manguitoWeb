@@ -2,17 +2,17 @@ export class Usuario {
     nombre: string;
     apellido: string;
     direccion: string;
-    nombreUsuario: string;
+    nombreUser: string;
     password: string;
     token?: string;
     fechahtml?:String
 
     constructor();
-    constructor(nombre: string = "", apellido: string = "", direccion: string = "", nombreUsuario: string = "", password: string = "", token: string = "") {
+    constructor(nombre: string = "", apellido: string = "", direccion: string = "", nombreUser: string = "", password: string = "", token: string = "") {
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
-        this.nombreUsuario = nombreUsuario;
+        this.nombreUser = nombreUser;
         this.password = password;
         this.token = token;
 
@@ -29,8 +29,7 @@ export class Usuario {
         return this.direccion
     }
     public getNombreUsuario() {
-        return this.nombreUsuario
-    }
+        return this.nombreUser }
     public getPassword() {
         return this.password
     }
@@ -45,7 +44,7 @@ export class Usuario {
         this.direccion = nuevaDireccion
     }
     public setNombreUsuario(nuevoNombreUsuario: string) {
-        this.nombreUsuario = nuevoNombreUsuario
+        this.nombreUser = nuevoNombreUsuario
     }
     public setPassword(nuevoPassword: string) {
         this.password = nuevoPassword
