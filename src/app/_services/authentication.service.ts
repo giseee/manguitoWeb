@@ -7,6 +7,7 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthenticationService {
+  private static KEY_LOCALSTORE = 'User';
   private loginUrl = 'http://localhost:8080/api/public/authenticate';
   private readonly TOKEN_KEY = 'access_token';
   constructor(private http: HttpClient) {}
@@ -35,7 +36,8 @@ export class AuthenticationService {
   }
 
   logout() {
-    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.clear();
+    window.location.href = './';
   }
 
   isLoggedIn(): boolean {
