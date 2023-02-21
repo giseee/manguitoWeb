@@ -16,12 +16,12 @@ export class EmprendimientoService {
   }
 
   getPorID(id: String) {
-      return this.http.get<Emprendimiento[]>(`${env.url}/api/usuario/emprendimiento/` + id);
+      return this.http.get<Emprendimiento[]>(`${env.url}/api/emprendimientos/` + id);
   }
-  public postEmprendimientoById(id: String, emprendimiento:Emprendimiento) {
 
-      return this.http.post(`${env.url}/api/usuario/alta/` + id, emprendimiento, { observe: 'response' })
-  }
+  public crearEmprendimiento({ emprendimiento }: { emprendimiento: Emprendimiento; }): any {
+    return this.http.post <Emprendimiento>(`${env.url}/api/emprendimientos`, emprendimiento)
+}
 
   public delEmprendimientoById(id: Number) {
       return this.http.delete(`${env.url}/api/delete/` + id, { observe: 'response' })

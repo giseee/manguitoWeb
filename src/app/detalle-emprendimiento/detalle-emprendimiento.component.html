@@ -1,0 +1,43 @@
+<div class="contenedor_principal" align="center">
+  <div>
+      <div class="conteiner">
+          <div class="contenedor_titulo">
+              <h1>Detalles del Emprendimiento</h1>
+          </div>
+          <div class="conteiner_table">
+              <table class="table table-dark table-sm">
+                  <tbody>
+                      <tr class="titulo">
+                          <td>
+                              <h5>Nombre</h5>
+                          </td>
+                          <td>
+                              <h5>Descripcion</h5>
+                          </td>
+                          <td>
+                              <h5>Foto</h5>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>{{emprendimiento.nombreEmprendimiento}}</td>
+                          <td>{{emprendimiento.descripcion}}</td>
+                          <td>{{emprendimiento.banner}}</td>
+                      </tr>
+                      <tr class="titulo">
+                          <td>
+                              <h5>WhatsApp</h5>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>{{emprendimiento.redeSociales}}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <div class="boton_atras d-grid gap-2 col-3 mx-auto">
+          <button class="btn btn-primary active boton" data-bs-toggle="button" autocomplete="off" aria-pressed="true"
+              routerLink="/">Salir</button>
+      </div>
+  </div>
+</div>
