@@ -20,15 +20,13 @@
     <!-- for para recorrer el arreglo de emprendimientos --->
     <div *ngFor="let emprendimiento of emprendimientos">
       <img [src]="emprendimiento.banner" alt="image">
-      <button [routerLink]="['/detalle',id]">{{emprendimiento.nombreEmprendimiento}}</button>
-      <h2>{{emprendimiento.id}}</h2>
+      <button [routerLink]="['/detalle',emprendimiento.id]">{{emprendimiento.nombreEmprendimiento}}</button>
+      <!--<h2>{{emprendimiento.id}}</h2>-->
       <h2>{{emprendimiento.descripcion}}</h2>
       <small>{{emprendimiento.categorias}}</small>
       <h3>{{emprendimiento.manguitosRecibidos}}</h3>
-    <td class="botones"> <button class="btn btn-primary"><a
-            [routerLink]="['/detalle', emprendimiento.id]">Detalle</a></button>
-      </td>
-       <!--
+
+      <!--
       <td class="botones"> <button class="btn btn-primary"><a
             [routerLink]="['/edit-servicio.component', emprendimiento.id]">Editar</a></button>
       </td>

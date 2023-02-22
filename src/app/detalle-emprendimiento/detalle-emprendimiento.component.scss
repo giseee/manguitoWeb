@@ -1,0 +1,42 @@
+.proyectos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap:15px;
+  div {
+    img {
+      width: 100%;
+      border-radius: 10px;
+      height: 200px;
+    }
+    h2, p {
+      margin: 0;
+
+    }
+  }
+}
+.categorias{
+  display: flex;
+  justify-content: space-between;
+  color: rgb(247, 155, 64);
+  padding: 10px 20px;
+  align-items: center;
+  height: 10%;
+  background-color:  rgb(247, 155, 64);
+
+}
+
+ul li{
+  font-size: 20px;
+  text-decoration: none;
+  list-style-type: none;
+}
+ul > li>a {
+  text-decoration: none;
+  color: rgb(97, 67, 36);
+}
+.menu .nav-item .nav-link:hover {
+  color: rgb(20, 11, 1);
+}
+header .name h2 {
+  font-family:Oswald;
+}
