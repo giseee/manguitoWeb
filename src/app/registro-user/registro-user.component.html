@@ -1,13 +1,31 @@
-<div>
-<form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
-  <div>
-    <label for="username">Nombre de usuario:</label>
-    <input type="text" id="username" name="username" [(ngModel)]="user.nombre" required>
+<body>
+
+  <div id="contenedor">
+    <div id="contenedorcentrado">
+      <div id="login">
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="formu" id="loginform">
+          <div class="form-group">
+            <label>Email:</label>
+            <input type="text" class="form-control" [(ngModel)]="email" name="email">
+          </div>
+          <div class="form-group">
+            <label>Nombre de usuario:</label>
+            <input type="text" class="form-control" [(ngModel)]="user.nombre" name="nombre">
+          </div>
+          <div class="form-group">
+            <label>Contraseña:</label>
+            <input type="password" class="form-control" [(ngModel)]="user.password" name="password">
+          </div>
+          <button type="submit" [disabled]="!registerForm.valid">Registrarse</button>
+
+        </form>
+        <div id="derecho">
+
+          <div class="pie-form">
+            <a href="#">« Volver</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" name="password" [(ngModel)]="user.password" required>
-  </div>
-  <button type="submit" [disabled]="!registerForm.valid">Registrarse</button>
-</form>
-</div>
+</body>

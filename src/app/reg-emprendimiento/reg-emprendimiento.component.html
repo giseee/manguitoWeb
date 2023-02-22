@@ -1,5 +1,9 @@
-<h2>Nuevo Emprendimiento</h2>
-<form [formGroup]="emprendimientoForm" (ngSubmit)="onSubmit()">
+<body>
+  <div id="contenedor">
+    <div id="contenedorcentrado">
+
+<form [formGroup]="emprendimientoForm" (ngSubmit)="onSubmit()" id="loginform">
+  <h1>Nuevo Emprendimiento</h1>
   <div class="form-group">
     <label for="nombre">Nombre:</label>
     <input type="text" class="form-control" id="nombre" formControlName="nombreEmprendimiento" requerid>
@@ -35,4 +39,6 @@
   </div>
   <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
-
+    </div>
+    </div>
+</body>
