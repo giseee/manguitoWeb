@@ -7,7 +7,6 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private static KEY_LOCALSTORE = 'User';
   private loginUrl = 'http://localhost:8080/api/public/authenticate';
   private readonly TOKEN_KEY = 'access_token';
   constructor(private http: HttpClient) {}
@@ -22,7 +21,7 @@ export class AuthenticationService {
     sessionStorage.removeItem(this.TOKEN_KEY);
   }
 
-  login(nombreUser: string, password: string): Observable<void> {
+  login(nombreUser: string, password: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const credentials = { nombre: nombreUser, password: password };
 

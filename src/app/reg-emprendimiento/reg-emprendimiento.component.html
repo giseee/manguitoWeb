@@ -1,64 +1,38 @@
-<div class="formulario">
-  <form #registroEventoForm="ngForm" (ngSubmit)="onSubmit(registroEventoForm)" class="formu" id="formu" align="left">
-    <div class="form-group">
-      <label class="form-label">Nombre del Emprendimiento</label>
-      <input type="text" class="form-control" id="nombreEmprendimiento"  name="nombreEmprendimiento" [(ngModel)]="emprendimiento.nombreEmprendimiento"/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Descripción</label>
-      <input type="text" class="form-control" name="descripcion" [(ngModel)]="emprendimiento.descripcion" />
-    </div>
-    <div class="form-group">
-      <label for="inputCity" class="form-label">Banner</label>
-      <input type="text" class="form-control" id="banner" name="banner" [(ngModel)]="emprendimiento.banner" />
-    </div>
-    <div class="form-group">
-      <label for="inputState" class="form-label">Categoria</label>
-      <select id="inputState" class="form-select" name="categorias" [(ngModel)]="emprendimiento.categorias">
-        <option selected>Arte</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="inputAddress" class="form-label">Twiter</label>
-      <input type="text" class="form-control" name="redeSociales" [(ngModel)]="emprendimiento.redeSociales" />
-    </div>
-    <div class="form-group">
-      <label for="inputAddress" class="form-label">facebook</label>
-      <input type="text" class="form-control" name="redeSociales"  [(ngModel)]="emprendimiento.redeSociales" />
-    </div>
-    <div class="form-group">
-      <label for="inputAddress" class="form-label">Web</label>
-      <input type="text" class="form-control" name="redeSociales"  [(ngModel)]="emprendimiento.redeSociales" />
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Monto manguito</label>
-      <input type="number" class="form-control" name="montoManguito"  [(ngModel)]="emprendimiento.montoManguito" />
-    </div>
-
-    <!--este es booleano podria ser un check-->
-    <div class="form-group">
-      <label for="inputAddress" class="form-label">Mostrar top de donadores</label>
-      <input type="checkbox" value="false" class="form-control" name="mostrarTopDonadores" [(ngModel)]="emprendimiento.mostrarTopDonadores"  />
-    </div>
-    <!--este es booleano podria ser un check-->
-
-    <div class="form-group">
-      <label for="inputAddress" class="form-label">Mostrar Manguitos recibidos</label>
-      <input type="checkbox" value="false"  class="form-control" name="montoManguito" [(ngModel)]="emprendimiento.montoManguito" />
-    </div>
-
-    <div class="form-group">
-      <div class="mb-3">
-        <label for="formFile" class="form-label">Subir fotos</label>
-        <input class="form-control" type="file" id="formFile" />
+<h2>Nuevo Emprendimiento</h2>
+<form [formGroup]="emprendimientoForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="nombre">Nombre:</label>
+    <input type="text" class="form-control" id="nombre" formControlName="nombreEmprendimiento" requerid>
+  </div>
+  <div class="form-group">
+    <label for="descripcion">Descripción:</label>
+    <textarea class="form-control" id="descripcion" formControlName="descripcion"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="categorias">Categorías:</label>
+    <div *ngFor="let categoria of categorias">
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" [id]="categoria.id" [value]="categoria" formControlName="categorias">
+        <label class="form-check-label" [for]="categoria.id">{{categoria.nombreCategoria}}</label>
       </div>
     </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck" />
-      <label class="form-check-label" for="gridCheck"> Guardar </label>
-    </div>
-    <input type="submit" class="Breg" id="Breg" value="registro" [disabled]="!registroEventoForm.form.valid">
+  </div>
+  <div class="form-group">
+    <label for="imagen">Imagen:</label>
+    <input type="text" class="form-control" id="imagen" formControlName="banner">
+  </div>
+  <div class="form-group">
+    <label for="montoManguito">montoManguito:</label>
+    <input type="number" class="form-control" id="montoManguito" formControlName="montoManguito">
+  </div>
+  <div class="form-group">
+    <label for="direccion">mostrarTopDonadores:</label>
+    <input type="checkbox" class="form-control" id="mostrarTopDonadores" formControlName="mostrarTopDonadores">
+  </div>
+  <div class="form-group">
+    <label for="direccion">mostrarTopDonadores:</label>
+    <input type="checkbox" class="form-control" id="mostrarTopDonadores" formControlName="mostrarTopDonadores">
+  </div>
+  <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
-</div>
+
