@@ -1,0 +1,15 @@
+<h2>Editar usuario</h2>
+
+<form>
+  <div class="form-group">
+    <label for="nombre">Nombre</label>
+    <input type="text" class="form-control" id="nombre" [(ngModel)]="usuario.nombre" name="nombre" required>
+  </div>
+  <div class="form-group">
+    <label for="password">Contraseña</label>
+    <input type="password" class="form-control" id="password" [(ngModel)]="usuario.password" name="password" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary" (click)="updateUsuario()">Guardar</button>
+  <a routerLink="/" class="btn btn-default">Cancelar</a>
+</form>

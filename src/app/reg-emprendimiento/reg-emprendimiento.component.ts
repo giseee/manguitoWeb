@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Emprendimiento, Categoria,Usuario, RedSocial} from '../_interfaces/emprendimiento';
+import { Emprendimiento, Categoria,Usuario} from '../_interfaces/emprendimiento';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import {Categorias } from '../_models/categorias'
 import { environment as env } from 'src/environments/environments';
+import { RedSocial } from '../_models/redSocial';
 @Component({
   selector: 'app-reg-emprendimiento',
   templateUrl: './reg-emprendimiento.component.html',
@@ -39,6 +40,7 @@ export class RegEmprendimientoComponent implements OnInit {
   ngOnInit(): void {
     this.getCategorias();
     this.getUsuarioId();
+    this.getRedSocial();
   }
 
   onSubmit(): void {

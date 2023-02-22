@@ -1,4 +1,5 @@
 export class Usuario {
+    id?:string;
     nombre: string;
     password: string;
     token?: string;

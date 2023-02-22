@@ -17,6 +17,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistroUserComponent } from './registro-user/registro-user.component';
 import { RegEmprendimientoComponent } from './reg-emprendimiento/reg-emprendimiento.component';
 import { DetalleEmprendimientoComponent } from './detalle-emprendimiento/detalle-emprendimiento.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { RedesSocialesComponent } from './redes-sociales/redes-sociales.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { DetalleEmprendimientoComponent } from './detalle-emprendimiento/detalle
     RegistroUserComponent,
     RegEmprendimientoComponent,
     DetalleEmprendimientoComponent,
+    EditUserComponent,
+    RedesSocialesComponent,
 
   ],
   imports: [
