@@ -24,7 +24,8 @@ const routes: Routes = [
   },
   {
     path: 'categorias',
-    component:CategoriaComponent
+    component:CategoriaComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'registro',

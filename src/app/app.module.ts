@@ -19,6 +19,8 @@ import { RegEmprendimientoComponent } from './reg-emprendimiento/reg-emprendimie
 import { DetalleEmprendimientoComponent } from './detalle-emprendimiento/detalle-emprendimiento.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { RedesSocialesComponent } from './redes-sociales/redes-sociales.component';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,13 @@ import { RedesSocialesComponent } from './redes-sociales/redes-sociales.componen
 
   ],
   imports: [
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('token'),
+        allowedDomains: ['example.com'],
+        disallowedRoutes: ['example.com/login']
+      }
+    }),
     BrowserModule,
     AppRoutingModule,
     BrowserModule,
@@ -47,7 +56,7 @@ import { RedesSocialesComponent } from './redes-sociales/redes-sociales.componen
     HttpClientModule,
     CommonModule,
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

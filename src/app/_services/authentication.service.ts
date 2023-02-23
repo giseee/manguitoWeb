@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Usuario } from '../_models/usuario';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,9 @@ import { Usuario } from '../_models/usuario';
 export class AuthenticationService {
   private loginUrl = 'http://localhost:8080/api/public/authenticate';
   private readonly TOKEN_KEY = 'access_token';
-
+  private token:any;
   private currentUsuarioSubject: BehaviorSubject<Usuario>;
+  private jwtHelper = new JwtHelperService();
 
   public currentUsuario: Observable<Usuario>;
   constructor(private http: HttpClient) {
@@ -20,6 +22,11 @@ export class AuthenticationService {
   }
   public get currentUsuarioValue(): Usuario {
     return this.currentUsuarioSubject.value;
+  }
+  getUserId(): number {
+    const token = this.getToken();
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    return decodedToken.sub; // asumimos que el ID del usuario se encuentra en el campo 'sub' del token
   }
 
   setToken(token: string): void {
@@ -57,5 +64,9 @@ login(nombreUser: string, password: string): Observable<any> {
 
   isLoggedIn(): boolean {
     return localStorage.getItem('access_token') !== null;
+  }
+
+  getToken(): string {
+    return this.token;
   }
 }

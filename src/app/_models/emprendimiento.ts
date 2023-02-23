@@ -14,7 +14,7 @@ export class Emprendimiento {
   categorias: Categorias[];
   donaciones: Donaciones[];
   montoManguito: number;
-  //usuario: Usuario;
+  usuario: Usuario | undefined;
 
 
   constructor(nombre: string = "", descripcion: string = "", banner: string, categorias: Categorias[] = [], donaciones: Donaciones[] = [], redSocial: RedSocial[] = []) {

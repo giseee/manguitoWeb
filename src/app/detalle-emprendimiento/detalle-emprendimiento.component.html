@@ -12,6 +12,16 @@
           <h2>{{emprendimiento.descripcion}}</h2>
           <small>{{emprendimiento.categorias}}</small>
           <h3>{{emprendimiento.manguitosRecibidos}}</h3>
+          <label for="categorias">Categorías:</label>
+          <div *ngFor="let categoria of categorias">
+              <p>{{categoria.nombreCategoria}}</p>
+            </div>
+
+          <label for="categorias">Redes Sociales:</label>
+          <div *ngFor="let redSocial of redeSociales">
+              <p>{{redSocial.nombre}}</p>
+              <p>{{redSocial.url}}</p>
+          </div>
 
       </div>
       <div class="boton_atras d-grid gap-2 col-3 mx-auto">

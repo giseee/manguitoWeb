@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Emprendimiento,Usuario,Categoria } from '../_interfaces/emprendimiento';
 
 import { environment as env } from 'src/environments/environments';
 import { Categorias } from '../_models/categorias';
+import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root'
 })
 export class EmprendimientoService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
 
   getAll() {
@@ -33,7 +34,7 @@ export class EmprendimientoService {
       return this.http.put<Emprendimiento>(`${env.url}/api/emprendimiento/`, emprendimiento)
   }
 
-  getEmprendimiento(id: String) {
+  getEmprendimientoId(id: String) {
       return this.http.get<Emprendimiento>(`${env.url}/api/emprendimientos/` + id);
   }
   getCategoria(id: Number) {
@@ -44,6 +45,14 @@ export class EmprendimientoService {
   }
   updateEmprendimiento(id: number, emprendimiento: Emprendimiento): Observable<Emprendimiento> {
     return this.http.put<Emprendimiento>(`${env.url}/emprendimientos/${id}`, emprendimiento);
+
   }
 
+  getEmprendimientoById(id: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.authService.getToken()}`
+    });
+    return this.http.get(`${env.url}/api/emprendimientos/${id}`, { headers });
+  }
 }

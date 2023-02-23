@@ -18,7 +18,7 @@
        <ul class="menu" *ngIf="currentUsuario; else elseBlock">
           <li class="nav-item"><a routerLink="/edit"  class="btn btn-outline-success editar">Editar
           Perfil</a></li>
-          <li class="nav-item"><a routerLink="/miEmprendimiento" class="btn btn-outline-success"> Mi Emprendimiento </a></li>
+          <li class="nav-item"><a routerLink="/dashboard" class="btn btn-outline-success"> Mi Emprendimiento </a></li>
         </ul>
       <ng-template #elseBlock>
         <li class="nav-item"><a href="/login" class="nav-link btn btn-outline-success"> Iniciar Sesion </a></li>

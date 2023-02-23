@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import {Categorias } from '../_models/categorias'
 import { environment as env } from 'src/environments/environments';
 import { RedSocial } from '../_models/redSocial';
+import { AuthenticationService } from '../_services/authentication.service';
 @Component({
   selector: 'app-reg-emprendimiento',
   templateUrl: './reg-emprendimiento.component.html',
@@ -20,9 +21,12 @@ export class RegEmprendimientoComponent implements OnInit {
   categorias: Categorias[] = [];
   redeSociales: RedSocial[] = [];
   constructor(
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private empService: EmprendimientoService,
+    private authenticationService:AuthenticationService
   ) {
     this.emprendimientoForm = this.formBuilder.group({
       nombreEmprendimiento: ['', Validators.required],
@@ -38,9 +42,13 @@ export class RegEmprendimientoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      const emprendimientoId = Number(this.route.snapshot.paramMap.get('id'));
+      this.empService.getEmprendimientoById(emprendimientoId).subscribe(
+      (data) => { this.emprendimiento = data; }
+    );
     this.getCategorias();
     this.getUsuarioId();
-    this.getRedSocial();
+   // this.getRedSocial();
   }
 
   onSubmit(): void {
@@ -73,11 +81,14 @@ export class RegEmprendimientoComponent implements OnInit {
   }
 
   getUsuarioId(): void {
-
-    this.http.get<{ id: number }>(`${env.url}/api/usuarios/`).subscribe(response => {
-      this.emprendimientoForm.patchValue({ usuarioId: response.id });
-    });
+    const userId = this.authenticationService.currentUsuario; // Obtener el ID del usuario desde el servicio de autenticación
+    this.http.get<{ id: number }>(`${env.url}/api/usuarios/5`).subscribe(
+      response => {
+        this.emprendimientoForm.patchValue({ usuarioId: response.id });
+      }
+    );
   }
+
   goBack() {
     this.router.navigate(['/']);
   }

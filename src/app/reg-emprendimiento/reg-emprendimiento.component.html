@@ -1,4 +1,10 @@
+
 <body>
+  <h2>Mi Emprendimiento</h2>
+<div *ngIf="emprendimiento">
+  <p><strong>Nombre:</strong> {{ emprendimiento.nombreEmprendimiento }}</p>
+  <p><strong>Descripción:</strong> {{ emprendimiento.descripcion }}</p>
+</div>
   <div id="contenedor">
     <div id="contenedorcentrado">
 
@@ -21,7 +27,7 @@
       </div>
     </div>
   </div>
-  <div class="form-group">
+<!-- <div class="form-group">
     <label for="categorias">Redes Sociales:</label>
     <div *ngFor="let redSocial of redeSociales">
       <div class="form-check">
@@ -31,7 +37,7 @@
         <input type="text" class="form-control" [id]="redSocial.id" [value]="redSocial" formControlName="redSocial">
       </div>
     </div>
-  </div>
+  </div>-->
   <div class="form-group">
     <label for="imagen">Imagen:</label>
     <input type="text" class="form-control" id="imagen" formControlName="banner">
