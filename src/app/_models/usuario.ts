@@ -12,5 +12,4 @@ export class Usuario {
         this.password = password;  
         this.perfiles = perfiles;      
     }
-
 }

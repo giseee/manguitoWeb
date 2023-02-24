@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { waitForAsync } from '@angular/core/testing';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-
-import { FormsModule } from '@angular/forms';
+import { first } from 'rxjs/operators';
 
 
 import { AuthenticationService } from '../_services/authentication.service';

@@ -1,11 +1,44 @@
+.logo{
+  padding:.5em;
+  width: 5em;
+}
+.navbar-nav .disabled{
+  color:rgb(8, 80, 8);
 
+}
+.card{
+  background-blend-mode: color;
+  box-sizing: border-box;
+  height: 80px;
+  background-repeat: no-repeat;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  justify-content: center;
+  font-size: large;
+}
+.object-cover {
+  object-fit: cover;
+}
+
+nav div .navbar-nav a {
+  color: rgb(134, 134, 134);
+}
+
+footer {
+  font-size: 0.9rem;
+  background-color: #103a57;
+}
+
+footer a {
+  text-decoration: none;
+  color: white
+}
 .banner-principal {
   display:flex;
   flex-direction: column;
-  background:url('/assets/img/cuidados.jpg'),rgba(216, 190, 190, 0.356);
+  background:url('/assets/img/pexels-jess-bailey-designs-876467.jpg'),rgba(216, 190, 190, 0.356);
   background-blend-mode: color;
   box-sizing: border-box;
-  height: 80vh;
+  height: 70vh;
   background-size:cover;
   background-repeat: no-repeat;
   font-family: Georgia, 'Times New Roman', Times, serif;

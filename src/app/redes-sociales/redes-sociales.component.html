@@ -1,0 +1,36 @@
+<h2>RedSocial</h2>
+
+<div class="row">
+  <div class="col-md-6">
+    <form #form="ngForm" (submit)="onSubmit(form)">
+      <div class="form-group">
+        <label for="redSocialName">Nombre</label>
+        <input type="text" class="form-control" id="redSocialName" [(ngModel)]="newRedSocial.nombre" name="name">
+      </div>
+      <button class="btn btn-primary" type="submit">Agregar</button>
+    </form>
+
+<div class="list-group">
+  <button type="button" class="list-group-item list-group-item-action" *ngFor="let redSocial of redSocial">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{ redSocial.nombre}}</h5>
+      <div>
+        <button class="btn btn-sm btn-outline-primary mr-2" (click)="editRedSocial(redSocial)">Editar</button>
+        <button class="btn btn-sm btn-danger" (click)="deleteRedSocial(redSocial)">Eliminar</button>
+      </div>
+    </div>
+    <small>ID: {{ redSocial.id }}</small>
+  </button>
+</div>
+</div>
+<div *ngIf="editing">
+  <h3>Editar</h3>
+  <form (ngSubmit)="onUpdateRedSocial()">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="redSocialToEdit.nombre" name="name">
+    </div>
+    <button type="submit" class="btn btn-primary mr-2">Guardar</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+  </form>
+</div>

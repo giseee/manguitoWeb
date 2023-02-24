@@ -18,13 +18,20 @@
   </section>
   <section class="proyectos">
     <!-- for para recorrer el arreglo de emprendimientos --->
-      <div *ngFor="let emprendimiento of emprendimientos">
-        <img [src]="emprendimiento.banner" alt="image">
-        <h2>{{emprendimiento.nombreEmprendimiento}}</h2>
-        <h2>{{emprendimiento.descripcion}}</h2>
-        <small>{{emprendimiento.categorias}}</small>
-        <h3>{{emprendimiento.manguitosRecibidos}}</h3>
-      </div>
+    <div *ngFor="let emprendimiento of emprendimientos">
+      <img [src]="emprendimiento.banner" alt="image">
+      <button [routerLink]="['/detalle',emprendimiento.id]">{{emprendimiento.nombreEmprendimiento}}</button>
+      <!--<h2>{{emprendimiento.id}}</h2>-->
+      <h2>{{emprendimiento.descripcion}}</h2>
+      <small>{{emprendimiento.categorias}}</small>
+      <h3>{{emprendimiento.manguitosRecibidos}}</h3>
+
+      <!--
+      <td class="botones"> <button class="btn btn-primary"><a
+            [routerLink]="['/edit-servicio.component', emprendimiento.id]">Editar</a></button>
+      </td>
+      <td class="botones"> <button class="btn btn-danger" (click)="borrar(emprendimiento.id)">Borrar</button></td>-->
+    </div>
   </section>
 
 </main>

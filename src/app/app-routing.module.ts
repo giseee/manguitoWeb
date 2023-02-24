@@ -8,30 +8,40 @@ import { CategoriaComponent } from './categoria';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { RegistroUserComponent } from './registro-user/registro-user.component';
+import { RegEmprendimientoComponent } from './reg-emprendimiento/reg-emprendimiento.component';
+import { DetalleEmprendimientoComponent } from './detalle-emprendimiento/detalle-emprendimiento.component';
+import { CommonModule } from '@angular/common';
+import { EditUserComponent } from './edit-user';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/'},//lo llevamos a una ruta no protegida
   { path:'login', component:LoginComponent},
   { path:'emprendimiento', component:EmprendimientoComponent},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'edit', component: EditUserComponent, canActivate: [AuthGuard] },
   {
       path: '',
       component: HomeComponent
   },
   {
     path: 'categorias',
-    component:CategoriaComponent
+    component:CategoriaComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'registro',
-    component: RegistroComponent
+    component: RegistroUserComponent
   },
   {
   path: 'register',
-  component: RegistroUserComponent
-  }
+  component: RegEmprendimientoComponent
+  },
+  {
+    path: 'detalle/:id',
+    component: DetalleEmprendimientoComponent
+    }
 ]
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [ CommonModule, RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

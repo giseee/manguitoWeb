@@ -70,7 +70,8 @@ export class AuthenticationService {
 
   private loadUserFromSessionStorage(): void {
     const userFromSession = sessionStorage.getItem(AuthenticationService.USER_KEY_LOCALSTORE) as string;
-    var usuario = JSON.parse(userFromSession) as Usuario;
+    var usuario = JSON.parse(JSON.stringify(userFromSession)) as Usuario;
+
     //userFromSession puede ser null -> cortocircuito como guarda para el next
     userFromSession && this.currentUsuarioSubject.next(usuario);
   }

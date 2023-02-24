@@ -12,6 +12,7 @@ export class RegistroUserComponent {
   user: User = {
     nombre: '', password: ''
   };
+  email:string="";
   router: any;
   registrando=false;
 

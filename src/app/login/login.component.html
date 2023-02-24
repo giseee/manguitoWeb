@@ -1,23 +1,36 @@
-<div id="contenedor-formu">
-  <div class="contenido" align="center">
-    <div class="content_container" align="center">
-      <form [formGroup]="form" (ngSubmit)="login()" class="formu" id="formu" align="left">
+<body>
 
-        <div class="form-group">
-          <label>Nombre de usuario:</label>
-          <input type="text" class="form-control" name="nombre" formControlName="nombre">
+  <div id="contenedor">
+    <div id="contenedorcentrado">
+      <div id="login">
+        <form [formGroup]="form" (ngSubmit)="login()" class="formu" id="formu">
+          <div class="form-group">
+            <label>Nombre de usuario:</label>
+            <input type="text" class="form-control" name="nombre" formControlName="nombre">
+          </div>
+          <div class="form-group">
+            <label>Contraseña:</label>
+            <input type="password" class="form-control" name="password" formControlName="password">
+          </div>
+          <p *ngIf="form.hasError('invalidCredentials')" class="error-msg">
+            Las credenciales son incorrectas
+          </p>
+          <input type="submit" class="btn btn-success" id="Breg" value="Login"
+            [disabled]="form.invalid || processingRequest">
+        </form>
+        <div id="derecho">
+          <div class="titulo">
+            Bienvenido
+          </div>
+          <hr>
+          <div class="pie-form">
+            <a href="#">¿Perdiste tu contraseña?</a>
+            <a href="/registro">¿No tienes Cuenta? Registrate</a>
+            <hr>
+            <a href="#">« Volver</a>
+          </div>
         </div>
-        <div class="form-group">
-          <label >Contraseña:</label>
-          <input type="password" class="form-control" name="password" formControlName="password">
-        </div>
-        <p *ngIf="form.hasError('invalidCredentials')" class="error-msg">
-          Las credenciales son incorrectas
-        </p>
-        <input type="submit" class="btn btn-success" id="Breg" value="Login" [disabled]="form.invalid || processingRequest">
-
-      </form>
+      </div>
     </div>
   </div>
-  </div>
-  <div>
+</body>

@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Emprendimiento } from '../_models/emprendimiento';
+import { Emprendimiento,Usuario,Categoria } from '../_interfaces/emprendimiento';
+
 import { environment as env } from 'src/environments/environments';
+import { Categorias } from '../_models/categorias';
+import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root'
 })
 export class EmprendimientoService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
 
   getAll() {
@@ -16,23 +19,40 @@ export class EmprendimientoService {
   }
 
   getPorID(id: String) {
-      return this.http.get<Emprendimiento[]>(`${env.url}/api/usuario/emprendimiento/` + id);
+      return this.http.get<Emprendimiento[]>(`${env.url}/api/emprendimientos/` + id);
   }
-  public postEmprendimientoById(id: String, emprendimiento:Emprendimiento) {
 
-      return this.http.post(`${env.url}/api/usuario/alta/` + id, emprendimiento, { observe: 'response' })
-  }
+  public crearEmprendimiento({ emprendimiento }: { emprendimiento: Emprendimiento; }): any {
+    return this.http.post<Emprendimiento>(`${env.url}/api/emprendimientos`, emprendimiento)
+}
 
   public delEmprendimientoById(id: Number) {
       return this.http.delete(`${env.url}/api/delete/` + id, { observe: 'response' })
   }
 
-  putEmprendimiento(id: String, emprendimiento: Emprendimiento) {
-      return this.http.put<Emprendimiento>(`${env.url}/api/emprendimiento/` + id, emprendimiento)
+  putEmprendimiento( emprendimiento: Emprendimiento) {
+      return this.http.put<Emprendimiento>(`${env.url}/api/emprendimiento/`, emprendimiento)
   }
 
-  getEmprendimiento(id: String) {
+  getEmprendimientoId(id: String) {
       return this.http.get<Emprendimiento>(`${env.url}/api/emprendimientos/` + id);
   }
+  getCategoria(id: Number) {
+    return this.http.get<Categorias>(`${env.url}/api/categorias/` + id);
+}
+  getUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${env.url}/usuarios`);
+  }
+  updateEmprendimiento(id: number, emprendimiento: Emprendimiento): Observable<Emprendimiento> {
+    return this.http.put<Emprendimiento>(`${env.url}/emprendimientos/${id}`, emprendimiento);
 
+  }
+
+  getEmprendimientoById(id: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.authService.getToken()}`
+    });
+    return this.http.get(`${env.url}/api/emprendimientos/${id}`, { headers });
+  }
 }
