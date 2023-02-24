@@ -15,6 +15,7 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { ListarCategoriasComponent } from './listar-categorias/listar-categorias.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistroUserComponent } from './registro-user/registro-user.component';
+import { authTokeninterceptorProvider } from './interceptors';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { RegistroUserComponent } from './registro-user/registro-user.component';
     HttpClientModule,
     CommonModule,
   ],
-  providers: [],
+  providers: [authTokeninterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
