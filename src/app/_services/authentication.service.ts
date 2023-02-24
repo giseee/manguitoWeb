@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { environment as env } from 'src/environments/environments';
+import { Usuario } from '../_models/usuario';
+import { Router } from '@angular/router';
+import { LoginCredentials } from '../_models/login-credentials.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private static KEY_LOCALSTORE = 'User';
-  private loginUrl = 'http://localhost:8080/api/public/authenticate';
+  private static USER_KEY_LOCALSTORE = 'User';
   private readonly TOKEN_KEY = 'access_token';
-  constructor(private http: HttpClient) {}
+  private currentUsuarioSubject = new BehaviorSubject<Usuario | null>(null);
+  currentUsuario$ = this.currentUsuarioSubject.asObservable();
+  isLoggedIn$: Observable<boolean> = this.currentUsuario$.pipe(map(Boolean));
+
+  constructor(private http: HttpClient, private router: Router) {
+    this.loadUserFromSessionStorage();
+  }
 
   setToken(token: string): void {
     if (token) {
@@ -22,25 +31,56 @@ export class AuthenticationService {
     sessionStorage.removeItem(this.TOKEN_KEY);
   }
 
-  login(nombreUser: string, password: string): Observable<void> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const credentials = { nombre: nombreUser, password: password };
+  login(credentials: LoginCredentials): Observable<void> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, DELETE, PUT, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Custom-header',
+      'Access-Control-Expose-Headers': 'Authorization'
+    });
 
     return this.http
-      .post<{ token: string }>(this.loginUrl, credentials, { headers })
+      .post<any>(`${env.url}/api/public/authenticate`, credentials, { 'headers':headers, observe: 'response' })
       .pipe(
         map((response) => {
-          localStorage.setItem('access_token', response.token);
+          let token = response.headers.get("Authorization") as string;
+          var usuario = JSON.parse(JSON.stringify(response.body)) as Usuario;
+          sessionStorage.setItem(this.TOKEN_KEY, token);
+          sessionStorage.setItem(AuthenticationService.USER_KEY_LOCALSTORE, response.body);
+          this.currentUsuarioSubject.next(usuario);
+          this.redirectToDashboard();
         })
       );
   }
 
   logout() {
-    localStorage.clear();
-    window.location.href = './';
+    this.removeUserFromSessionStorage();
+    this.currentUsuarioSubject.next(null as any);
+    this.router.navigateByUrl('/');
   }
 
   isLoggedIn(): boolean {
-    return localStorage.getItem('access_token') !== null;
+    return sessionStorage.getItem(this.TOKEN_KEY) !== null;
+  }
+
+  private redirectToDashboard(): void {
+    this.router.navigateByUrl('/dashboard');
+  }
+
+  private loadUserFromSessionStorage(): void {
+    const userFromSession = sessionStorage.getItem(AuthenticationService.USER_KEY_LOCALSTORE) as string;
+    var usuario = JSON.parse(userFromSession) as Usuario;
+    //userFromSession puede ser null -> cortocircuito como guarda para el next
+    userFromSession && this.currentUsuarioSubject.next(usuario);
+  }
+
+  private removeUserFromSessionStorage(): void {
+    sessionStorage.removeItem(this.TOKEN_KEY);
+    sessionStorage.removeItem(AuthenticationService.USER_KEY_LOCALSTORE);
+  }
+
+  public getToken(): string | null{
+    return sessionStorage.getItem(this.TOKEN_KEY);
   }
 }

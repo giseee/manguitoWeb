@@ -9,7 +9,7 @@ import { UsuarioService } from '../_services/usuario.service';
   styleUrls: ['./registro.component.scss']
 })
 export class RegistroComponent {
-  usuario = new Usuario();
+  //usuario = new Usuario();
   submitted = false;
   mensaje: string = "";
   error: string = '';
