@@ -32,7 +32,7 @@ export class LoginComponent {
     }),
   });
 
-  constructor(private authService: AuthenticationService, private cdr: ChangeDetectorRef) {} 
+  constructor(private authService: AuthenticationService, private cdr: ChangeDetectorRef) {}
 
   login() {
     this.processingRequest = true;

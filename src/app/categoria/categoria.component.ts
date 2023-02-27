@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Categorias } from '../_models/categorias';
+import { Categoria } from '../_models/categoria';
 import { CategoriasService } from '../_services/categoria.service'
 
 
@@ -11,10 +11,10 @@ import { CategoriasService } from '../_services/categoria.service'
 })
 export class CategoriaComponent {
 
-  categorias: Categorias[] = [];
-  newCategory: Categorias = new Categorias();
+  categorias: Categoria[] = [];
+  newCategory: Categoria = new Categoria();
   editing: boolean = false;
-  categoryToEdit: Categorias = new Categorias();
+  categoryToEdit: Categoria = new Categoria();
 
   constructor(private categoriaService: CategoriasService) { }
 
@@ -32,35 +32,35 @@ export class CategoriaComponent {
     this.categoriaService.postCategoria(this.newCategory)
       .subscribe(categoria => {
         this.categorias.push(categoria);
-        this.newCategory = new Categorias();
+        this.newCategory = new Categoria();
         categoryForm.resetForm();
       });
   }
 
-  deleteCategory(categoria: Categorias): void {
+  deleteCategory(categoria: Categoria): void {
       this.categoriaService.delCategoriaById(categoria.id!)
       .subscribe(() => {
-        this.categorias= this.categorias.filter((c: Categorias) => c !== categoria);
+        this.categorias= this.categorias.filter((c: Categoria) => c !== categoria);
       });
   }
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
-    this.categoriaService.addCategory({ name } as unknown as Categorias)
+    this.categoriaService.addCategory({ name } as unknown as Categoria)
       .subscribe(category => {
         this.categorias.push(category);
       });
   }
 
 
-  editCategory(category: Categorias): void {
+  editCategory(category: Categoria): void {
     this.editing = true;
     this.categoryToEdit = Object.assign({}, category);
   }
 
   cancelEdit(): void {
     this.editing = false;
-    this.categoryToEdit = new Categorias();
+    this.categoryToEdit = new Categoria();
   }
 
   onUpdateCategory(): void {
@@ -69,7 +69,7 @@ export class CategoriaComponent {
         const index = this.categorias.findIndex(c => c.id === this.categoryToEdit.id);
         this.categorias[index] = this.categoryToEdit;
         this.editing = false;
-        this.categoryToEdit = new Categorias();
+        this.categoryToEdit = new Categoria();
       });
   }
 }

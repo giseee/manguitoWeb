@@ -1,61 +1,42 @@
-
-<body>
-  <h2>Mi Emprendimiento</h2>
-<div *ngIf="emprendimiento">
-  <p><strong>Nombre:</strong> {{ emprendimiento.nombreEmprendimiento }}</p>
-  <p><strong>Descripción:</strong> {{ emprendimiento.descripcion }}</p>
-</div>
-  <div id="contenedor">
-    <div id="contenedorcentrado">
-
-<form [formGroup]="emprendimientoForm" (ngSubmit)="onSubmit()" id="loginform">
-  <h1>Nuevo Emprendimiento</h1>
-  <div class="form-group">
-    <label for="nombre">Nombre:</label>
-    <input type="text" class="form-control" id="nombre" formControlName="nombreEmprendimiento" requerid>
-  </div>
-  <div class="form-group">
-    <label for="descripcion">Descripción:</label>
-    <textarea class="form-control" id="descripcion" formControlName="descripcion"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="categorias">Categorías:</label>
-    <div *ngFor="let categoria of categorias">
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" [id]="categoria.id" [value]="categoria" formControlName="categorias">
-        <label class="form-check-label" [for]="categoria.id">{{categoria.nombreCategoria}}</label>
-      </div>
-    </div>
-  </div>
-<!-- <div class="form-group">
-    <label for="categorias">Redes Sociales:</label>
-    <div *ngFor="let redSocial of redeSociales">
-      <div class="form-check">
-        <input type="text" class="form-control" [id]="redSocial.id" [value]="redSocial" formControlName="redSocial">
-        <label class="form-control" [for]="redSocial.id">{{redSocial.nombre}}</label>
-        <label class="form-control" [for]="redSocial.id">{{redSocial.url}}</label>
-        <input type="text" class="form-control" [id]="redSocial.id" [value]="redSocial" formControlName="redSocial">
-      </div>
-    </div>
-  </div>-->
-  <div class="form-group">
-    <label for="imagen">Imagen:</label>
-    <input type="text" class="form-control" id="imagen" formControlName="banner">
-  </div>
-  <div class="form-group">
-    <label for="montoManguito">montoManguito:</label>
-    <input type="number" class="form-control" id="montoManguito" formControlName="montoManguito">
-  </div>
-  <div class="form-group">
-    <label for="direccion">mostrarTopDonadores:</label>
-    <input type="checkbox" class="form-control" id="mostrarTopDonadores" formControlName="mostrarTopDonadores">
-  </div>
-  <div class="form-group">
-    <label for="direccion">mostrarTopDonadores:</label>
-    <input type="checkbox" class="form-control" id="mostrarTopDonadores" formControlName="mostrarTopDonadores">
-  </div>
-  <button type="submit" class="btn btn-primary">Guardar</button>
+<form (ngSubmit)="createNewEmp()" #emprendimientoForm="ngForm">
+  <label>
+    Nombre del emprendimiento:
+    <input [(ngModel)]="emprendimiento.nombreEmprendimiento" type="text" name="nombreEmprendimiento" required>
+  </label>
+  <br>
+  <label>
+    Descripción:
+    <textarea [(ngModel)]="emprendimiento.descripcion" name="descripcion" required></textarea>
+  </label>
+  <br>
+  <label>
+    Categorías:
+    <select [(ngModel)]="emprendimiento.categorias" name="categorias" multiple>
+      <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria.nombreCategoria }}</option>
+    </select>
+  </label>
+  <br>
+  <br>
+  <label>
+    Banner:
+    <input [(ngModel)]="emprendimiento.banner" type="text" name="banner" required>
+  </label>
+  <br>
+  <label>
+    Monto del manguito:
+    <input [(ngModel)]="emprendimiento.montoManguito" type="number" name="montoManguito" required>
+  </label>
+  <br>
+  <label>
+    ¿Mostrar manguitos recibidos?
+    <input [(ngModel)]="emprendimiento.mostrarManguitos" type="checkbox" name="mostrarManguitos">
+  </label>
+  <br>
+  <label>
+    ¿Mostrar top de donadores?
+    <input [(ngModel)]="emprendimiento.mostrarTopDonadores" type="checkbox" name="mostrarTopDonadores">
+  </label>
+  <br>
+  <br>
+  <button type="submit">Crear emprendimiento</button>
 </form>
-    </div>
-    </div>
-</body>

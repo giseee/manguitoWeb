@@ -12,21 +12,26 @@ export class RegistroUserComponent {
   user: User = {
     nombre: '', password: ''
   };
-  email:string="";
+  mail:string="";
   router: any;
   registrando=false;
 
   constructor(private userService: UsuarioService) { }
 
   onSubmit(form: NgForm) {
+
     this.registrando=true;
     if (form.valid) {
       this.userService.crearUsuario({ usuario: this.user }).subscribe(
         () => {
+          this.registrando=true;
           console.log('Usuario registrado con éxito');
         }
       );
     }
+  }
+  login(){
+    this.router.navigate(['/login']);
   }
 }
 

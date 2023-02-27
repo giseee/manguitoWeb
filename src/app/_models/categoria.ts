@@ -1,4 +1,4 @@
-export class Categorias {
+export class Categoria {
   id:number=0;
   nombreCategoria: string;
   constructor(nombre: string = "") {

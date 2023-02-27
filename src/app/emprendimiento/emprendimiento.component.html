@@ -1,37 +1,9 @@
-<main>
-  <section>
-    <div class="services">
-      <div>Proyectos</div>
-    </div>
-    <div class="input-buscar">
-
-      <input type="text" class="form-control" placeholder="Proyecto" aria-label="Username"
-        aria-describedby="input-group-button-right">
-      <button class="btn btn-lg btn-success" type="submit">Buscar</button>
-    </div>
-
-
-  </section>
-  <section class="Unnombre">
-
-    <app-listar-categorias></app-listar-categorias>
-  </section>
-  <section class="proyectos">
-    <!-- for para recorrer el arreglo de emprendimientos --->
-    <div *ngFor="let emprendimiento of emprendimientos">
-      <img [src]="emprendimiento.banner" alt="image">
-      <button [routerLink]="['/detalle',emprendimiento.id]">{{emprendimiento.nombreEmprendimiento}}</button>
-      <!--<h2>{{emprendimiento.id}}</h2>-->
+<div class="proyecto">
+<img [src]="emprendimiento.banner" alt="image">
+      <button [routerLink]="['/detalle',emprendimiento.id_emprendimiento]">{{emprendimiento.nombreEmprendimiento}}</button>
       <h2>{{emprendimiento.descripcion}}</h2>
-      <small>{{emprendimiento.categorias}}</small>
-      <h3>{{emprendimiento.manguitosRecibidos}}</h3>
-
-      <!--
-      <td class="botones"> <button class="btn btn-primary"><a
-            [routerLink]="['/edit-servicio.component', emprendimiento.id]">Editar</a></button>
-      </td>
-      <td class="botones"> <button class="btn btn-danger" (click)="borrar(emprendimiento.id)">Borrar</button></td>-->
-    </div>
-  </section>
-
-</main>
+      <small *ngIf="emprendimiento.categorias.length > 0">{{emprendimiento.categorias[0].nombreCategoria}}</small>
+      <small *ngIf="emprendimiento.redeSociales.length > 0">{{emprendimiento.redeSociales[0]}}</small>
+   <!--  <small *ngIf="emprendimiento.donaciones.length > 0">{{emprendimiento.donaciones[0]}}</small>
+    -->  <h3>{{emprendimiento.manguitosRecibidos}}</h3>
+  </div>

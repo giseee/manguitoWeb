@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Categorias } from '../_models/categorias';
+import { Categoria } from '../_models/categoria';
 import { Emprendimiento } from '../_models/emprendimiento';
 import { RedSocial } from '../_models/redSocial';
 import { Usuario } from '../_models/usuario';
@@ -14,10 +14,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DetalleEmprendimientoComponent implements OnInit {
   usuarios!: Usuario[];
-  categorias: Categorias[] = [];
+  categorias: Categoria[] = [];
   redeSociales: RedSocial[] = [];
   emprendimiento: any;
-  id!: String;
+  id!: number;
   error!: String;
   constructor(private route: ActivatedRoute, private emprendimientoService: EmprendimientoService,
     private http: HttpClient,
@@ -43,7 +43,7 @@ export class DetalleEmprendimientoComponent implements OnInit {
   }
 
   getCategorias(): void {
-    this.http.get<Categorias[]>(`${env.url}/api/categorias`).subscribe(response => {
+    this.http.get<Categoria[]>(`${env.url}/api/categorias`).subscribe(response => {
       this.categorias = response;
     });
   }

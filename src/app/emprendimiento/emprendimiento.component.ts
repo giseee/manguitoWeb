@@ -1,8 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Emprendimiento } from '../_models/emprendimiento';
-import { EmprendimientoService } from '../_services/emprendimiento.service'
-import { Router,RouterModule } from '@angular/router';
-
 
 @Component({
   selector: 'app-emprendimiento',
@@ -10,17 +7,25 @@ import { Router,RouterModule } from '@angular/router';
   styleUrls: ['./emprendimiento.component.scss']
 })
 export class EmprendimientoComponent {
-  emprendimientos : any;
-  id:Number=0;
-constructor(private servicio: EmprendimientoService) { }
+  @Input() emprendimiento:Emprendimiento={
+    id_emprendimiento: 0,
+    nombreEmprendimiento: '',
+    descripcion: '',
+    banner: '',
+    manguitosRecibidos: 0,
+    mostrarManguitos: true,
+    mostrarTopDonadores: true,
+    redeSociales: [],
+    categorias:[],
+   // donaciones: [],
+    montoManguito: 0,
+    id:0
+  }
+
+@Output() showEmp= new EventEmitter<number>();
+constructor( ){}
 
 ngOnInit() {
-    this.servicio.getAll().subscribe(emprendimientos=> {
-    this.emprendimientos = emprendimientos;
-    this.id= this.emprendimientos.id;
-});
 }
-
-
 
 }

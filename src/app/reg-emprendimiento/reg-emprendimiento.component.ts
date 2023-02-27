@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Emprendimiento, Categoria,Usuario} from '../_interfaces/emprendimiento';
+import { Emprendimiento,EmprendimientoDto,Usuario} from '../_interfaces/emprendimiento';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import {Categorias } from '../_models/categorias'
+import {Categoria } from '../_models/categoria'
 import { environment as env } from 'src/environments/environments';
 import { RedSocial } from '../_models/redSocial';
 import { AuthenticationService } from '../_services/authentication.service';
@@ -16,78 +16,56 @@ import { AuthenticationService } from '../_services/authentication.service';
 export class RegEmprendimientoComponent implements OnInit {
   emprendimientoForm!: FormGroup;
   isNew = true;
-  emprendimiento!: Emprendimiento;
+  emprendimiento!: EmprendimientoDto;
   usuarios!: Usuario[];
-  categorias: Categorias[] = [];
+  categorias: Categoria[] = [];
   redeSociales: RedSocial[] = [];
+  userId!: any;
+
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
     private empService: EmprendimientoService,
-    private authenticationService:AuthenticationService
+    private authenticationService: AuthenticationService
   ) {
-    this.emprendimientoForm = this.formBuilder.group({
-      nombreEmprendimiento: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      categorias: [[], Validators.required],
-      redeSociales:[[], Validators.required],
-      banner: ['', Validators.required],
-      montoManguito: ['', Validators.required],
-      mostrarTopDonadores: ['', Validators.required],
-      mostrarManguitos:['', Validators.required],
-      usuarioId: ['', Validators.required]
-    });
+    this.emprendimiento = {
+    nombreEmprendimiento: '',
+    descripcion: '',
+    banner: '',
+    manguitosRecibidos:0,
+    montoManguito: 0,
+    mostrarTopDonadores: false,
+    mostrarManguitos: false,
+    categorias:[],
+    id: 0 // o el valor que corresponda
+  };
   }
 
   ngOnInit(): void {
-      const emprendimientoId = Number(this.route.snapshot.paramMap.get('id'));
-      this.empService.getEmprendimientoById(emprendimientoId).subscribe(
-      (data) => { this.emprendimiento = data; }
-    );
     this.getCategorias();
     this.getUsuarioId();
-   // this.getRedSocial();
-  }
-
-  onSubmit(): void {
-    const emprendimiento: Emprendimiento = {
-      nombreEmprendimiento: this.emprendimientoForm.get('nombreEmprendimiento')?.value,
-      descripcion: this.emprendimientoForm.get('descripcion')?.value,
-      categorias: this.emprendimientoForm.get('categorias')?.value,
-      redeSociales: this.emprendimientoForm.get('redeSociales')?.value,
-      banner: this.emprendimientoForm.get('banner')?.value,
-      montoManguito: this.emprendimientoForm.get('montoManguito')?.value,
-      mostrarTopDonadores: this.emprendimientoForm.get('mostrarTopDonadores')?.value,
-      mostrarManguitos: this.emprendimientoForm.get('mostrarManguitos')?.value,
-      usuarioId: this.emprendimientoForm.get('usuarioId')?.value
-    };
-
-    this.http.post(`${env.url}/api/emprendimientos`, emprendimiento).subscribe(() => {
-      this.router.navigate(['/']);
-    });
   }
 
   getCategorias(): void {
-    this.http.get<Categorias[]>(`${env.url}/api/categorias`).subscribe(response => {
+    this.http.get<Categoria[]>(`${env.url}/api/categorias`).subscribe(response => {
       this.categorias = response;
     });
   }
-  getRedSocial(): void {
-    this.http.get<RedSocial[]>(`${env.url}/api/redSocial`).subscribe(response => {
-      this.redeSociales = response;
-    });
-  }
 
-  getUsuarioId(): void {
-    const userId = this.authenticationService.currentUsuario$; // Obtener el ID del usuario desde el servicio de autenticación
-    this.http.get<{ id: number }>(`${env.url}/api/usuarios/`+userId).subscribe(
-      response => {
-        this.emprendimientoForm.patchValue({ usuarioId: response.id });
-      }
-    );
-  }
+  getUsuarioId() {
+    this.authenticationService.currentUsuario$.subscribe(data => {
+      this.userId = data?.id;
+    }); // Obtener el ID del usuario desde el servicio de autenticación
+  };
+
+    createNewEmp() {
+      this.emprendimiento.id = this.userId;
+      this.empService.create(this.emprendimiento).subscribe(data => {
+        console.log('created', data);
+      })
+    }
 
   goBack() {
     this.router.navigate(['/']);

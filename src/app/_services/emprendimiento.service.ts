@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Emprendimiento,Usuario,Categoria } from '../_interfaces/emprendimiento';
+import { Emprendimiento,Usuario,Categoria, EmprendimientoDto } from '../_interfaces/emprendimiento';
 
 import { environment as env } from 'src/environments/environments';
-import { Categorias } from '../_models/categorias';
+//import { Categorias } from '../_models/categorias';
 import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root'
@@ -18,33 +18,36 @@ export class EmprendimientoService {
       return this.http.get<Emprendimiento[]>(`${env.url}/api/emprendimientos`);
   }
 
-  getPorID(id: String) {
-      return this.http.get<Emprendimiento[]>(`${env.url}/api/emprendimientos/` + id);
+  getPorID(id: number) {
+      return this.http.get<Emprendimiento>(`${env.url}/api/emprendimientos/${id}`);
   }
 
-  public crearEmprendimiento({ emprendimiento }: { emprendimiento: Emprendimiento; }): any {
-    return this.http.post<Emprendimiento>(`${env.url}/api/emprendimientos`, emprendimiento)
-}
+  crearEmprendimiento(emprendimiento: Emprendimiento) {
+    return this.http.post<Emprendimiento>(`${env.url}/api/emprendimientos`,emprendimiento);
+  }
+  create(emprendimiento:EmprendimientoDto){
+    return this.http.post<Emprendimiento>(`${env.url}/api/emprendimientos`,emprendimiento);
+  }
 
   public delEmprendimientoById(id: Number) {
       return this.http.delete(`${env.url}/api/delete/` + id, { observe: 'response' })
   }
 
   putEmprendimiento( emprendimiento: Emprendimiento) {
-      return this.http.put<Emprendimiento>(`${env.url}/api/emprendimiento/`, emprendimiento)
+      return this.http.put<Emprendimiento>(`${env.url}/api/emprendimientos/${emprendimiento.id}`, emprendimiento)
   }
 
-  getEmprendimientoId(id: String) {
-      return this.http.get<Emprendimiento>(`${env.url}/api/emprendimientos/` + id);
+  getEmprendimientoId(id: Number) {
+      return this.http.get<Emprendimiento>(`${env.url}/api/emprendimientos/${id}`);
   }
   getCategoria(id: Number) {
-    return this.http.get<Categorias>(`${env.url}/api/categorias/` + id);
+    return this.http.get<Categoria[]>(`${env.url}/api/categorias/` + id);
 }
-  getUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${env.url}/usuarios`);
-  }
-  updateEmprendimiento(id: number, emprendimiento: Emprendimiento): Observable<Emprendimiento> {
-    return this.http.put<Emprendimiento>(`${env.url}/emprendimientos/${id}`, emprendimiento);
+getUsuarios(): Observable<Usuario[]> {
+  return this.http.get<Usuario[]>(`${env.url}/api/usuarios`);
+}
+  updateEmprendimiento(emprendimiento: Emprendimiento): Observable<Emprendimiento> {
+    return this.http.put<Emprendimiento>(`${env.url}/emprendimientos/`+ emprendimiento.id, emprendimiento);
 
   }
 

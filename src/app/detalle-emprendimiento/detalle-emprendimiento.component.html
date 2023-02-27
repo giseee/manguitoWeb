@@ -10,16 +10,17 @@
 
             <!--<h2>{{emprendimiento.id}}</h2>-->
           <h2>{{emprendimiento.descripcion}}</h2>
-          <small>{{emprendimiento.categorias}}</small>
           <h3>{{emprendimiento.manguitosRecibidos}}</h3>
-          <label for="categorias">Categorías:</label>
-          <div *ngFor="let categoria of categorias">
-              <p>{{categoria.nombreCategoria}}</p>
-            </div>
+
+          <label *ngIf="emprendimiento.categorias.length > 0" for="categorias">Categorías:</label>
+          <div *ngFor="let categoria of categorias; let i = index" [attr.data-index]="i">
+              <p>{{emprendimiento.categorias[i].nombreCategoria}}</p>
+          </div>
+
 
           <label for="categorias">Redes Sociales:</label>
           <div *ngFor="let redSocial of redeSociales">
-              <p>{{redSocial.nombre}}</p>
+              <p>{{redSocial.perfilSocial}}</p>
               <p>{{redSocial.url}}</p>
           </div>
 

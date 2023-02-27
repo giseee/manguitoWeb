@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SwiperModule }from 'swiper/angular'
+import { AuthenticationService } from './_services/authentication.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
@@ -20,7 +22,8 @@ import { RegEmprendimientoComponent } from './reg-emprendimiento/reg-emprendimie
 import { DetalleEmprendimientoComponent } from './detalle-emprendimiento/detalle-emprendimiento.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { RedesSocialesComponent } from './redes-sociales/redes-sociales.component';
-import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { EmprendimientosComponent } from './emprendimientos/emprendimientos.component';
+import { EditEmprendimientoComponent } from './edit-emprendimiento/edit-emprendimiento.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,8 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
     DetalleEmprendimientoComponent,
     EditUserComponent,
     RedesSocialesComponent,
+    EmprendimientosComponent,
+    EditEmprendimientoComponent,
 
   ],
   imports: [
@@ -48,8 +53,9 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
     FormsModule,
     HttpClientModule,
     CommonModule,
+    SwiperModule
   ],
-  providers: [authTokeninterceptorProvider],
+  providers: [authTokeninterceptorProvider,AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

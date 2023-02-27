@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { Categorias } from '../_models/categorias';
+import { Categoria } from '../_models/categoria';
 import { CategoriasService } from '../_services/categoria.service'
 
 
@@ -10,8 +10,8 @@ import { CategoriasService } from '../_services/categoria.service'
   styleUrls: ['./listar-categorias.component.scss']
 })
 export class ListarCategoriasComponent {
-  categorias: Categorias[] = [];
-  newCategory: Categorias = new Categorias();
+  categorias: Categoria[] = [];
+  newCategory: Categoria = new Categoria();
   constructor(private categoriaService: CategoriasService) { }
 
   ngOnInit() {

@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthenticationService, private router: Router) {}
   //currentUsuario = this.authService.currentUsuario$;
   canActivate(): boolean {
-    if (this.authService.isLoggedIn$) {
+    if (this.authService.isLoggedIn()) {
       return true;
     } else {
       this.router.navigate(['/login']);

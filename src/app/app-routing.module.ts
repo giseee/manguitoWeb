@@ -12,6 +12,7 @@ import { RegEmprendimientoComponent } from './reg-emprendimiento/reg-emprendimie
 import { DetalleEmprendimientoComponent } from './detalle-emprendimiento/detalle-emprendimiento.component';
 import { CommonModule } from '@angular/common';
 import { EditUserComponent } from './edit-user';
+import { EditEmprendimientoComponent } from './edit-emprendimiento';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/'},//lo llevamos a una ruta no protegida
   { path:'login', component:LoginComponent},
@@ -35,6 +36,10 @@ const routes: Routes = [
   path: 'register',
   component: RegEmprendimientoComponent
   },
+  {
+  path: 'editEmp',
+  component: EditEmprendimientoComponent,canActivate: [AuthGuard]
+},
   {
     path: 'detalle/:id',
     component: DetalleEmprendimientoComponent

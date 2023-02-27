@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Usuario } from '../_models/usuario';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment as env } from 'src/environments/environments';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs';
-import { User } from '../_models';
-
-
+import { environment } from 'src/environments/environments';
+import { User } from '../_models/user';
+import { Usuario } from '../_models/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -14,24 +11,20 @@ import { User } from '../_models';
 export class UsuarioService {
   constructor(private http: HttpClient) { }
 
-  public crearUsuario({ usuario }: { usuario: User; }): any {
-      return this.http.post <User>(`${env.url}/api/public/register`, usuario)
-  }
-  public getUsuarioById(id:String) {
-    return this.http.get<Usuario>(`${env.url}/api/usuarios/`+id);
-
-  }
-  public putUsuarioById(id:String, usuario:Usuario){
-    return this.http.put(`${env.url}/api/usuarios/`+id, usuario,  {observe: 'response'})
-  }
-  getUsuario(id: string): Observable<any> {
-    return this.http.get<Usuario>(`${env.url}/api/usuarios/${id}`);
+  public crearUsuario({ usuario }: { usuario: User; }): Observable<User> {
+    return this.http.post<User>(`${environment.url}/api/public/register`, usuario);
   }
 
-  updateUsuario(id: string, nombre: string, password: string): Observable<any> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify({ nombre, password });
-    return this.http.put(`${env.url}/api/usuarios/${id}`, body, { headers });
+  public getUsuarioById(id: number): Observable<Usuario> {
+    return this.http.get<Usuario>(`${environment.url}/api/usuarios/${id}`);
   }
 
+  public putUsuarioById(id: number, usuario: Usuario): Observable<any> {
+    return this.http.put(`${environment.url}/api/usuarios/${id}`, usuario,  {observe: 'response'});
+  }
+
+  public updateUsuario(usuario:Usuario): Observable<Usuario> {
+    return this.http.put<Usuario>(`${environment.url}/api/usuarios/${usuario.id}`, usuario);
+  }
 }
+

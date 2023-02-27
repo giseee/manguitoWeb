@@ -6,7 +6,7 @@
         <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="formu" id="loginform">
           <div class="form-group">
             <label>Email:</label>
-            <input type="text" class="form-control" [(ngModel)]="email" name="email">
+            <input type="text" class="form-control" [(ngModel)]="user.mail" name="mail">
           </div>
           <div class="form-group">
             <label>Nombre de usuario:</label>
@@ -17,7 +17,9 @@
             <input type="password" class="form-control" [(ngModel)]="user.password" name="password">
           </div>
           <button type="submit" [disabled]="!registerForm.valid">Registrarse</button>
-
+          <h1 *ngIf="registrando">Usuario registrado con exito</h1>
+          <button *ngIf="registrando" ><a href="/login">Login</a></button>
+          <h1 *ngIf="!registrando">Usuario Existente</h1>
         </form>
         <div id="derecho">
 

@@ -1,42 +1,38 @@
-.proyectos {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap:15px;
-  div {
-    img {
-      width: 100%;
-      border-radius: 10px;
-      height: 200px;
-    }
-    h2, p {
-      margin: 0;
-
-    }
-  }
-}
-.categorias{
+.proyecto {
   display: flex;
-  justify-content: space-between;
-  color: rgb(247, 155, 64);
-  padding: 10px 20px;
+  flex-direction: column;
   align-items: center;
-  height: 10%;
-  background-color:  rgb(247, 155, 64);
-
+  text-align: center;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
-ul li{
-  font-size: 20px;
-  text-decoration: none;
-  list-style-type: none;
+.proyecto img {
+  width: 100%;
+  max-width: 400px;
+  height: 200px;;
+  margin-bottom: 10px;
+  padding-top: 10px;
 }
-ul > li>a {
-  text-decoration: none;
-  color: rgb(97, 67, 36);
+
+.proyecto button {
+  background-color: #aa00cc;
+  color: #fff;
+  font-size: 18px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-.menu .nav-item .nav-link:hover {
-  color: rgb(20, 11, 1);
+
+.proyecto h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
-header .name h2 {
-  font-family:Oswald;
+
+.proyecto small {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
 }

@@ -1,0 +1,35 @@
+<form *ngIf="emprendimientoSeleccionado" (ngSubmit)="onUpdateEmprendimiento()">
+
+  <label>
+    Nombre del emprendimiento:
+    <input [(ngModel)]="emprendimientoToEdit.nombreEmprendimiento" type="text" name="nombreEmprendimiento" required>
+  </label>
+  <br>
+  <label>
+    Descripción:
+    <textarea [(ngModel)]="emprendimientoToEdit.descripcion" name="descripcion" required></textarea>
+  </label>
+  <br>
+  <label>
+    Banner:
+    <input [(ngModel)]="emprendimientoToEdit.banner" type="text" name="banner" required>
+  </label>
+  <br>
+  <label>
+    Monto del manguito:
+    <input [(ngModel)]="emprendimientoToEdit.montoManguito" type="number" name="montoManguito" required>
+  </label>
+  <br>
+  <label>
+    ¿Mostrar manguitos recibidos?
+    <input [(ngModel)]="emprendimientoToEdit.mostrarManguitos" type="checkbox" name="mostrarManguitos">
+  </label>
+  <br>
+  <label>
+    ¿Mostrar top de donadores?
+    <input [(ngModel)]="emprendimientoToEdit.mostrarTopDonadores" type="checkbox" name="mostrarTopDonadores">
+  </label>
+  <br>
+  <br>
+  <button type="submit">Actualizar emprendimiento</button>
+</form>
