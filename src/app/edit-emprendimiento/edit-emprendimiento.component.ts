@@ -34,6 +34,7 @@ export class EditEmprendimientoComponent implements OnInit {
 
   };
   emprendimientos: Emprendimiento[] = [];
+  mensaje: string='';
 
   constructor(private router: Router,
     private authService: AuthenticationService,
@@ -71,8 +72,12 @@ export class EditEmprendimientoComponent implements OnInit {
 
 
   onCreateEmprendimiento() {
-    this.emprendimientoService.crearEmprendimiento(this.emprendimientoToEdit).subscribe(() => {
-      console.log('Emprendimiento creado!');
+    this.emprendimientoToEdit.id = this.idUsuario;
+    this.emprendimientoService.create(this.emprendimientoToEdit).subscribe(data => {
+      this.mensaje = "Emprendimiento creado exitosamente";
+      setTimeout(() => {
+        this.router.navigate(['/']);
+      }, 1000); // Esperar 1 segundo antes de redirigir al usuario
     });
   }
 
