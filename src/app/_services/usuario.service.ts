@@ -10,6 +10,7 @@ import { Usuario } from '../_models/usuario';
 })
 export class UsuarioService {
   constructor(private http: HttpClient) { }
+  id!:number;
 
   public crearUsuario({ usuario }: { usuario: User; }): Observable<User> {
     return this.http.post<User>(`${environment.url}/api/public/register`, usuario);

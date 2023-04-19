@@ -1,31 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Emprendimiento } from '../_models/emprendimiento';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Emprendimiento } from '../_interfaces/emprendimiento';
+import { DetalleEmprendimientoComponent } from '../detalle-emprendimiento/detalle-emprendimiento.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-emprendimiento',
   templateUrl: './emprendimiento.component.html',
   styleUrls: ['./emprendimiento.component.scss']
 })
-export class EmprendimientoComponent {
-  @Input() emprendimiento:Emprendimiento={
-    id_emprendimiento: 0,
-    nombreEmprendimiento: '',
-    descripcion: '',
-    banner: '',
-    manguitosRecibidos: 0,
-    mostrarManguitos: true,
-    mostrarTopDonadores: true,
-    redeSociales: [],
-    categorias:[],
-   // donaciones: [],
-    montoManguito: 0,
-    id:0
-  }
-
+export class EmprendimientoComponent implements OnInit{
+  mostrarDetalle = false;
+@Input() emprendimiento!:Emprendimiento;
 @Output() showEmp= new EventEmitter<number>();
-constructor( ){}
+constructor(private router: Router) {}
 
 ngOnInit() {
 }
-
+mostrarDetalles() {
+  this.router.navigate(['/detalle', this.emprendimiento.id]);
+}
 }

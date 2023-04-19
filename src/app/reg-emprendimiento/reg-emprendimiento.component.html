@@ -38,5 +38,11 @@
   </label>
   <br>
   <br>
+
   <button type="submit">Crear emprendimiento</button>
+  <div *ngIf="mensaje" class="alert alert-success">
+    {{ mensaje }}
+  </div>
+
+
 </form>

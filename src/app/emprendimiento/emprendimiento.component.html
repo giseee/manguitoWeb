@@ -1,9 +1,12 @@
 <div class="proyecto">
-<img [src]="emprendimiento.banner" alt="image">
-      <button [routerLink]="['/detalle',emprendimiento.id_emprendimiento]">{{emprendimiento.nombreEmprendimiento}}</button>
-      <h2>{{emprendimiento.descripcion}}</h2>
-      <small *ngIf="emprendimiento.categorias.length > 0">{{emprendimiento.categorias[0].nombreCategoria}}</small>
-      <small *ngIf="emprendimiento.redeSociales.length > 0">{{emprendimiento.redeSociales[0]}}</small>
-   <!--  <small *ngIf="emprendimiento.donaciones.length > 0">{{emprendimiento.donaciones[0]}}</small>
-    -->  <h3>{{emprendimiento.manguitosRecibidos}}</h3>
+  <img [src]="emprendimiento.banner" alt="image">
+  <button (click)="mostrarDetalles()">{{emprendimiento.nombreEmprendimiento}}</button>
+  <div *ngIf="mostrarDetalle">
+    <app-detalle-emprendimiento [emprendimiento]="emprendimiento"></app-detalle-emprendimiento>
   </div>
+
+  <h2>{{emprendimiento.descripcion}}</h2>
+  <small *ngIf="emprendimiento.categorias.length > 0">{{emprendimiento.categorias[0].nombreCategoria}}</small>
+  <small *ngIf="emprendimiento.redeSociales.length > 0">{{emprendimiento.redeSociales[0]}}</small>
+  <h3>{{emprendimiento.manguitosRecibidos}}</h3>
+</div>

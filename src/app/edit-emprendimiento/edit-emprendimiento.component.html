@@ -1,5 +1,4 @@
-<form *ngIf="emprendimientoSeleccionado" (ngSubmit)="onUpdateEmprendimiento()">
-
+<form *ngIf="emprendimientoToEdit" (ngSubmit)="onUpdateEmprendimiento()">
   <label>
     Nombre del emprendimiento:
     <input [(ngModel)]="emprendimientoToEdit.nombreEmprendimiento" type="text" name="nombreEmprendimiento" required>
@@ -31,5 +30,8 @@
   </label>
   <br>
   <br>
-  <button type="submit">Actualizar emprendimiento</button>
+  <button *ngIf="emprendimientoToEdit.id; else crearEmprendimiento" type="submit">Actualizar emprendimiento</button>
+  <ng-template #crearEmprendimiento>
+    <button (click)="onCreateEmprendimiento()" type="button">Crear emprendimiento</button>
+  </ng-template>
 </form>

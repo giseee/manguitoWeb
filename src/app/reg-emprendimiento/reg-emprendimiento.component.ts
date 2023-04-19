@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Emprendimiento,EmprendimientoDto,Usuario} from '../_interfaces/emprendimiento';
+import { EmprendimientoDto,Usuario} from '../_interfaces/emprendimiento';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +8,7 @@ import {Categoria } from '../_models/categoria'
 import { environment as env } from 'src/environments/environments';
 import { RedSocial } from '../_models/redSocial';
 import { AuthenticationService } from '../_services/authentication.service';
+import { Emprendimiento } from '../_models/emprendimiento';
 @Component({
   selector: 'app-reg-emprendimiento',
   templateUrl: './reg-emprendimiento.component.html',
@@ -15,6 +16,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 })
 export class RegEmprendimientoComponent implements OnInit {
   emprendimientoForm!: FormGroup;
+  mensaje!:String;
   isNew = true;
   emprendimiento!: EmprendimientoDto;
   usuarios!: Usuario[];
@@ -46,6 +48,13 @@ export class RegEmprendimientoComponent implements OnInit {
   ngOnInit(): void {
     this.getCategorias();
     this.getUsuarioId();
+    this.empService.getEmprendimientos().subscribe(empresas => {
+      const userId = this.authenticationService.currentUsuarioValue?.id;
+      const userEmprendimiento = empresas.find(emp => emp.id === userId);
+      if (userEmprendimiento) {
+        this.mensaje = "Ya tienes un emprendimiento registrado";
+      }
+    });
   }
 
   getCategorias(): void {
@@ -60,12 +69,16 @@ export class RegEmprendimientoComponent implements OnInit {
     }); // Obtener el ID del usuario desde el servicio de autenticación
   };
 
-    createNewEmp() {
-      this.emprendimiento.id = this.userId;
-      this.empService.create(this.emprendimiento).subscribe(data => {
-        console.log('created', data);
-      })
-    }
+  createNewEmp() {
+    this.emprendimiento.id = this.userId;
+    this.empService.create(this.emprendimiento).subscribe(data => {
+      this.mensaje = "Emprendimiento creado exitosamente";
+      setTimeout(() => {
+        this.router.navigate(['/']);
+      }, 1000); // Esperar 1 segundo antes de redirigir al usuario
+    });
+  }
+
 
   goBack() {
     this.router.navigate(['/']);

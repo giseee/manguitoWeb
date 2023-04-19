@@ -11,31 +11,29 @@
 
   <nav>
     <ul class="menu">
-      <li class="nav-item"><a routerLink="/" routerLinkActive="active" class="nav-link btn btn-outline-success" title="Home">Home</a></li>
+      <li class="nav-item"><a routerLink="/" routerLinkActive="active" class="nav-link btn btn-outline-success"
+          title="Home">Home</a></li>
 
-      <li class="nav-item"><a routerLink="/categorias" routerLinkActive="active" class="nav-link btn btn-outline-success">Categorias</a></li>
+      <li class="nav-item"><a routerLink="/categorias" routerLinkActive="active"
+          class="nav-link btn btn-outline-success">Categorias</a></li>
 
       <li class="nav-item" *ngIf="!isLoggedIn()">
         <a routerLink="/login" routerLinkActive="active" class="nav-link btn btn-outline-success">Iniciar sesión</a>
       </li>
 
       <div class="nav-item" *ngIf="isLoggedIn()">
-
-
         <li class="nav-item">
-          <a routerLink="/edit" routerLinkActive="active" class="nav-link btn btn-outline-success editar">Editar Perfil</a>
+          <a routerLink="/editEmp" routerLinkActive="active" class="nav-link btn btn-outline-success editar">Editar</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/register" routerLinkActive="active" class="nav-link btn btn-outline-success editar">Emprendimiento</a>
+          <a routerLink="/edit" routerLinkActive="active" class="nav-link btn btn-outline-success editar">Editar
+            Perfil</a>
         </li>
-        <li class="nav-item">
-          <a routerLink="/editEmp" routerLinkActive="active" class="nav-link btn btn-outline-success editar">Emprendimiento</a>
-        </li>
-
-        <li class="nav-item">
+        <li>
           <a class="nav-link btn btn-outline-success" (click)="logout()">Cerrar sesión</a>
         </li>
       </div>
+
     </ul>
   </nav>
 </header>

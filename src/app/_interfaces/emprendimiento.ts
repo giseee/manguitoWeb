@@ -2,7 +2,7 @@
 
 
 export interface Emprendimiento {
-  id_emprendimiento?: number;
+  id_emprendimiento: number;
   nombreEmprendimiento: string;
   descripcion: string;
   categorias: Categoria[];

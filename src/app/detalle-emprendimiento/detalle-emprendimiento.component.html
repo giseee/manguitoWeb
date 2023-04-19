@@ -2,34 +2,33 @@
   <div>
       <div class="conteiner">
           <div class="contenedor_titulo">
-            <h1>{{emprendimiento.nombreEmprendimiento}}</h1>
+            <h1>{{detalleEmprendimiento.nombreEmprendimiento}}</h1>
           </div>
-          <img [src]="emprendimiento.banner" alt="image">
+          <img [src]="detalleEmprendimiento.banner" alt="image">
           <br>
 
 
-            <!--<h2>{{emprendimiento.id}}</h2>-->
-          <h2>{{emprendimiento.descripcion}}</h2>
-          <h3>{{emprendimiento.manguitosRecibidos}}</h3>
+            <!--<h2>{{detalleEmprendimiento.id}}</h2>-->
+          <h2>{{detalleEmprendimiento.descripcion}}</h2>
+          <h3>{{detalleEmprendimiento.manguitosRecibidos}}</h3>
+            <label *ngIf="detalleEmprendimiento.categorias.length > 0" for="categorias">Categorías:</label>
+            <div *ngFor="let categoria of detalleEmprendimiento.categorias; let i = index" [attr.data-index]="i">
+                <p>{{categoria.nombreCategoria}}</p>
+            </div>
 
-          <label *ngIf="emprendimiento.categorias.length > 0" for="categorias">Categorías:</label>
-          <div *ngFor="let categoria of categorias; let i = index" [attr.data-index]="i">
-              <p>{{emprendimiento.categorias[i].nombreCategoria}}</p>
-          </div>
+            <label for="categorias">Redes Sociales:</label>
+            <div *ngFor="let redSocial of detalleEmprendimiento.redeSociales">
+                <p>{{redSocial.perfilSocial}}</p>
+                <p>{{redSocial.url}}</p>
+            </div>
 
-
-          <label for="categorias">Redes Sociales:</label>
-          <div *ngFor="let redSocial of redeSociales">
-              <p>{{redSocial.perfilSocial}}</p>
-              <p>{{redSocial.url}}</p>
-          </div>
-
-      </div>
-      <div class="boton_atras d-grid gap-2 col-3 mx-auto">
-          <button class="btn btn-primary active boton" data-bs-toggle="button" autocomplete="off" aria-pressed="true"
-              routerLink="/">Salir</button>
-              <button class="btn btn-primary active boton" data-bs-toggle="button" autocomplete="off" aria-pressed="true"
-              routerLink="/">Donar</button>
-      </div>
+        </div>
+        <div class="boton_atras d-grid gap-2 col-3 mx-auto">
+            <button class="btn btn-primary active boton" data-bs-toggle="button" autocomplete="off" aria-pressed="true"
+                routerLink="/">Salir</button>
+                <button class="btn btn-primary active boton" data-bs-toggle="button" autocomplete="off" aria-pressed="true"
+                routerLink="/">Donar</button>
+        </div>
+    </div>
   </div>
-</div>
+
