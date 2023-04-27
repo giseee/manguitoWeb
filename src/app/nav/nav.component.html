@@ -23,8 +23,11 @@
 
       <div class="nav-item" *ngIf="isLoggedIn()">
         <li class="nav-item">
-          <a routerLink="/edit" routerLinkActive="active" class="nav-link btn btn-outline-success editar">Editar
+          <a routerLink="/edit" class="nav-link btn btn-outline-success editar">Editar
             Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/dashboard" class="nav-link btn btn-outline-success">Mi proyecto</a>
         </li>
         <li>
           <a class="nav-link btn btn-outline-success" (click)="logout()">Cerrar sesión</a>

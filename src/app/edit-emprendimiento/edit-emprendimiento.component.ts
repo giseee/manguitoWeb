@@ -7,6 +7,10 @@ import { EmprendimientoService } from '../_services/emprendimiento.service';
 import { UsuarioService } from '../_services/usuario.service';
 import { Router } from '@angular/router';
 import { Emprendimiento } from '../_models/emprendimiento';
+import { HttpClient } from '@angular/common/http';
+import {Categoria } from '../_models/categoria'
+import { RedSocial } from '../_models/redSocial';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-edit-emprendimiento',
@@ -35,18 +39,24 @@ export class EditEmprendimientoComponent implements OnInit {
   };
   emprendimientos: Emprendimiento[] = [];
   mensaje: string='';
-
+  categorias: Categoria[] = [];
+  redeSociales: RedSocial[] = [];
   constructor(private router: Router,
     private authService: AuthenticationService,
-    private emprendimientoService: EmprendimientoService
+    private emprendimientoService: EmprendimientoService,
+    private http: HttpClient
   ) {}
 
+    categoriasSeleccionadas!: string[];
   ngOnInit(): void {
+    this.getCategorias()
+
     this.idUsuario=this.authService.getCurrentUserId();
-    console.log(this.idUsuario);
       this.emprendimientoService.getEmprendimientosPorUsuario(this.idUsuario).subscribe(
       (emprendimiento: Emprendimiento) => {
         this.emprendimientoToEdit = emprendimiento;
+         // Agregar las categorías seleccionadas al objeto emprendimientoToEdit
+    this.emprendimientoToEdit.categorias = this.categorias.filter(categoria => this.emprendimientoToEdit.categorias.some(cat => cat.id === categoria.id));
       }
     );
     if(!this.emprendimientoToEdit){
@@ -67,10 +77,26 @@ export class EditEmprendimientoComponent implements OnInit {
 
       };
         }
+        this.categoriasSeleccionadas = this.emprendimientoToEdit.categorias.map(categoria => categoria.nombreCategoria);
 
+  }
+  onCategoriaChange(event: any) {
+    if (event.target.checked) {
+      this.categoriasSeleccionadas.push(event.target.value);
+    } else {
+      const index = this.categoriasSeleccionadas.indexOf(event.target.value);
+      if (index !== -1) {
+        this.categoriasSeleccionadas.splice(index, 1);
+      }
+    }
   }
 
 
+  getCategorias(): void {
+    this.http.get<Categoria[]>(`${environment.url}/api/categorias`).subscribe(response => {
+      this.categorias = response;
+    });
+  }
   onCreateEmprendimiento() {
     this.emprendimientoToEdit.id = this.idUsuario;
     this.emprendimientoService.create(this.emprendimientoToEdit).subscribe(data => {

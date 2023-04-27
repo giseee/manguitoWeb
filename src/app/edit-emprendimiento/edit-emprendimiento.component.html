@@ -13,6 +13,18 @@
     Banner:
     <input [(ngModel)]="emprendimientoToEdit.banner" type="text" name="banner" required>
   </label>
+  <label>
+    Categorías:
+    <div *ngFor="let categoria of categorias">
+      <input type="checkbox" name="categoria" [value]="categoria.nombreCategoria" [checked]="categoriasSeleccionadas.includes(categoria.nombreCategoria)" (change)="onCategoriaChange($event)">
+      {{ categoria.nombreCategoria }}
+    </div>
+  </label>
+
+
+
+
+
   <br>
   <label>
     Monto del manguito:
