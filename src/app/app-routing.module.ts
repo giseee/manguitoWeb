@@ -13,11 +13,18 @@ import { DetalleEmprendimientoComponent } from './detalle-emprendimiento/detalle
 import { CommonModule } from '@angular/common';
 import { EditUserComponent } from './edit-user';
 import { EditEmprendimientoComponent } from './edit-emprendimiento';
+import {hasRole} from './_guards/has-role.guard';
+
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/'},//lo llevamos a una ruta no protegida
   { path:'login', component:LoginComponent},
   { path:'emprendimiento', component:EmprendimientoComponent},
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { 
+    path: 'dashboard', 
+    component: DashboardComponent, 
+    canActivate: [AuthGuard, hasRole(['ROLE_USER'])],
+    canLoad: [hasRole(['ROLE_USER'])]
+  },
   { path: 'edit', component: EditUserComponent, canActivate: [AuthGuard] },
   {
       path: '',

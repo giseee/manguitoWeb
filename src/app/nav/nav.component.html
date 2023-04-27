@@ -14,7 +14,7 @@
       <li class="nav-item"><a routerLink="/" routerLinkActive="active" class="nav-link btn btn-outline-success"
           title="Home">Home</a></li>
 
-      <li class="nav-item"><a routerLink="/categorias" routerLinkActive="active"
+      <li class="nav-item"><a *showForRoles="['ROLE_ADMIN']" routerLink="/categorias" routerLinkActive="active"
           class="nav-link btn btn-outline-success">Categorias</a></li>
 
       <li class="nav-item" *ngIf="!isLoggedIn()">

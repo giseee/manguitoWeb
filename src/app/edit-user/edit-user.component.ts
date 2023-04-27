@@ -18,12 +18,18 @@ throw new Error('Method not implemented.');
   usuario:Usuario={
     nombre:'',
     id:0,
+    password:'',
+    perfiles: ['ROLE_USER'],
+    mail:''
   };
   id!: number;
   editing: boolean = false;
   usuarioToEdit: Usuario={
     nombre:'',
     id:0,
+    password:'',
+    perfiles: ['ROLE_USER'],
+    mail:''
   };
   constructor(
 

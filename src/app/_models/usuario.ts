@@ -1,13 +1,13 @@
-import { Perfil } from "./perfil";
+import { Role } from './roles.type';
 
 export class Usuario {
     id: number;
-    nombre?: string;
-    password?: string;
-    perfiles?: [Perfil];
+    nombre: string;
+    password: string;
+    perfiles: [Role];
+    mail:string;
 
-    mail?:string;
-    constructor(mail:string='', id: number=0,nombre: string = "", password: string = "", perfiles:[Perfil]) {
+    constructor(id: number=0,nombre: string = "", password: string = "", perfiles:[Role], mail:string="") {
         this.id = id;
         this.nombre = nombre;
         this.password = password;

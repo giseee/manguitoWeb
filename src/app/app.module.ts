@@ -24,6 +24,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { RedesSocialesComponent } from './redes-sociales/redes-sociales.component';
 import { EmprendimientosComponent } from './emprendimientos/emprendimientos.component';
 import { EditEmprendimientoComponent } from './edit-emprendimiento/edit-emprendimiento.component';
+import { ShowForRolesDirective} from './directives/show-for-roles.directive'
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { EditEmprendimientoComponent } from './edit-emprendimiento/edit-emprendi
     RedesSocialesComponent,
     EmprendimientosComponent,
     EditEmprendimientoComponent,
-
+    ShowForRolesDirective
   ],
   imports: [
     BrowserModule,

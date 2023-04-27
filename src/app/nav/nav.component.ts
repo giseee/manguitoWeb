@@ -13,6 +13,9 @@ export class NavComponent implements OnInit {
   usuario: Usuario={
     nombre:'',
     id:0,
+    password:'',
+    perfiles: ['ROLE_USER'],
+    mail:''
   };
   emprendimientoId! :number;
   constructor(private emprendimientoService:EmprendimientoService,public router: Router, private authenticationService: AuthenticationService) {}
