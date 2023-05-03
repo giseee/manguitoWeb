@@ -37,12 +37,11 @@ export class ShowForRolesDirective implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  private  includesRoles(user: Usuario, allowedRoles?: Role[]):boolean{
-    var allawed = true;
-    user.perfiles.forEach(function(value){
-      allawed = allawed && allowedRoles !== undefined && allowedRoles.includes(value)
+  //Si el usuario tiene al menos un rol dentro de los permitidos retorna verdadero.
+  private  includesRoles(user: Usuario, allowedRoles?: Role[]):boolean{    
+    return user.perfiles.some(function(value){
+      return allowedRoles !== undefined && allowedRoles.includes(value)
     });
-    return allawed;
   }
 
   ngOnDestroy(): void {

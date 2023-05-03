@@ -39,19 +39,20 @@ export class HasRoleGuard implements CanMatch, CanActivate {
   }
 
   private  includesRoles(perfiles: Role[], allowedRoles: Role[]):boolean{
-    var allawed = true;
+    var allawed = false;
     perfiles.forEach(function(value){
-      allawed = allawed && allowedRoles.includes(value)
+      allawed = allawed || allowedRoles.includes(value)
     });
     return allawed;
   }
 
 }
 
+//Si el usuario tiene al menos un rol dentro de los permitidos retorna verdadero.
 function includesRole(perfiles: Role[],allowedRoles: Role[]) { 
-  var allawed = true;
+  var allawed = false;
     perfiles.forEach(function(value){
-      allawed = allawed && allowedRoles.includes(value)
+      allawed = allawed || allowedRoles.includes(value)
     });
     return allawed; 
 } 
