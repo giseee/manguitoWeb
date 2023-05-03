@@ -11,29 +11,25 @@
 
   <nav>
     <ul class="menu">
-      <li class="nav-item"><a routerLink="/" routerLinkActive="active" class="nav-link btn btn-outline-success"
-          title="Home">Home</a></li>
-
-      <li class="nav-item"><a *showForRoles="['ROLE_ADMIN']" routerLink="/categorias" routerLinkActive="active"
-          class="nav-link btn btn-outline-success">Categorias</a></li>
-
+      <li class="nav-item">
+        <a routerLink="/" routerLinkActive="active" class="nav-link btn btn-outline-success"title="Home">Home</a>
+      </li>
+      <li class="nav-item">
+        <a *showForRoles="['ROLE_ADMIN']" routerLink="/categorias" routerLinkActive="active"
+          class="nav-link btn btn-outline-success">Categorias</a>
+      </li>
       <li class="nav-item" *ngIf="!isLoggedIn()">
         <a routerLink="/login" routerLinkActive="active" class="nav-link btn btn-outline-success">Iniciar sesión</a>
       </li>
-
-      <div class="nav-item" *ngIf="isLoggedIn()">
-        <li class="nav-item">
-          <a routerLink="/edit" class="nav-link btn btn-outline-success editar">Editar
-            Perfil</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/dashboard" class="nav-link btn btn-outline-success">Mi proyecto</a>
-        </li>
-        <li>
-          <a class="nav-link btn btn-outline-success" (click)="logout()">Cerrar sesión</a>
-        </li>
-      </div>
-
+      <li class="nav-item">
+        <a routerLink="/edit" *ngIf="isLoggedIn()" class="nav-link btn btn-outline-success editar">Editar Perfil</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/dashboard" *ngIf="isLoggedIn()" class="nav-link btn btn-outline-success">Mi proyecto</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="#" *ngIf="isLoggedIn()" class="nav-link btn btn-outline-success" (click)="logout()">Cerrar sesión</a>
+      </li>
     </ul>
   </nav>
 </header>
