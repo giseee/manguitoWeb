@@ -3,21 +3,37 @@
 <!--el formulario no valida los campos-->
 <!--No conviene editar el nombre(campo clave!) y la contraseña conviene en un caso de uso aparte-->
 
-<form (ngSubmit)="onUpdateUsuario()">
-  
+<form [formGroup]="formUsuario" (ngSubmit)="onUpdateUsuario()">
+
   <div class="form-group">
     <label for="name">Nombre</label>
-    <input type="text" class="form-control" id="name" [(ngModel)]="usuarioToEdit!.nombre" name="name">
+    <input type="text" class="form-control" id="name" formControlName="nombre">
+  </div>
+  <div *ngIf="name!.invalid && (name!.dirty || name!.touched)" class="alert alert-danger">
+    <div *ngIf="name!.hasError('required')">
+      El nombre es requerido.
+    </div>
   </div>
   <div class="form-group">
     <label for="mail">Mail</label>
-    <input type="email" class="form-control" id="mail" [(ngModel)]="usuarioToEdit!.mail" name="mail" required>
+    <input type="email" class="form-control" id="mail" formControlName="mail">
+  </div>
+  <div *ngIf="mail!.invalid && (mail!.dirty || mail!.touched)" class="alert alert-danger">
+    <div *ngIf="mail!.hasError('required')">
+      El correo es requerido.
+    </div>
+    <div *ngIf="mail!.hasError('email')">
+      El formato del correo es incorrecto.
+    </div>
   </div>
   <div class="form-group">
     <label for="password">Contraseña</label>
-    <input type="password" class="form-control" id="password" [(ngModel)]="usuarioToEdit!.password" name="password">
+    <input type="password" class="form-control" id="password" formControlName="password">
   </div>
-  <button type="submit" class="btn btn-primary mr-2" [disabled]="editing">Guardar</button>
+  <p *ngIf="formUsuario.hasError('unauthorized')" class="error-msg">
+    No autorizado para modificar perfil.
+  </p>
+  <button type="submit" class="btn btn-primary mr-2" [disabled]="formUsuario.invalid || editing">Guardar</button>
   <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
 
 </form>
