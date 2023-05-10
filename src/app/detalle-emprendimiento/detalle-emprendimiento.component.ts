@@ -50,7 +50,7 @@ export class DetalleEmprendimientoComponent implements OnInit {
   }
 
   getRedSocial(): void {
-    this.http.get<RedSocial[]>(`${env.url}/api/redSocial`).subscribe(response => {
+    this.http.get<RedSocial[]>(`${env.url}/api/perfilSocial`).subscribe(response => {
       this.redeSociales = response;
     });
   }

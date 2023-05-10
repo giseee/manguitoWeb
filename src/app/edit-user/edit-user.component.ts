@@ -1,32 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ChangeDetectionStrategy, ChangeDetectorRef,} from '@angular/core';
 import {  Router } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
 import { UsuarioService } from '../_services/usuario.service';
 import { Usuario } from '../_models/usuario';
-import { catchError, EMPTY, finalize, map } from 'rxjs';
+import { async, catchError, EMPTY, finalize, map } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from '../_models';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UsuarioDto } from '../_interfaces/emprendimiento';
 
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.scss']
+  styleUrls: ['./edit-user.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class EditUserComponent implements OnInit {
   editing: boolean = false;
   usuarioToEdit!: Usuario | null;
+
+  formUsuario = new FormGroup({
+    id: new FormControl('', {      
+      nonNullable: true,
+    }),
+    nombre: new FormControl('', {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+    password: new FormControl('', {      
+      nonNullable: false,
+    }),
+    perfiles: new FormControl([], {      
+      nonNullable: true,
+    }),
+    mail: new FormControl('', {
+      validators: [Validators.required, Validators.email],
+      nonNullable: true,
+    })
+  });
+
   constructor(
     private router: Router,
     private usuarioService: UsuarioService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.authService.currentUsuario$.pipe(
       map((user) => {
-        this.usuarioToEdit = user;
-        console.log(user);
+        //Cargo el formulario con el usuario        
+        //this.usuarioToEdit = user;
+        this.formUsuario.patchValue(user as any);
+        console.log(this.formUsuario.value);
       })
     ).subscribe();
   }
@@ -34,9 +61,12 @@ export class EditUserComponent implements OnInit {
 
   onUpdateUsuario(): void {
     this.editing = true;
-    this.usuarioService.updateUsuario(this.usuarioToEdit!)
-    .pipe(// Actualizar el usuario gaurdado en el navegador
+    var usuario = JSON.parse(JSON.stringify(this.formUsuario.value)) as Usuario;
+    this.usuarioService.updateUsuario(usuario)
+    .pipe(   
       finalize(() => {
+        // Sincronizo el usuario gaurdado en el navegador con el de la base. 
+        this.authService.setUserToSessionStorage(usuario);
         this.editing = false; 
         this.router.navigateByUrl('/dashboard')
       }),
@@ -50,14 +80,16 @@ export class EditUserComponent implements OnInit {
     ).subscribe();    
   }
 
-  handleUnauthorized() {
-    //******qué hacemos acá????**** */
-    // this.form.setErrors({ invalidCredentials: true });
-    // this.cdr.markForCheck();
+  handleUnauthorized() {    
+    this.formUsuario.setErrors({ unauthorized: true });
+    this.cdr.markForCheck();
   }
 
   cancelEdit(): void {
     this.editing = false;
     this.router.navigateByUrl('/dashboard')
   }
+
+  get name() { return this.formUsuario.get('nombre'); }
+  get mail() { return this.formUsuario.get('mail'); }
 }

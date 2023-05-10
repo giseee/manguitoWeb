@@ -51,6 +51,12 @@ export class EditEmprendimientoComponent implements OnInit {
   ngOnInit(): void {
     this.getCategorias()
 
+    //********se podría anidar de ésta manera */
+    // this.userService.getUser().pipe(
+    //   tap(u => this.user = u),
+    //   flatMap(u => this.userService.getPreferences(u.username))
+    // ).subscribe(p => this.preferences = p);
+
     this.idUsuario=this.authService.getCurrentUserId();
       this.emprendimientoService.getEmprendimientosPorUsuario(this.idUsuario).subscribe(
       (emprendimiento: Emprendimiento) => {
@@ -112,5 +118,17 @@ export class EditEmprendimientoComponent implements OnInit {
       console.log('Emprendimiento actualizado!');
       // Puedes hacer algo aquí si quieres
     });
+  }
+
+  uploadImage(event: any){
+    const file = event.target.files[0];
+    if(file){
+      const formData = new FormData();
+      formData.append('file', file);
+      //en el response tengo el link que permite ver la imagen.
+      //ese link tendria que estar en el emprendimiento
+      //https://www.youtube.com/watch?v=oruiytokUwo
+    }
+    
   }
 }

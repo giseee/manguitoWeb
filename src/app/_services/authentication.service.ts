@@ -81,6 +81,14 @@ export class AuthenticationService {
     userFromSession && this.currentUsuarioSubject.next(usuario);
   }
 
+  setUserToSessionStorage(user: any): void{
+    const userFromSession = sessionStorage.getItem(AuthenticationService.USER_KEY_LOCALSTORE) as string;
+    if(userFromSession){
+      sessionStorage.setItem(AuthenticationService.USER_KEY_LOCALSTORE, JSON.stringify(user));
+      this.currentUsuarioSubject.next(user);
+    }
+  }
+
   private removeUserFromSessionStorage(): void {
     sessionStorage.removeItem(this.TOKEN_KEY);
     sessionStorage.removeItem(AuthenticationService.USER_KEY_LOCALSTORE);
