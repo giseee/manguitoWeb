@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color:  #ac77b973;
+  background-color: #d8abdb;
   color: #fff;
   padding: 10px;
 }
@@ -17,3 +17,18 @@
   color: #fff;
   text-decoration: none;
 }
+button {
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+
