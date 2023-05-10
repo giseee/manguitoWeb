@@ -1,9 +1,17 @@
-
-
 <div>
   <nav class="navbar">
-    <ul  *ngFor="let category of categorias">
-      <li class="mb-1">{{ category.nombreCategoria}}</li>
+    <ul>
+      <li *ngFor="let category of categorias">
+        <button (click)="obtenerEmprendimientosPorCategoria(category.nombreCategoria)">{{ category.nombreCategoria }}</button>
+      </li>
     </ul>
   </nav>
+</div>
+<div *ngIf="emprendimientos.length > 0">
+  <ul>
+    <app-emprendimiento
+    [emprendimiento]="emprendimiento"
+     *ngFor="let emprendimiento of emprendimientos">
+    </app-emprendimiento>
+  </ul>
 </div>

@@ -6,6 +6,152 @@
   color:rgb(8, 80, 8);
 
 }
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+p {
+  font-size: 30px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Estilos de la cabecera */
+header {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+  height: 40px;
+}
+
+.search-bar {
+  display: flex;
+  flex-grow: 1;
+  margin-left: 16px;
+}
+
+.search-bar form {
+  display: flex;
+  flex-grow: 1;
+}
+
+.search-bar input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.search-button {
+  background-color: #e8b057;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* Estilos del banner principal */
+.banner-principal {
+  background-color: #d8abdb;
+  padding: 48px 16px;
+  text-align: center;
+    display:flex;
+    flex-direction: column;
+    background:url('/assets/img/pexels-jess-bailey-designs-876467.jpg');
+    background-blend-mode: color;
+    box-sizing: border-box;
+    height: 70vh;
+    background-size:cover;
+    background-repeat: no-repeat;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    justify-content: center;
+    font-size: large;
+    color:  rgb(74, 3, 60);
+
+
+}
+
+.info-foto {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Estilos de la sección de emprendimientos */
+.emprendimientos {
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.emprendimientos-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+/* Estilos de la sección de categorías */
+.categorias {
+  background-color:  #d8abdb;
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.listar-categorias {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.listar-categorias .categoria {
+  background-color: #d8abdb;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 8px;
+  padding: 16px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.listar-categorias .categoria img {
+  max-width: 80%;
+  margin-bottom: 16px;
+}
+
+.listar-categorias .categoria h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.listar-categorias .categoria p {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/*
 .card{
   background-blend-mode: color;
   box-sizing: border-box;
@@ -102,4 +248,4 @@ footer{
   padding-bottom: 0%;
   background-position-y: end;
 }
-
+*/

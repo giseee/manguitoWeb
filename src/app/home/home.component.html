@@ -1,16 +1,31 @@
-
 <body>
-    <main>
-        <section class="banner-principal">
-            <div class="info-foto">
-                <p>Podemos avanzar juntos!!</p><br><br>
-
-                Apoyá a emprendedores de todo el pais y sumate a nuestra comunidad con tu proyecto
-            </div>
-        </section>
-        <app-listar-categorias></app-listar-categorias>
-    <app-emprendimientos></app-emprendimientos>
-    </main>
-
+  <header>
+    <div class="search-bar">
+      <form (ngSubmit)="buscarPorNombre()">
+        <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Buscar emprendimientos">
+        <button type="submit" class="search-button">
+        Buscar
+        </button>
+      </form>
+    </div>
+  </header>
+  <main>
+    <section class="banner-principal">
+      <div class="info-foto">
+        <p>¡Podemos avanzar juntos!</p>
+        <br><br>
+        Apoyá a emprendedores de todo el país y sumate a nuestra comunidad con tu proyecto.
+      </div>
+    </section>
+<!--   <section class="emprendimientos">
+      <h2>Emprendimientos destacados</h2>
+      <div class="emprendimientos-list">
+        <app-emprendimiento [emprendimiento]="emprendimiento" *ngFor="let emprendimiento of emprendimientoss"></app-emprendimiento>
+      </div>
+    </section>-->
+    <section class="categorias">
+      <p>Categorías</p>
+      <app-listar-categorias></app-listar-categorias>
+    </section>
+  </main>
 </body>
-

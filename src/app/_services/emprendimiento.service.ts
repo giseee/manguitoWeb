@@ -75,6 +75,16 @@ getUsuarios(): Observable<Usuario[]> {
   getEmprendimientoIdValue(): number {
     return this.emprendimientoId;
   }
+  buscarPorNombre(nombre: string): Observable<Emprendimiento[]> {
+    const url = `${env.url}/api/emprendimientos/buscar/nombre`;
+    return this.http.post<Emprendimiento[]>(url, nombre);
+}
+
+
+obtenerEmprendimientosPorCategoria(nombreCategoria: string): Observable<Emprendimiento[]> {
+  const endpoint = `${env.url}/api/emprendimientos/categoria/${nombreCategoria}`;
+  return this.http.get<Emprendimiento[]>(endpoint);
+}
 
   // Resto de métodos
 }
