@@ -19,10 +19,10 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/'},//lo llevamos a una ruta no protegida
   { path:'login', component:LoginComponent},
   { path:'emprendimiento', component:EmprendimientoComponent},
-  { 
-    path: 'dashboard', 
-    component: DashboardComponent, 
-    canActivate: [AuthGuard, hasRole(['ROLE_USER'])],
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],//, hasRole(['ROLE_USER'])],
     canLoad: [hasRole(['ROLE_USER'])]
   },
   { path: 'edit', component: EditUserComponent, canActivate: [AuthGuard] },
