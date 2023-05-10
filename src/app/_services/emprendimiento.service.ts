@@ -80,9 +80,10 @@ getUsuarios(): Observable<Usuario[]> {
     return this.http.post<Emprendimiento[]>(url, nombre);
 }
 
-buscarPorCategoria(categoria: string): Observable<Emprendimiento[]> {
-    const url = `${env.url}/api/emprendimientos/buscar/categoria`;
-    return this.http.post<Emprendimiento[]>(url, categoria);
+
+obtenerEmprendimientosPorCategoria(nombreCategoria: string): Observable<Emprendimiento[]> {
+  const endpoint = `${env.url}/api/emprendimientos/categoria/${nombreCategoria}`;
+  return this.http.get<Emprendimiento[]>(endpoint);
 }
 
   // Resto de métodos

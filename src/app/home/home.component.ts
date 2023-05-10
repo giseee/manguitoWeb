@@ -22,13 +22,7 @@ export class HomeComponent implements OnInit{
       emprendimientoss => this.emprendimientoss = emprendimientoss
     );
   }
-  getIdEmprendimiento(id: number)
-{
-  return this.emprendimientoss.find(ele => {return ele.id_emprendimiento == id});
-}
-  mostrarDetalles() {
-    this.router.navigate(['/detalle', this.emprendimiento.id]);
-  }
+
 
   //buscarPorCategoria() {
   // this.emprendimientoService.buscarPorCategoria(this.categoria).subscribe(
