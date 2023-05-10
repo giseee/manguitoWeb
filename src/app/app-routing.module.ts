@@ -23,8 +23,8 @@ const routes: Routes = [
   { 
     path: 'dashboard', 
     component: DashboardComponent, 
-    canActivate: [AuthGuard, hasRole(['ROLE_USER'])],
-    canLoad: [hasRole(['ROLE_USER'])]
+    canActivate: [AuthGuard, hasRole(['ROLE_USER', 'ROLE_ADMIN'])],
+    canLoad: [hasRole(['ROLE_USER', 'ROLE_ADMIN'])]
   },
   { path: 'edit', component: EditUserComponent, canActivate: [AuthGuard] },
   {
