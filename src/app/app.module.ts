@@ -26,6 +26,7 @@ import { EmprendimientosComponent } from './emprendimientos/emprendimientos.comp
 import { EditEmprendimientoComponent } from './edit-emprendimiento/edit-emprendimiento.component';
 import { ShowForRolesDirective} from './directives/show-for-roles.directive';
 import { EditPasswordComponent } from './edit-password/edit-password.component'
+import { AlertModule } from './_alert';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { EditPasswordComponent } from './edit-password/edit-password.component'
     EmprendimientosComponent,
     EditEmprendimientoComponent,
     ShowForRolesDirective,
-    EditPasswordComponent
+    EditPasswordComponent    
   ],
   imports: [
     BrowserModule,
@@ -56,7 +57,8 @@ import { EditPasswordComponent } from './edit-password/edit-password.component'
     FormsModule,
     HttpClientModule,
     CommonModule,
-    SwiperModule
+    SwiperModule,
+    AlertModule
   ],
   providers: [authTokeninterceptorProvider,AuthenticationService],
   bootstrap: [AppComponent]

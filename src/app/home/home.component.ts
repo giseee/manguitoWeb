@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
 import { Emprendimiento } from '../_models/emprendimiento';
 import { Router } from '@angular/router';
+import { AlertService } from '../_alert/alert.service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,13 @@ export class HomeComponent implements OnInit{
   nombre!: string;
   categoria!: string;
   emprendimientoss!: Emprendimiento[];
-  constructor(private emprendimientoService:EmprendimientoService,private router: Router){}
+
+  constructor(
+    private emprendimientoService:EmprendimientoService,
+    private router: Router,
+    public alertService: AlertService
+    ){}
+  
   ngOnInit() {}
   buscarPorNombre() {
     this.emprendimientoService.buscarPorNombre(this.nombre).subscribe(

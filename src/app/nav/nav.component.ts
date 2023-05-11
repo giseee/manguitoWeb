@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../_models/usuario';
 import { AuthenticationService } from '../_services/authentication.service';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
+import { AlertService } from '../_alert/alert.service';
 
 @Component({
   selector: 'app-nav',
@@ -20,7 +21,8 @@ export class NavComponent implements OnInit {
   emprendimientoId!: number;
   constructor(private emprendimientoService: EmprendimientoService, 
               public router: Router, 
-              private authenticationService: AuthenticationService
+              private authenticationService: AuthenticationService,              
+              public alertService: AlertService
               ) { }
 
   ngOnInit() {
@@ -30,6 +32,11 @@ export class NavComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: true
+  };
+    this.alertService.info('Se ha deslogueado del sistema', options);
     this.router.navigate(['/']);
   }
   getCurrentUser() {
