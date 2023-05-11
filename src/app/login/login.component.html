@@ -15,7 +15,7 @@
           <p *ngIf="form.hasError('invalidCredentials')" class="error-msg">
             Las credenciales son incorrectas
           </p>
-          <input type="submit" class="btn btn-success" id="Breg" value="Login"
+          <input type="submit" class="btn" id="login" value="Login"
             [disabled]="form.invalid || processingRequest">
         </form>
         <div id="derecho">
