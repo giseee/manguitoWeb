@@ -12,7 +12,7 @@
   <nav>
     <ul class="menu">
       <li class="nav-item">
-        <a routerLink="/" routerLinkActive="active" class="nav-link"title="Home">Home</a>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" title="Home">Home</a>
       </li>
       <li class="nav-item">
         <a *showForRoles="['ROLE_ADMIN']" routerLink="/categorias" routerLinkActive="active"
@@ -21,14 +21,17 @@
       <li class="nav-item" *ngIf="!isLoggedIn()">
         <a routerLink="/login" routerLinkActive="active" class="nav-link">Iniciar sesión</a>
       </li>
-      <li class="nav-item">
-        <a routerLink="/edit" *ngIf="isLoggedIn()" class="nav-link">Editar Perfil</a>
+      <li class="nav-item" *ngIf="!isLoggedIn()">
+        <a routerLink="/registro" routerLinkActive="active" class="nav-link">Registrarse</a>
       </li>
       <li class="nav-item">
-        <a routerLink="/editPassword" *ngIf="isLoggedIn()" class="nav-link">Cambiar contraseña</a>
+        <a routerLink="/edit" routerLinkActive="active" *ngIf="isLoggedIn()" class="nav-link">Editar Perfil</a>
       </li>
       <li class="nav-item">
-        <a routerLink="/dashboard" *ngIf="isLoggedIn()" class="nav-link">Mi proyecto</a>
+        <a routerLink="/editPassword" routerLinkActive="active" *ngIf="isLoggedIn()" class="nav-link">Cambiar contraseña</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/dashboard" routerLinkActive="active" *ngIf="isLoggedIn()" class="nav-link">Mi proyecto</a>
       </li>
       <li class="nav-item">
         <a routerLink="#" *ngIf="isLoggedIn()" class="nav-link" (click)="logout()">Cerrar sesión</a>
