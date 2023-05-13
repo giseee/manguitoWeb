@@ -14,7 +14,7 @@ import { EmprendimientoService } from '../_services/emprendimiento.service';
 export class ListarCategoriasComponent {
   categorias: Categoria[] = [];
   emprendimientos: Emprendimiento[] = [];
-  newCategory: Categoria = new Categoria();
+  //newCategory: Categoria = new Categoria();
   constructor(private categoriaService: CategoriasService,private emprendimientoService: EmprendimientoService) { }
 
   ngOnInit() {

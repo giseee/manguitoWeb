@@ -50,12 +50,8 @@ getUsuarios(): Observable<Usuario[]> {
 
   }
 
-  getEmprendimientoById(id: number): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.authService.getToken()}`
-    });
-    return this.http.get(`${env.url}/api/emprendimientos/${id}`, { headers });
+  getEmprendimientoById(id: number): Observable<any> {    
+    return this.http.get(`${env.url}/api/emprendimientos/${id}`);
   }
   getEmprendimientos(): Observable<Emprendimiento[]> {
     return this.http.get<Emprendimiento[]>(`${env.url}/api/emprendimientos`);

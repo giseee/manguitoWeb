@@ -3,11 +3,9 @@ import {  Router } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
 import { UsuarioService } from '../_services/usuario.service';
 import { Usuario } from '../_models/usuario';
-import { async, catchError, EMPTY, finalize, map } from 'rxjs';
+import { catchError, EMPTY, finalize, map } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { User } from '../_models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UsuarioDto } from '../_interfaces/emprendimiento';
 
 @Component({
   selector: 'app-edit-user',
@@ -17,8 +15,7 @@ import { UsuarioDto } from '../_interfaces/emprendimiento';
 })
 
 export class EditUserComponent implements OnInit {
-  editing: boolean = false;
-  usuarioToEdit!: Usuario | null;
+  editing: boolean = false;  
 
   formUsuario = new FormGroup({
     id: new FormControl('', {      
@@ -50,8 +47,7 @@ export class EditUserComponent implements OnInit {
   ngOnInit() {
     this.authService.currentUsuario$.pipe(
       map((user) => {
-        //Cargo el formulario con el usuario        
-        //this.usuarioToEdit = user;
+        //Cargo el formulario con el usuario                
         this.formUsuario.patchValue(user as any);
         console.log(this.formUsuario.value);
       })

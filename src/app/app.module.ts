@@ -27,6 +27,7 @@ import { EditEmprendimientoComponent } from './edit-emprendimiento/edit-emprendi
 import { ShowForRolesDirective} from './directives/show-for-roles.directive';
 import { EditPasswordComponent } from './edit-password/edit-password.component'
 import { AlertModule } from './_alert';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { AlertModule } from './_alert';
     ShowForRolesDirective,
     EditPasswordComponent    
   ],
-  imports: [
+  imports: [    
     BrowserModule,
     AppRoutingModule,
     BrowserModule,
@@ -58,7 +59,8 @@ import { AlertModule } from './_alert';
     HttpClientModule,
     CommonModule,
     SwiperModule,
-    AlertModule
+    AlertModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [authTokeninterceptorProvider,AuthenticationService],
   bootstrap: [AppComponent]

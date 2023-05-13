@@ -20,6 +20,6 @@ ngOnInit():void {
 
 getIdEmprendimiento(id: number)
 {
-  return this.emprendimientos.find(ele => {return ele.id_emprendimiento == id});
+  return this.emprendimientos.find(ele => {return ele.id == id});
 }
 }

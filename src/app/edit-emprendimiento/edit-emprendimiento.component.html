@@ -1,48 +1,46 @@
-<form *ngIf="emprendimientoToEdit" (ngSubmit)="onUpdateEmprendimiento()">
+<form [formGroup]="formEmprendimiento" (ngSubmit)="onUpdateEmprendimiento()">
   <label>
     Nombre del emprendimiento:
-    <input [(ngModel)]="emprendimientoToEdit.nombreEmprendimiento" type="text" name="nombreEmprendimiento" required>
+    <input type="text" name="nombreEmprendimiento" formControlName="nombreEmprendimiento">
   </label>
   <br>
   <label>
     Descripción:
-    <textarea [(ngModel)]="emprendimientoToEdit.descripcion" name="descripcion" required></textarea>
+    <textarea formControlName="descripcion" name="descripcion"></textarea>
   </label>
   <br>
   <label>
     Banner:
-    <input [(ngModel)]="emprendimientoToEdit.banner" type="text" name="banner" required>
+    <input type="text" formControlName="banner" name="banner">
   </label>
   <label>
-    Categorías:
-    <div *ngFor="let categoria of categorias">
-      <input type="checkbox" name="categoria" [value]="categoria.nombreCategoria" [checked]="categoriasSeleccionadas.includes(categoria.nombreCategoria)" (change)="onCategoriaChange($event)">
-      {{ categoria.nombreCategoria }}
-    </div>
+    Categorías:    
+      <ng-multiselect-dropdown 
+        [placeholder]="'Seleccione una o varias categorías'"
+        [data]="dropdownListCategorias"
+        [formControl]="f.categorias" 
+        [settings]="dropdownSettings">  
+      </ng-multiselect-dropdown>    
   </label>
-
-
-
-
-
   <br>
   <label>
     Monto del manguito:
-    <input [(ngModel)]="emprendimientoToEdit.montoManguito" type="number" name="montoManguito" required>
+    <input type="number" formControlName="montoManguito" name="montoManguito" required>
   </label>
   <br>
   <label>
     ¿Mostrar manguitos recibidos?
-    <input [(ngModel)]="emprendimientoToEdit.mostrarManguitos" type="checkbox" name="mostrarManguitos">
+    <input type="checkbox" formControlName="montoManguito" name="mostrarManguitos">
   </label>
   <br>
   <label>
     ¿Mostrar top de donadores?
-    <input [(ngModel)]="emprendimientoToEdit.mostrarTopDonadores" type="checkbox" name="mostrarTopDonadores">
+    <input type="checkbox" formControlName="mostrarTopDonadores" name="mostrarTopDonadores">
   </label>
   <br>
   <br>
-  <button *ngIf="emprendimientoToEdit.id; else crearEmprendimiento" type="submit">Actualizar emprendimiento</button>
+  <button *ngIf="formEmprendimiento.get('id'); else crearEmprendimiento" type="submit">Actualizar
+    emprendimiento</button>
   <ng-template #crearEmprendimiento>
     <button (click)="onCreateEmprendimiento()" type="button">Crear emprendimiento</button>
   </ng-template>

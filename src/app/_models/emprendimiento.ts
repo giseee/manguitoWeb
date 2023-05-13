@@ -2,8 +2,10 @@ import { Usuario } from "./usuario";
 import { RedSocial } from "./redSocial";
 import { Categoria } from "./categoria";
 import { Donaciones } from "./donaciones";
+
 export class Emprendimiento {
-  id_emprendimiento:number=0;
+  id: number;
+  id_usuario: number;
   nombreEmprendimiento: string;
   descripcion: string;
   banner: string;
@@ -12,24 +14,35 @@ export class Emprendimiento {
   mostrarTopDonadores: boolean;
   redeSociales: RedSocial[];
   categorias: Categoria[];
- // donaciones: Donaciones[];
+  donaciones: Donaciones[];
   montoManguito: number;
-  id!:number;
 
-
-
-  constructor(nombre: string = "", descripcion: string = "", banner: string, categorias: Categoria[] = [], donaciones: Donaciones[] = [], redSocial: RedSocial[] = []) {
-    this.nombreEmprendimiento = nombre;
+  constructor(
+    id:number,
+    id_usuario:number,
+    nombreEmprendimiento: string = "",
+    descripcion: string = "",
+    banner: string,
+    manguitosRecibidos:number = 0,
+    mostrarManguitos: boolean = true,
+    mostrarTopDonadores: boolean = true,
+    categorias: Categoria[] = [],
+    donaciones: Donaciones[] = [],
+    redSocial: RedSocial[] = [],
+    montoManguito:number = 0
+  ) {
+    this.id = id;
+    this.id_usuario = id_usuario;
+    this.nombreEmprendimiento = nombreEmprendimiento;
     this.descripcion = descripcion;
     this.banner = banner;
-    this.mostrarManguitos = true;
-    this.mostrarTopDonadores = true;
-    this.redeSociales = redSocial;
+    this.manguitosRecibidos = manguitosRecibidos;
+    this.mostrarManguitos = mostrarManguitos;
+    this.mostrarTopDonadores = mostrarTopDonadores;
     this.categorias = categorias;
-    //this.donaciones = donaciones;
-    this.montoManguito = 0;
-    this.manguitosRecibidos = 0;
-    //this.usuario = usuario;
+    this.donaciones = donaciones;    
+    this.redeSociales = redSocial;        
+    this.montoManguito = montoManguito;    
   }
-  }
+}
 
