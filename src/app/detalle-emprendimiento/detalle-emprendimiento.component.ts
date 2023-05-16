@@ -7,7 +7,10 @@ import { Usuario } from '../_models/usuario';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
 import { environment as env } from 'src/environments/environments';
 import { HttpClient } from '@angular/common/http';
-import * as bootstrap from 'bootstrap';
+import { Donaciones } from '../_models/donaciones';
+
+declare var bootstrap: any; // Agrega esta línea para evitar errores de TypeScript
+
 @Component({
   selector: 'app-detalle-emprendimiento',
   templateUrl: './detalle-emprendimiento.component.html',
@@ -21,6 +24,10 @@ export class DetalleEmprendimientoComponent implements OnInit {
   redeSociales: RedSocial[] = [];
   id!: number;
   error!: String;
+  cantidadManguitos: number = 0;
+  nombreDonador: string = '';
+  contacto: string = '';
+  mensaje: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -58,23 +65,35 @@ export class DetalleEmprendimientoComponent implements OnInit {
     const manguitosInput = document.getElementById('manguitosInput') as HTMLInputElement;
     const nombreInput = document.getElementById('nombreInput') as HTMLInputElement;
     const emailInput = document.getElementById('emailInput') as HTMLInputElement;
-
+    const mensaje = document.getElementById('mensajeInput') as HTMLInputElement;
     const manguitos = Number(manguitosInput.value);
     const nombre = nombreInput.value;
     const email = emailInput.value;
+    console.log(this.id);
+    const donacion: Donaciones = {
+      cantidadManguitos: manguitos,
+      nombreDonador: nombre,
+      contacto: emailInput.value,
+      mensaje: mensaje.value,
+      plan_id: 0,
+      emprendimiento_id: this.id,
+      fecha: new Date()
+    };
 
-    // Aquí puedes procesar los datos de donación y realizar las acciones necesarias
-    // por ejemplo, aumentar los manguitos, guardar el nombre y el correo electrónico, etc.
+    this.http.post<Donaciones>('http://localhost:8080/api/donacion', donacion)
+      .subscribe(
+        (response) => {
+          console.log('Donación realizada con éxito', response);
+        }
+      );
 
-    // Restablecer los valores de los campos
     manguitosInput.value = '';
     nombreInput.value = '';
     emailInput.value = '';
+    mensaje.value='';
 
     // Cerrar la ventana emergente
-    const donationModal = new bootstrap.Modal(document.getElementById('donationModal')||"");
+    const donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
     donationModal.hide();
   }
-
-
 }
