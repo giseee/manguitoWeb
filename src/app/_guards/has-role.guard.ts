@@ -1,11 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanMatch,
-  CanLoad,
-  Route,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, Route } from '@angular/router';
 import { map, Observable, tap } from 'rxjs';
 import { AuthenticationService } from '../_services';
 import { Role, Usuario } from '../_models';
@@ -13,7 +7,7 @@ import { Role, Usuario } from '../_models';
 @Injectable({
   providedIn: 'root',
 })
-export class HasRoleGuard implements CanMatch, CanActivate {
+export class HasRoleGuard  {
   constructor(private authService: AuthenticationService) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {

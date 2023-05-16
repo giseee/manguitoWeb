@@ -24,16 +24,21 @@ export class EmprendimientoService {
   crearEmprendimiento(emprendimiento: Emprendimiento) {
     return this.http.post<Emprendimiento>(`${env.url}/api/emprendimientos`,emprendimiento);
   }
-  create(emprendimiento:EmprendimientoDto){
-    return this.http.post<Emprendimiento>(`${env.url}/api/emprendimientos`,emprendimiento);
+  
+  create(formData: FormData){
+    return this.http.post<Emprendimiento>(`${env.url}/api/emprendimientos`,formData);
   }
 
   public delEmprendimientoById(id: Number) {
       return this.http.delete(`${env.url}/api/delete/` + id, { observe: 'response' })
   }
 
-  putEmprendimiento( emprendimiento: Emprendimiento) {
-      return this.http.put<Emprendimiento>(`${env.url}/api/emprendimientos/${emprendimiento.id}`, emprendimiento)
+  putEmprendimiento( formData: FormData) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'undefined'
+    });
+    //, { 'headers':headers, observe: 'response' }
+    return this.http.put<Emprendimiento>(`${env.url}/api/emprendimientos/${formData.get('id')}`, formData)
   }
 
   getEmprendimientoId(id: Number) {

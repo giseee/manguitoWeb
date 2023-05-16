@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY, catchError, map, switchMap } from 'rxjs';
+import { EMPTY, catchError, finalize, map, switchMap } from 'rxjs';
 //import { Emprendimiento } from '../_interfaces/emprendimiento';
 import { AuthenticationService } from '../_services';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
@@ -13,6 +13,7 @@ import { RedSocial } from '../_models/redSocial';
 import { environment } from 'src/environments/environments';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoriasService } from '../_services/categoria.service';
+import { AlertService } from '../_alert';
 
 @Component({
   selector: 'app-edit-emprendimiento',
@@ -23,16 +24,10 @@ import { CategoriasService } from '../_services/categoria.service';
 export class EditEmprendimientoComponent implements OnInit {
 
   dropdownListCategorias: any;
-  dropdownSettings: any;
-  selectedItems = [];
-
-
-  emprendimiento!: Emprendimiento;
   editing: boolean = false;
   mensaje: string = '';
-  categorias: Categoria[] = [];
-  redeSociales: RedSocial[] = [];
-  categoriasSeleccionadas!: string[];
+  formData = new FormData();
+  imageURL: any;
 
   formEmprendimiento = new FormGroup({
     id: new FormControl('', {      
@@ -80,48 +75,28 @@ export class EditEmprendimientoComponent implements OnInit {
     private emprendimientoService: EmprendimientoService,
     private categoriasService: CategoriasService,
     private cdr: ChangeDetectorRef,
-    private http: HttpClient
+    private http: HttpClient,
+    public alertService: AlertService,
   ) { }
 
   ngOnInit(): void {    
-    //Cargo las categorías y configuro el control multiselect
+    //Cargo las categorías 
     this.getCategorias();
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'nombreCategoria',      
-      selectAllText: 'Seleccionar todo',
-      unSelectAllText: 'Deseleccionar todo'
-    };
-
+    //Cargo el emprendimiento si lo tiene
     this.authService.currentUsuario$.pipe(
       map((user) => {
         //Cargo el formulario con el usuario    
         if (user?.id_emprendimiento) {
           this.emprendimientoService.getEmprendimientoById(user.id_emprendimiento).pipe(
             map((emprendimiento) => {
+              this.imageURL = emprendimiento.banner;
               this.formEmprendimiento.patchValue(emprendimiento as any);
-              //Selecciono las categorias del emprendimiento
-              //this.selectedItems = emprendimiento.categorias;
-              console.log(this.formEmprendimiento.value);
             })
           ).subscribe();
         }
       })
     ).subscribe();
   }
-
-  onCategoriaChange(event: any) {
-    if (event.target.checked) {
-      this.categoriasSeleccionadas.push(event.target.value);
-    } else {
-      const index = this.categoriasSeleccionadas.indexOf(event.target.value);
-      if (index !== -1) {
-        this.categoriasSeleccionadas.splice(index, 1);
-      }
-    }
-  }
-
 
   getCategorias(): void {
     this.categoriasService.getAll().pipe(
@@ -136,58 +111,107 @@ export class EditEmprendimientoComponent implements OnInit {
         throw error;
       })
     ).subscribe();
-
-    // this.http.get<Categoria[]>(`${environment.url}/api/categorias`).subscribe(response => {
-    //   this.dropdownListCategorias = response;
-    // });
-  }
-
-  get f() {
-    return this.formEmprendimiento.controls;
-  }
-
-  onItemSelect($event: any){
-    console.log(this.dropdownListCategorias);
-    console.log(this.formEmprendimiento.get('categorias')?.value);
-    //console.log(this.selectedItems);
-
-    // let data = this.dropdownListCategorias;
-    // let selectedItem = data.filter((item: { id: any; }) => item.id == $event.id);
-    // let selectedItemid = selectedItem[0]['id'];
-    // this.dropdownListCategorias = data.map((item: { id: any; isDisabled: boolean; }) => {
-    //   if(item.id == selectedItemid){
-    //     item.isDisabled = false;
-    //   } else {
-    //     item.isDisabled = true;
-    //   }
-    //   return item;
-    // })
-  }
-
-  onItemDeSelect(){
-    // if(this.selectedItems && this.selectedItems.length == 0){
-    //   this.dropdownListCategorias = this.dropdownListCategorias.map((item: { isDisabled: boolean; }) => {
-    //     item.isDisabled = false;
-    //     return item;
-    //   })
-    // }
   }
 
   onCreateEmprendimiento() {
-    // this.emprendimientoToEdit.id = this.idUsuario;
-    // this.emprendimientoService.create(this.emprendimientoToEdit).subscribe(data => {
-    //   this.mensaje = "Emprendimiento creado exitosamente";
-    //   setTimeout(() => {
-    //     this.router.navigate(['/']);
-    //   }, 1000); // Esperar 1 segundo antes de redirigir al usuario
-    // });
+    this.editing = true;
+    this.formData.append('emprendimiento', new Blob([JSON.stringify(this.formEmprendimiento.value)], {type: "application/json"}));
+    this.emprendimientoService.create(this.formData).pipe(   
+      finalize(() => {
+        this.editing = false;         
+        this.router.navigateByUrl('/');
+        this.handleSucceed();
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.handleUnauthorized();
+          return EMPTY;
+        }
+        if (error.status === 500) {
+          this.handleServerError();
+          return EMPTY;
+        }
+        throw error;
+      })
+    ).subscribe(); 
   }
 
   onUpdateEmprendimiento() {
-    // this.emprendimientoService.putEmprendimiento(this.emprendimientoToEdit).subscribe(() => {
-    //   console.log('Emprendimiento actualizado!');
-    //   // Puedes hacer algo aquí si quieres
-    // });
+    this.editing = true;
+    var emprendimiento = JSON.parse(JSON.stringify(this.formEmprendimiento.value)) as Emprendimiento;    
+    let text = emprendimiento.id.toString();
+    this.formData.append('id',text);
+    this.formData.append('emprendimiento', new Blob([JSON.stringify(this.formEmprendimiento.value)], {type: "application/json"}));
+    this.emprendimientoService.putEmprendimiento(this.formData).pipe(   
+      finalize(() => {
+        this.editing = false;         
+        this.router.navigateByUrl('/');
+        this.handleSucceed();
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.handleUnauthorized();
+          return EMPTY;
+        }
+        if (error.status === 500) {
+          this.handleServerError();
+          return EMPTY;
+        }
+        throw error;
+      })
+    ).subscribe(); 
+  }
+
+  handleServerError() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+  };
+    this.alertService.error('No se pudo actualizar el emprendimiento.', options);
+  }
+
+  handleSucceed() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+  };
+    this.alertService.success('El emprendimiento se ha actualizado de forma exitosa.', options);
+  }
+
+  handleUnauthorized() {
+    this.formEmprendimiento.setErrors({ unauthorized: true });
+    this.cdr.markForCheck();
+  }
+
+  loadImage(event: any){
+    const file = event.files[0];
+    if (file) {
+      this.formData.append('archivoImagen', file);
+    }
+  }
+
+  clearImage(){
+    this.formData.delete('archivoImagen');
+  }
+
+  // Image Preview
+  showPreview(event: any) {
+    const file = event.files[0];
+    this.formEmprendimiento.patchValue({
+      banner: file
+    });
+    this.formEmprendimiento.get('banner')!.updateValueAndValidity()
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageURL = reader.result as string;
+    }
+    reader.readAsDataURL(file)
+  }
+
+  hidePreview(){
+    this.imageURL = null;
+    this.formEmprendimiento.get('banner')?.setValue(null);
   }
 
   uploadImage(event: any) {
@@ -199,6 +223,7 @@ export class EditEmprendimientoComponent implements OnInit {
       //ese link tendria que estar en el emprendimiento
       //https://www.youtube.com/watch?v=oruiytokUwo
     }
-
   }
+
+  get banner() { return this.formEmprendimiento.get('banner')}
 }

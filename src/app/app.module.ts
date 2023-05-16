@@ -27,7 +27,10 @@ import { EditEmprendimientoComponent } from './edit-emprendimiento/edit-emprendi
 import { ShowForRolesDirective} from './directives/show-for-roles.directive';
 import { EditPasswordComponent } from './edit-password/edit-password.component'
 import { AlertModule } from './_alert';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
   ],
   imports: [    
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     BrowserModule,
     ReactiveFormsModule,
@@ -60,7 +64,9 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     CommonModule,
     SwiperModule,
     AlertModule,
-    NgMultiSelectDropDownModule.forRoot()
+    MultiSelectModule,
+    FileUploadModule,
+    ImageModule
   ],
   providers: [authTokeninterceptorProvider,AuthenticationService],
   bootstrap: [AppComponent]

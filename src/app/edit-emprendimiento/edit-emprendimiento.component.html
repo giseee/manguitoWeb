@@ -11,16 +11,31 @@
   <br>
   <label>
     Banner:
-    <input type="text" formControlName="banner" name="banner">
   </label>
+  <!-- Image Preview -->
+  <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+    <!--<img [src]="imageURL" width="200" height="300">-->
+
+    <p-image [src]="imageURL" alt="Image" width="250"></p-image>
+  </div>
+  <p-fileUpload 
+    name="myfile[]"
+    url="formEmprendimiento.banner"
+    (onSelect)="loadImage($event)" 
+    (onClear)="clearImage()" 
+    (onRemove)="clearImage()" 
+    [multiple]="false" 
+    [showUploadButton]="false"
+    accept="image/*">
+    <ng-template pTemplate="content" let-files>      
+    </ng-template>
+  </p-fileUpload>
+
+
   <label>
-    Categorías:    
-      <ng-multiselect-dropdown 
-        [placeholder]="'Seleccione una o varias categorías'"
-        [data]="dropdownListCategorias"
-        [formControl]="f.categorias" 
-        [settings]="dropdownSettings">  
-      </ng-multiselect-dropdown>    
+    Categorías:
+    <p-multiSelect [options]="dropdownListCategorias" formControlName="categorias" optionLabel="nombreCategoria">
+    </p-multiSelect>
   </label>
   <br>
   <label>
@@ -39,7 +54,7 @@
   </label>
   <br>
   <br>
-  <button *ngIf="formEmprendimiento.get('id'); else crearEmprendimiento" type="submit">Actualizar
+  <button *ngIf="formEmprendimiento.get('id') else crearEmprendimiento" type="submit">Actualizar
     emprendimiento</button>
   <ng-template #crearEmprendimiento>
     <button (click)="onCreateEmprendimiento()" type="button">Crear emprendimiento</button>

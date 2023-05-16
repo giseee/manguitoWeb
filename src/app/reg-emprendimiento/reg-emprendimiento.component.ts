@@ -70,13 +70,13 @@ export class RegEmprendimientoComponent implements OnInit {
   };
 
   createNewEmp() {
-    this.emprendimiento.id = this.userId;
-    this.empService.create(this.emprendimiento).subscribe(data => {
-      this.mensaje = "Emprendimiento creado exitosamente";
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, 1000); // Esperar 1 segundo antes de redirigir al usuario
-    });
+    // this.emprendimiento.id = this.userId;
+    // this.empService.create(this.emprendimiento).subscribe(data => {
+    //   this.mensaje = "Emprendimiento creado exitosamente";
+    //   setTimeout(() => {
+    //     this.router.navigate(['/']);
+    //   }, 1000); // Esperar 1 segundo antes de redirigir al usuario
+    // });
   }
 
 
