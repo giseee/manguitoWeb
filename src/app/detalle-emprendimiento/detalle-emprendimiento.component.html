@@ -26,9 +26,36 @@
         <div class="boton_atras d-grid gap-2 col-3 mx-auto">
             <button class="btn btn-primary active boton" data-bs-toggle="button" autocomplete="off" aria-pressed="true"
                 routerLink="/">Salir</button>
-                <button class="btn btn-primary active boton" data-bs-toggle="button" autocomplete="off" aria-pressed="true"
-                routerLink="/">Donar</button>
+                <button class="btn btn-primary active boton" data-bs-toggle="modal" data-bs-target="#donationModal">Donar</button>
         </div>
     </div>
   </div>
+
+
+<!-- Ventana emergente para la donación -->
+<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="donationModalLabel">Donar Manguitos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="manguitosInput" class="form-label">Cantidad de Manguitos:</label>
+        <input type="number" class="form-control" id="manguitosInput">
+
+        <label for="nombreInput" class="form-label">Nombre del Donador:</label>
+        <input type="text" class="form-control" id="nombreInput">
+
+        <label for="emailInput" class="form-label">Correo Electrónico:</label>
+        <input type="email" class="form-control" id="emailInput">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="confirmarDonacion()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
