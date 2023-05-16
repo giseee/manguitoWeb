@@ -30,8 +30,6 @@
         </div>
     </div>
   </div>
-
-
 <!-- Ventana emergente para la donación -->
 <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -42,13 +40,17 @@
       </div>
       <div class="modal-body">
         <label for="manguitosInput" class="form-label">Cantidad de Manguitos:</label>
-        <input type="number" class="form-control" id="manguitosInput">
+        <input type="number" class="form-control" id="manguitosInput" [(ngModel)]="cantidadManguitos">
 
         <label for="nombreInput" class="form-label">Nombre del Donador:</label>
-        <input type="text" class="form-control" id="nombreInput">
+        <input type="text" class="form-control" id="nombreInput" [(ngModel)]="nombreDonador">
 
         <label for="emailInput" class="form-label">Correo Electrónico:</label>
-        <input type="email" class="form-control" id="emailInput">
+        <input type="email" class="form-control" id="emailInput" [(ngModel)]="contacto">
+
+        <label for="mensajeInput" class="form-label">Mensaje:</label>
+        <input type="text" class="form-control" id="mensajeInput" [(ngModel)]="mensaje">
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -57,5 +59,3 @@
     </div>
   </div>
 </div>
-
-
