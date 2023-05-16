@@ -30,7 +30,7 @@ export class EditEmprendimientoComponent implements OnInit {
   imageURL: any;
 
   formEmprendimiento = new FormGroup({
-    id: new FormControl('', {      
+    id: new FormControl(null, {      
       nonNullable: false,
     }),
     id_usuario: new FormControl('', {      

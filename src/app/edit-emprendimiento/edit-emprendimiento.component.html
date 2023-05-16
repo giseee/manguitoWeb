@@ -45,7 +45,7 @@
   <br>
   <label>
     ¿Mostrar manguitos recibidos?
-    <input type="checkbox" formControlName="montoManguito" name="mostrarManguitos">
+    <input type="checkbox" formControlName="mostrarManguitos" name="mostrarManguitos">
   </label>
   <br>
   <label>
@@ -54,7 +54,7 @@
   </label>
   <br>
   <br>
-  <button *ngIf="formEmprendimiento.get('id') else crearEmprendimiento" type="submit">Actualizar
+  <button *ngIf="formEmprendimiento.get('id')!.value else crearEmprendimiento" type="submit">Actualizar
     emprendimiento</button>
   <ng-template #crearEmprendimiento>
     <button (click)="onCreateEmprendimiento()" type="button">Crear emprendimiento</button>
