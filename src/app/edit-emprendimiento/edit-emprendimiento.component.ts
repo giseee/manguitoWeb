@@ -29,7 +29,7 @@ export class EditEmprendimientoComponent implements OnInit {
   mensaje: string = '';
   formData = new FormData();
   imageURL: any;
-  redeSociales: RedSocial[] = [];
+  redeSociales: any;
 
   formEmprendimiento = new FormGroup({
     id: new FormControl(null, {
@@ -103,8 +103,8 @@ export class EditEmprendimientoComponent implements OnInit {
   }
   getRedSocial(): void {
     this.redSocialService.getAll().pipe(
-      map((perfilSocial) =>{
-        this.redeSociales=perfilSocial
+      map((redeSociales) =>{
+        this.redeSociales=redeSociales
       }),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {

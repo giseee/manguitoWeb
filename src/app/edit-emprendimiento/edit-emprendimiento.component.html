@@ -41,7 +41,7 @@
   <div *ngFor="let redSocial of redeSociales">
     <label>
       {{ redSocial.nombreRed }}
-      <input type="text"  [value]="redSocial.url" formControlName="{{ redSocial.url }}" name="{{ redSocial.url }}">
+      <input type="text"  [value]="redSocial.url" formControlName="redeSociales" label="url" name="{{ redSocial.url }}">
     </label>
     <br>
   </div>

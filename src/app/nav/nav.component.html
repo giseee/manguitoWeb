@@ -34,7 +34,7 @@
         <a routerLink="/dashboard" routerLinkActive="active" *ngIf="isLoggedIn()" class="nav-link">Mi proyecto</a>
       </li>
       <li class="nav-item">
-        <a routerLink="/redes" routerLinkActive="active" *ngIf="isLoggedIn()" class="nav-link">Redes</a>
+        <a *showForRoles="['ROLE_ADMIN']"  routerLink="/redes" routerLinkActive="active" class="nav-link">Redes</a>
       </li>
       <li class="nav-item">
         <a routerLink="#" *ngIf="isLoggedIn()" class="nav-link" (click)="logout()">Cerrar sesión</a>
