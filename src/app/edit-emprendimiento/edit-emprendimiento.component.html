@@ -18,16 +18,16 @@
 
     <p-image [src]="imageURL" alt="Image" width="250"></p-image>
   </div>
-  <p-fileUpload 
+  <p-fileUpload
     name="myfile[]"
     url="formEmprendimiento.banner"
-    (onSelect)="loadImage($event)" 
-    (onClear)="clearImage()" 
-    (onRemove)="clearImage()" 
-    [multiple]="false" 
+    (onSelect)="loadImage($event)"
+    (onClear)="clearImage()"
+    (onRemove)="clearImage()"
+    [multiple]="false"
     [showUploadButton]="false"
     accept="image/*">
-    <ng-template pTemplate="content" let-files>      
+    <ng-template pTemplate="content" let-files>
     </ng-template>
   </p-fileUpload>
 
@@ -38,6 +38,13 @@
     </p-multiSelect>
   </label>
   <br>
+  <div *ngFor="let redSocial of redeSociales">
+    <label>
+      {{ redSocial.nombreRed }}
+      <input type="text"  [value]="redSocial.url" formControlName="{{ redSocial.url }}" name="{{ redSocial.url }}">
+    </label>
+    <br>
+  </div>
   <label>
     Monto del manguito:
     <input type="number" formControlName="montoManguito" name="montoManguito" required>

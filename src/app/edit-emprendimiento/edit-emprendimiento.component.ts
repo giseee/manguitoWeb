@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environments';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoriasService } from '../_services/categoria.service';
 import { AlertService } from '../_alert';
+import { RedSocialService } from '../_services/redSocial.service';
 
 @Component({
   selector: 'app-edit-emprendimiento',
@@ -28,22 +29,23 @@ export class EditEmprendimientoComponent implements OnInit {
   mensaje: string = '';
   formData = new FormData();
   imageURL: any;
+  redeSociales: RedSocial[] = [];
 
   formEmprendimiento = new FormGroup({
-    id: new FormControl(null, {      
+    id: new FormControl(null, {
       nonNullable: false,
     }),
-    id_usuario: new FormControl('', {      
+    id_usuario: new FormControl('', {
       nonNullable: true,
     }),
     nombreEmprendimiento: new FormControl('', {
       validators: [Validators.required],
       nonNullable: true,
     }),
-    descripcion: new FormControl('', {      
+    descripcion: new FormControl('', {
       nonNullable: false,
     }),
-    banner: new FormControl('', {      
+    banner: new FormControl('', {
       nonNullable: false,
     }),
     manguitosRecibidos: new FormControl( 0 , {
@@ -74,18 +76,20 @@ export class EditEmprendimientoComponent implements OnInit {
     private authService: AuthenticationService,
     private emprendimientoService: EmprendimientoService,
     private categoriasService: CategoriasService,
+    private redSocialService:  RedSocialService,
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
     public alertService: AlertService,
   ) { }
 
-  ngOnInit(): void {    
-    //Cargo las categorías 
+  ngOnInit(): void {
+    //Cargo las categorías
     this.getCategorias();
+    this.getRedSocial();
     //Cargo el emprendimiento si lo tiene
     this.authService.currentUsuario$.pipe(
       map((user) => {
-        //Cargo el formulario con el usuario    
+        //Cargo el formulario con el usuario
         if (user?.id_emprendimiento) {
           this.emprendimientoService.getEmprendimientoById(user.id_emprendimiento).pipe(
             map((emprendimiento) => {
@@ -97,7 +101,20 @@ export class EditEmprendimientoComponent implements OnInit {
       })
     ).subscribe();
   }
-
+  getRedSocial(): void {
+    this.redSocialService.getAll().pipe(
+      map((perfilSocial) =>{
+        this.redeSociales=perfilSocial
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          //this.handleUnauthorized();
+          return EMPTY;
+        }
+        throw error;
+      })
+      ).subscribe();
+    }
   getCategorias(): void {
     this.categoriasService.getAll().pipe(
       map((categorias) =>{
@@ -116,9 +133,9 @@ export class EditEmprendimientoComponent implements OnInit {
   onCreateEmprendimiento() {
     this.editing = true;
     this.formData.append('emprendimiento', new Blob([JSON.stringify(this.formEmprendimiento.value)], {type: "application/json"}));
-    this.emprendimientoService.create(this.formData).pipe(   
+    this.emprendimientoService.create(this.formData).pipe(
       finalize(() => {
-        this.editing = false;         
+        this.editing = false;
         this.router.navigateByUrl('/');
         this.handleSucceed();
       }),
@@ -133,18 +150,18 @@ export class EditEmprendimientoComponent implements OnInit {
         }
         throw error;
       })
-    ).subscribe(); 
+    ).subscribe();
   }
 
   onUpdateEmprendimiento() {
     this.editing = true;
-    var emprendimiento = JSON.parse(JSON.stringify(this.formEmprendimiento.value)) as Emprendimiento;    
+    var emprendimiento = JSON.parse(JSON.stringify(this.formEmprendimiento.value)) as Emprendimiento;
     let text = emprendimiento.id.toString();
     this.formData.append('id',text);
     this.formData.append('emprendimiento', new Blob([JSON.stringify(this.formEmprendimiento.value)], {type: "application/json"}));
-    this.emprendimientoService.putEmprendimiento(this.formData).pipe(   
+    this.emprendimientoService.putEmprendimiento(this.formData).pipe(
       finalize(() => {
-        this.editing = false;         
+        this.editing = false;
         this.router.navigateByUrl('/');
         this.handleSucceed();
       }),
@@ -159,7 +176,7 @@ export class EditEmprendimientoComponent implements OnInit {
         }
         throw error;
       })
-    ).subscribe(); 
+    ).subscribe();
   }
 
   handleServerError() {
@@ -227,3 +244,8 @@ export class EditEmprendimientoComponent implements OnInit {
 
   get banner() { return this.formEmprendimiento.get('banner')}
 }
+
+
+
+
+

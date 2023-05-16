@@ -5,6 +5,7 @@ import { LoginComponent } from './login';
 import { RegistroComponent } from './registro';
 import {EmprendimientoComponent } from './emprendimiento';
 import { CategoriaComponent } from './categoria';
+import { RedesSocialesComponent } from './redes-sociales';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { RegistroUserComponent } from './registro-user/registro-user.component';
@@ -20,9 +21,9 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/'},//lo llevamos a una ruta no protegida
   { path:'login', component:LoginComponent},
   { path:'emprendimiento', component:EmprendimientoComponent},
-  { 
-    path: 'dashboard', 
-    component: DashboardComponent, 
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
     canActivate: [AuthGuard, hasRole(['ROLE_USER', 'ROLE_ADMIN'])],
     canLoad: [hasRole(['ROLE_USER', 'ROLE_ADMIN'])]
   },
@@ -32,10 +33,15 @@ const routes: Routes = [
       component: HomeComponent
   },
   {
-    path: 'editPassword', 
-    component: EditPasswordComponent, 
+    path: 'editPassword',
+    component: EditPasswordComponent,
     canActivate: [AuthGuard, hasRole(['ROLE_USER', 'ROLE_ADMIN'])],
     canLoad: [hasRole(['ROLE_USER', 'ROLE_ADMIN'])]
+  },
+  {
+    path: 'redes',
+    component:RedesSocialesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'categorias',

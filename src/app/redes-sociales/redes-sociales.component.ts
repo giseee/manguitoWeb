@@ -14,41 +14,31 @@ export class RedesSocialesComponent {
   editing: boolean = false;
   redSocialToEdit: RedSocial = new RedSocial();
 
-  constructor(private redService:RedSocialService) { }
+  constructor(private redService: RedSocialService) {}
+
   ngOnInit() {
     this.getRedSocial();
   }
 
   getRedSocial() {
-    this.redService.getAll()
-      .subscribe(redSocial => this.redSocial = redSocial);
+    this.redService.getAll().subscribe((redSocial) => (this.redSocial = redSocial));
   }
 
+ deleteRedSocial(redSocial: RedSocial): void {
+   this.redService.delRedSocialById(redSocial.id!).subscribe(() => {
+    this.redSocial = this.redSocial.filter((c: RedSocial) => c !== redSocial);
+    });}
 
-  onSubmit(redSocialForm: NgForm): void {
-    this.redService.postRedSocial(this.newRedSocial)
-      .subscribe(redSocial => {
-        this.redSocial.push(redSocial);
-        this.newRedSocial = new RedSocial();
-        redSocialForm.resetForm();
-      });
-  }
-
-  deleteRedSocial(redSocial:RedSocial): void {
-      this.redService.delRedSocialById(redSocial.id!)
-      .subscribe(() => {
-        this.redSocial= this.redSocial.filter((c: RedSocial) => c !== redSocial);
-      });
-  }
   add(name: string): void {
     name = name.trim();
-    if (!name) { return; }
-    this.redService.addRedSocial({ name } as unknown as RedSocial)
-      .subscribe(redSocial => {
-        this.redSocial.push(redSocial);
-      });
+    if (!name) {
+      return;
+    }
+    const newRedSocial = new RedSocial(name);
+    this.redService.addRedSocial(newRedSocial).subscribe((redSocial) => {
+      this.redSocial.push(redSocial);
+    });
   }
-
 
   editRedSocial(redSocial: RedSocial): void {
     this.editing = true;
@@ -61,13 +51,20 @@ export class RedesSocialesComponent {
   }
 
   onUpdateRedSocial(): void {
-    this.redService.updateRedSocial(this.redSocialToEdit)
-      .subscribe(() => {
-        const index = this.redSocial.findIndex(c => c.id === this.redSocialToEdit.id);
-        this.redSocial[index] = this.redSocialToEdit;
-        this.editing = false;
-        this.redSocialToEdit = new RedSocial();
-      });
+    this.redService.updateRedSocial(this.redSocialToEdit).subscribe(() => {
+      const index = this.redSocial.findIndex((c) => c.id === this.redSocialToEdit.id);
+      this.redSocial[index] = this.redSocialToEdit;
+      this.editing = false;
+      this.redSocialToEdit = new RedSocial();
+    });
   }
 
+  onSubmit(redSocialForm: NgForm): void {
+    this.redService.addRedSocial(this.newRedSocial).subscribe((redSocial) => {
+      this.newRedSocial = new RedSocial();
+      redSocialForm.resetForm();
+    });
+  }
 }
+
+

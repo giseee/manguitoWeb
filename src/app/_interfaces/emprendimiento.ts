@@ -2,7 +2,7 @@ import { Donaciones } from "../_models/donaciones";
 
 
 
-export interface Emprendimiento { 
+export interface Emprendimiento {
   id:number;
   id_usuario:number
   nombreEmprendimiento: string;
@@ -15,7 +15,7 @@ export interface Emprendimiento {
   montoManguito:number;
   mostrarTopDonadores:boolean;
   mostrarManguitos:boolean;
-  
+
 }
 export interface  EmprendimientoDto extends Omit<Emprendimiento,'id_emprendimiento'|'redeSociales'|'id_usuario' | 'donaciones'>{
 
@@ -51,6 +51,6 @@ export interface Perfil {
 }
 export interface RedSocial {
   id?: number;
-  perfilSocial: string;
-  url:string;
+  nombreRed: string;
+  url:string
 }

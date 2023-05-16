@@ -34,6 +34,4 @@ updateRedSocial(redSocial: RedSocial): Observable<RedSocial> {
 return this.http.put<RedSocial>(`${env.url}/api/perfilSocial/` + redSocial.id, redSocial)
 }
 
-
-
 }

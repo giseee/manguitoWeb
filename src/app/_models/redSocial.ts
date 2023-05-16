@@ -1,9 +1,9 @@
 export class RedSocial {
   id?: number;
-  perfilSocial: string;
-  url:string;
-  constructor(nombre: string = "",url:string ="") {
-    this.perfilSocial = nombre;
+  nombreRed:string;
+  url :string;
+  constructor(nombre: string = "",url :string="") {
+    this.nombreRed = nombre;
     this.url=url;
   }
 }
