@@ -39,9 +39,6 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <label for="manguitosInput" class="form-label">Cantidad de Manguitos:</label>
-        <input type="number" class="form-control" id="manguitosInput" [(ngModel)]="cantidadManguitos">
-
         <label for="nombreInput" class="form-label">Nombre del Donador:</label>
         <input type="text" class="form-control" id="nombreInput" [(ngModel)]="nombreDonador">
 
@@ -51,6 +48,13 @@
         <label for="mensajeInput" class="form-label">Mensaje:</label>
         <input type="text" class="form-control" id="mensajeInput" [(ngModel)]="mensaje">
 
+        <label for="manguitosInput" class="form-label">Cantidad de Manguitos:</label>
+        <input type="number" step="1" min="1" class="form-control" id="manguitosInput"  (click)="actualizarTotal()"  [(ngModel)]="cantidadManguitos">
+
+        <label for="manguitosMonto" class="form-label">Monto Manguito: ${{detalleEmprendimiento.montoManguito}}</label> <br/>              
+        
+        <label class="form-label">Total:</label> 
+        <input type="number" class="form-control" id="total" [(ngModel)]="total" disabled="true">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

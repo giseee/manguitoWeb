@@ -17,6 +17,7 @@ declare var bootstrap: any; // Agrega esta línea para evitar errores de TypeScr
   styleUrls: ['./detalle-emprendimiento.component.scss']
 })
 export class DetalleEmprendimientoComponent implements OnInit {
+
   @Input() emprendimiento!: Emprendimiento;
   detalleEmprendimiento!: Emprendimiento;
   usuarios!: Usuario[];
@@ -28,6 +29,7 @@ export class DetalleEmprendimientoComponent implements OnInit {
   nombreDonador: string = '';
   contacto: string = '';
   mensaje: string = '';
+  total: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -75,7 +77,7 @@ export class DetalleEmprendimientoComponent implements OnInit {
       nombreDonador: nombre,
       contacto: emailInput.value,
       mensaje: mensaje.value,
-      plan_id: 0,
+      //plan_id: 0,
       emprendimiento_id: this.id,
       fecha: new Date()
     };
@@ -96,4 +98,8 @@ export class DetalleEmprendimientoComponent implements OnInit {
     const donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
     donationModal.hide();
   }
+
+  actualizarTotal() {
+    this.total = this.detalleEmprendimiento.montoManguito * this.cantidadManguitos;
+ }
 }
