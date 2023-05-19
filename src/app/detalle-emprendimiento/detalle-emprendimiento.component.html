@@ -19,7 +19,7 @@
             <label for="categorias">Redes Sociales:</label>
             <div *ngFor="let redSocial of detalleEmprendimiento.redeSociales">
                 <p>{{redSocial.nombreRed}}</p>
-                <p>{{redSocial.id}}</p>
+                <p>{{redSocial.url}}</p>
             </div>
 
         </div>
@@ -51,13 +51,13 @@
         <label for="manguitosInput" class="form-label">Cantidad de Manguitos:</label>
         <input type="number" step="1" min="1" class="form-control" id="manguitosInput"  (click)="actualizarTotal()"  [(ngModel)]="cantidadManguitos">
 
-        <label for="manguitosMonto" class="form-label">Monto Manguito: ${{detalleEmprendimiento.montoManguito}}</label> <br/>              
-        
-        <label class="form-label">Total:</label> 
+        <label for="manguitosMonto" class="form-label">Monto Manguito: ${{detalleEmprendimiento.montoManguito}}</label> <br/>
+
+        <label class="form-label">Total:</label>
         <input type="number" class="form-control" id="total" [(ngModel)]="total" disabled="true">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" routerLink="/">Cancelar</button>
         <button type="button" class="btn btn-primary" (click)="confirmarDonacion()">Confirmar</button>
       </div>
     </div>
