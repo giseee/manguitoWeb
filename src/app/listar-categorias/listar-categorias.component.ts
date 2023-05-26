@@ -16,6 +16,7 @@ export class ListarCategoriasComponent {
   emprendimientos: Emprendimiento[] = [];
   //newCategory: Categoria = new Categoria();
   constructor(private categoriaService: CategoriasService,private emprendimientoService: EmprendimientoService) { }
+  categoriaSeleccionada: string = '';
 
   ngOnInit() {
     this.getCategorias();
@@ -26,6 +27,7 @@ export class ListarCategoriasComponent {
       .subscribe(categorias => this.categorias = categorias);
   }
   obtenerEmprendimientosPorCategoria(nombreCategoria: string): void {
+    this.categoriaSeleccionada = nombreCategoria;
     this.emprendimientoService.obtenerEmprendimientosPorCategoria(nombreCategoria)
       .subscribe(emprendimientos => this.emprendimientos = emprendimientos);
   }
