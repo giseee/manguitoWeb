@@ -8,8 +8,15 @@
         </button>
       </form>
     </div>
+
   </header>
+
   <main>
+    <div>
+      <section class="categorias">
+        <app-listar-categorias></app-listar-categorias>
+      </section>
+    </div>
     <section class="banner-principal">
       <div class="info-foto">
         <p>¡Podemos avanzar juntos!</p>
@@ -18,15 +25,10 @@
       </div>
     </section>
     <section class="emprendimientos">
-      <h2>Emprendimientos destacados</h2>
       <div class="emprendimientos-list">
         <app-emprendimiento [emprendimiento]="emprendimiento"
           *ngFor="let emprendimiento of emprendimientoss"></app-emprendimiento>
       </div>
-    </section>
-    <section class="categorias">
-      <p>Categorías</p>
-      <app-listar-categorias></app-listar-categorias>
     </section>
   </main>
 </body>
