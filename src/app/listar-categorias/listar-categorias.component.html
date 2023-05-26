@@ -15,4 +15,6 @@
     </app-emprendimiento>
   </ul>
 </div>
-<div *ngIf="emprendimientos.length===0"><p>No hay emprendimientos con esa categoria</p></div>
+<div *ngIf="emprendimientos.length == 0 && categoriaSeleccionada !== ''">
+  <p>No hay emprendimientos con esa categoría</p>
+</div>
