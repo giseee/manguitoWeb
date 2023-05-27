@@ -51,9 +51,9 @@ import { ImageModule } from 'primeng/image';
     EmprendimientosComponent,
     EditEmprendimientoComponent,
     ShowForRolesDirective,
-    EditPasswordComponent    
+    EditPasswordComponent
   ],
-  imports: [    
+  imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

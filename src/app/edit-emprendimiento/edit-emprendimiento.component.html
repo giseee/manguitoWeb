@@ -1,69 +1,147 @@
-<form [formGroup]="formEmprendimiento" (ngSubmit)="onUpdateEmprendimiento()">
-  <label>
-    Nombre del emprendimiento:
-    <input type="text" name="nombreEmprendimiento" formControlName="nombreEmprendimiento">
-  </label>
-  <br>
-  <label>
-    Descripción:
-    <textarea formControlName="descripcion" name="descripcion"></textarea>
-  </label>
-  <br>
-  <label>
-    Banner:
-  </label>
-  <!-- Image Preview -->
-  <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
-    <!--<img [src]="imageURL" width="200" height="300">-->
-
-    <p-image [src]="imageURL" alt="Image" width="250"></p-image>
-  </div>
-  <p-fileUpload
-    name="myfile[]"
-    url="formEmprendimiento.banner"
-    (onSelect)="loadImage($event)"
-    (onClear)="clearImage()"
-    (onRemove)="clearImage()"
-    [multiple]="false"
-    [showUploadButton]="false"
-    accept="image/*">
-    <ng-template pTemplate="content" let-files>
-    </ng-template>
-  </p-fileUpload>
-
-
-  <label>
-    Categorías:
-    <p-multiSelect [options]="dropdownListCategorias" formControlName="categorias" optionLabel="nombreCategoria">
-    </p-multiSelect>
-  </label>
-  <br>
-  <div *ngFor="let redSocial of redeSociales">
+<div class="miProyecto">
+  <form [formGroup]="formEmprendimiento" (ngSubmit)="onUpdateEmprendimiento()">
     <label>
-      {{ redSocial.nombreRed }}
-      <input type="text"  [value]="redSocial.url" formControlName="redeSociales" label="url" name="{{ redSocial.url }}">
+      Nombre del emprendimiento:
+      <input
+        type="text"
+        name="nombreEmprendimiento"
+        formControlName="nombreEmprendimiento"
+      />
     </label>
-    <br>
+    <br />
+    <label>
+      Descripción:
+      <textarea formControlName="descripcion" name="descripcion"></textarea>
+    </label>
+    <br />
+    <label> Banner: </label>
+    <!-- Image Preview -->
+    <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+      <!--<img [src]="imageURL" width="200" height="300">-->
+
+      <p-image [src]="imageURL" alt="Image" width="250"></p-image>
+    </div>
+    <p-fileUpload
+      name="myfile[]"
+      url="formEmprendimiento.banner"
+      (onSelect)="loadImage($event)"
+      (onClear)="clearImage()"
+      (onRemove)="clearImage()"
+      [multiple]="false"
+      [showUploadButton]="false"
+      accept="image/*"
+    >
+      <ng-template pTemplate="content" let-files> </ng-template>
+    </p-fileUpload>
+
+    <label>
+      Categorías:
+      <p-multiSelect
+        [options]="dropdownListCategorias"
+        formControlName="categorias"
+        optionLabel="nombreCategoria"
+      >
+      </p-multiSelect>
+    </label>
+    <br />
+    <div *ngFor="let redeSociales of redeSociales; let i = index">
+      <label>
+        <input type="text"  [value]="redeSociales.perfilSocial.nombreRed" formControlName="perfilSocial.nombreRed" label="nombreRed" name="{{ redeSociales.perfilSocial.nombreRed }}" [readOnly]="true">
+        <input type="text"  [value]="redeSociales.url" formControlName="url" label="url" name="{{ redeSociales.url }}">
+        <button (click)="agregarUrl()">Agregar URL</button>
+      </label>
+    </div>
+
+    <label>
+      Monto del manguito:
+      <input
+        type="number"
+        formControlName="montoManguito"
+        name="montoManguito"
+        required
+      />
+    </label>
+    <br />
+    <label>
+      ¿Mostrar manguitos recibidos?
+      <input
+        type="checkbox"
+        formControlName="mostrarManguitos"
+        name="mostrarManguitos"
+      />
+    </label>
+    <br />
+    <label>
+      ¿Mostrar top de donadores?
+      <input
+        type="checkbox"
+        formControlName="mostrarTopDonadores"
+        name="mostrarTopDonadores"
+      />
+    </label>
+    <br />
+    <br />
+    <button
+      *ngIf="formEmprendimiento.get('id')!.value; else crearEmprendimiento"
+      type="submit"
+    >
+      Actualizar emprendimiento
+    </button>
+    <ng-template #crearEmprendimiento>
+      <button (click)="onCreateEmprendimiento()" type="button">
+        Crear emprendimiento
+      </button>
+    </ng-template>
+  </form>
+  <button  (click)="openResumenModal()" type="button" class="btn btn-primary active boton">
+    Ver resumen
+  </button>
+
+  <!-- Ventana emergente para la donación -->
+  <div
+    class="modal fade"
+    id="resumenModal"
+    tabindex="-1"
+    aria-labelledby="resumenModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resumenModalLabel">Resumen de ganancias</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <h2>Resumen de ganancias</h2>
+        <ul>
+          <li>
+            Total Manguitos recibidos: {{ detalleEmp.manguitosRecibidos }}
+          </li>
+        </ul>
+        <h3>Donaciones Recibidas</h3>
+        <ul *ngIf="donacionesRecibidas && donacionesRecibidas.length > 0">
+          <li *ngFor="let donacion of donacionesRecibidas">
+            {{ donacion.nombreDonador }} - {{ donacion.cantidadManguitos }}
+          </li>
+        </ul>
+        <p *ngIf="!donacionesRecibidas || donacionesRecibidas.length === 0">
+          No se encontraron donaciones recibidas.
+        </p>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            routerLink="/"
+          >
+            Volver
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-  <label>
-    Monto del manguito:
-    <input type="number" formControlName="montoManguito" name="montoManguito" required>
-  </label>
-  <br>
-  <label>
-    ¿Mostrar manguitos recibidos?
-    <input type="checkbox" formControlName="mostrarManguitos" name="mostrarManguitos">
-  </label>
-  <br>
-  <label>
-    ¿Mostrar top de donadores?
-    <input type="checkbox" formControlName="mostrarTopDonadores" name="mostrarTopDonadores">
-  </label>
-  <br>
-  <br>
-  <button *ngIf="formEmprendimiento.get('id')!.value else crearEmprendimiento" type="submit">Actualizar
-    emprendimiento</button>
-  <ng-template #crearEmprendimiento>
-    <button (click)="onCreateEmprendimiento()" type="button">Crear emprendimiento</button>
-  </ng-template>
-</form>
+</div>

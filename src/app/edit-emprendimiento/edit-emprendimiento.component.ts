@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, catchError, finalize, map, switchMap } from 'rxjs';
-//import { Emprendimiento } from '../_interfaces/emprendimiento';
+import { Emprendimiento } from '../_interfaces/emprendimiento';
 import { AuthenticationService } from '../_services';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
 import { UsuarioService } from '../_services/usuario.service';
 import { Router } from '@angular/router';
-import { Emprendimiento } from '../_models/emprendimiento';
+//import { Emprendimiento } from '../_models/emprendimiento';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Categoria } from '../_models/categoria'
 import { RedSocial } from '../_models/redSocial';
@@ -15,6 +15,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoriasService } from '../_services/categoria.service';
 import { AlertService } from '../_alert';
 import { RedSocialService } from '../_services/redSocial.service';
+import { Donaciones } from '../_models/donaciones';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-edit-emprendimiento',
@@ -23,14 +25,17 @@ import { RedSocialService } from '../_services/redSocial.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditEmprendimientoComponent implements OnInit {
-
   dropdownListCategorias: any;
   editing: boolean = false;
   mensaje: string = '';
   formData = new FormData();
   imageURL: any;
-  redeSociales: any;
-
+  redeSociales:{ url: "", perfilSocial:{nombreRed:""} }[]=[];
+  redSocial:RedSocial[]=[];
+  id!:number;
+  resumenModal: any;
+  detalleEmp!:Emprendimiento;
+  donacionesRecibidas:Donaciones[]=[];
   formEmprendimiento = new FormGroup({
     id: new FormControl(null, {
       nonNullable: false,
@@ -72,6 +77,7 @@ export class EditEmprendimientoComponent implements OnInit {
     })
   });
 
+
   constructor(private router: Router,
     private authService: AuthenticationService,
     private emprendimientoService: EmprendimientoService,
@@ -95,16 +101,23 @@ export class EditEmprendimientoComponent implements OnInit {
             map((emprendimiento) => {
               this.imageURL = emprendimiento.banner;
               this.formEmprendimiento.patchValue(emprendimiento as any);
+              this.redeSociales=emprendimiento.redeSociales;
+              this.detalleEmp=emprendimiento;
+              this.emprendimientoService.getDonacionesRecibidas(emprendimiento.id)
+              .subscribe(donaciones => {
+                this.donacionesRecibidas = donaciones;
+              });
             })
           ).subscribe();
         }
       })
     ).subscribe();
+
   }
   getRedSocial(): void {
     this.redSocialService.getAll().pipe(
-      map((redeSociales) =>{
-        this.redeSociales=redeSociales
+      map((redSocial) =>{
+        this.redSocial=redSocial
       }),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
@@ -177,6 +190,7 @@ export class EditEmprendimientoComponent implements OnInit {
         throw error;
       })
     ).subscribe();
+
   }
 
   handleServerError() {
@@ -236,13 +250,31 @@ export class EditEmprendimientoComponent implements OnInit {
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
-      //en el response tengo el link que permite ver la imagen.
-      //ese link tendria que estar en el emprendimiento
-      //https://www.youtube.com/watch?v=oruiytokUwo
     }
   }
 
   get banner() { return this.formEmprendimiento.get('banner')}
+
+  openResumenModal() {
+    console.log('estoy en openresumenmodel');
+    const resumenModalElement = document.getElementById('resumenModal');
+    if (resumenModalElement) {
+      const resumenModal = new bootstrap.Modal(resumenModalElement);
+      resumenModal.show();
+    }
+  }
+
+  closeResumenModal() {
+    this.resumenModal.hide();
+  }
+
+  agregarUrl() {
+    const seleccion = prompt(`Selecciona una opción:\n${this.redSocial.map(rs => rs.nombreRed).join('\n')}`);
+    if (seleccion) {
+      const url = prompt('Ingresa la URL:');
+    }
+  }
+
 }
 
 

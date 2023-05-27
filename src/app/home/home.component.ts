@@ -16,18 +16,26 @@ export class HomeComponent implements OnInit{
   nombre!: string;
   categoria!: string;
   emprendimientoss!: Emprendimiento[];
-
+  noResultsFound:boolean=false;
   constructor(
     private emprendimientoService:EmprendimientoService,
     private router: Router,
     public alertService: AlertService
     ){}
-  
-  ngOnInit() {}
-  buscarPorNombre() {
-    this.emprendimientoService.buscarPorNombre(this.nombre).subscribe(
+
+  ngOnInit() {  const nombreBusqueda = localStorage.getItem('nombreBusqueda');
+  if (nombreBusqueda) {
+    this.nombre = nombreBusqueda;
+    this.emprendimientoService.buscarPorNombre(nombreBusqueda).subscribe(
       emprendimientoss => this.emprendimientoss = emprendimientoss
     );
+    this.noResultsFound = (this.emprendimientoss.length === 0);
+    localStorage.removeItem('nombreBusqueda');
+  }}
+  buscarPorNombre() {
+    localStorage.setItem('nombreBusqueda', this.nombre); 
+    window.location.reload();
+
   }
 
 

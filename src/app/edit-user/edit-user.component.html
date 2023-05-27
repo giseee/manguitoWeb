@@ -1,41 +1,38 @@
-<h2>Editar usuario</h2>
-
-<!--el formulario no valida los campos-->
-<!--No conviene editar el nombre(campo clave!) y la contraseña conviene en un caso de uso aparte-->
 
 <form [formGroup]="formUsuario" (ngSubmit)="onUpdateUsuario()">
-
-  <div class="form-group">
-    <label for="name">Nombre</label>
+  <h2>Editar usuario</h2>
+  <fieldset class="form-group">
+    <legend>Nombre</legend>
     <input type="text" class="form-control" id="name" formControlName="nombre">
-  </div>
-  <div *ngIf="name!.invalid && (name!.dirty || name!.touched)" class="alert alert-danger">
-    <div *ngIf="name!.hasError('required')">
-      El nombre es requerido.
+    <div *ngIf="name!.invalid && (name!.dirty || name!.touched)" class="alert alert-danger">
+      <div *ngIf="name!.hasError('required')" class="error-message">El nombre es requerido.</div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="mail">Mail</label>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <legend>Mail</legend>
     <input type="email" class="form-control" id="mail" formControlName="mail">
-  </div>
-  <div *ngIf="mail!.invalid && (mail!.dirty || mail!.touched)" class="alert alert-danger">
-    <div *ngIf="mail!.hasError('required')">
-      El correo es requerido.
+    <div *ngIf="mail!.invalid && (mail!.dirty || mail!.touched)" class="alert alert-danger">
+      <div *ngIf="mail!.hasError('required')" class="error-message">El correo es requerido.</div>
+      <div *ngIf="mail!.hasError('email')" class="error-message">El formato del correo es incorrecto.</div>
     </div>
-    <div *ngIf="mail!.hasError('email')">
-      El formato del correo es incorrecto.
-    </div>
-  </div>
+  </fieldset>
+
   <!--<div class="form-group">
     <label for="password">Contraseña</label>
     <input type="password" class="form-control" id="password" formControlName="password">
   </div>-->
+
   <p *ngIf="formUsuario.hasError('unauthorized')" class="error-msg">
     No autorizado para modificar perfil.
   </p>
+<div class="botones">
   <button type="submit" class="btn btn-primary mr-2" [disabled]="formUsuario.invalid || editing">Guardar</button>
   <button type="button" class="btn btn-secondary" (click)="cancelEdit()" routerLinkActive="active" routerLink="/dashboard">Cancelar</button>
-  <br>
+</div>
+<br>
   <div>
-    <a class="btn btn-secondary" routerLink="/editPassword" routerLinkActive="active">Cambiar contraseña</a>
+    <a class="btn btn-secondary cambio" routerLink="/editPassword" routerLinkActive="active">Cambiar contraseña</a>
   </div>
+
+</form>

@@ -60,7 +60,7 @@ header {
 }
 
 .search-button {
-  background-color: #e8b057;
+  background-color: #c300ffe8;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -70,7 +70,7 @@ header {
 
 /* Estilos del banner principal */
 .banner-principal {
-  background-color: #d8abdb;
+  background-color: #c300ffe8;
   padding: 48px 16px;
   text-align: center;
     display:flex;
@@ -109,7 +109,7 @@ header {
 
 /* Estilos de la sección de categorías */
 .categorias {
-  background-color:  #d8abdb;
+  background-color:  #c300ffe8;
   padding: 48px 16px;
   text-align: center;
 }
@@ -122,7 +122,7 @@ header {
 }
 
 .listar-categorias .categoria {
-  background-color: #d8abdb;
+  background-color: #c300ffe9;
   border-radius: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin: 8px;
@@ -150,102 +150,3 @@ header {
   line-height: 1.5;
   text-align: center;
 }
-
-/*
-.card{
-  background-blend-mode: color;
-  box-sizing: border-box;
-  height: 80px;
-  background-repeat: no-repeat;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  justify-content: center;
-  font-size: large;
-}
-.object-cover {
-  object-fit: cover;
-}
-
-nav div .navbar-nav a {
-  color: rgb(134, 134, 134);
-}
-
-footer {
-  font-size: 0.9rem;
-  background-color: #103a57;
-}
-
-footer a {
-  text-decoration: none;
-  color: white
-}
-.banner-principal {
-  display:flex;
-  flex-direction: column;
-  background:url('/assets/img/pexels-jess-bailey-designs-876467.jpg'),rgba(216, 190, 190, 0.356);
-  background-blend-mode: color;
-  box-sizing: border-box;
-  height: 70vh;
-  background-size:cover;
-  background-repeat: no-repeat;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  justify-content: center;
-  font-size: large;
-  color:  rgb(253, 252, 252);
-}
-
-.services{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  text-transform: uppercase;
-  font-size: 50px;
-  padding-top: 0.5em;
-
-}
-
-.formulario{
-padding: 10em 10em 10em 10em;
-background-color: rgb(230, 189, 148);
-
-}
-
-.banner-principal .info-foto {
-  color:  rgb(68, 65, 63);
-  font-size: xx-large;
-
-}
-.banner-principal .info-foto p {
-  justify-content: center;
-  color: rgb(0, 0, 0);
-  justify-content: flex-end;
-  font-size: 50px;
-}
-
-
-
-.links a{
-margin-left: 4px;
-color: white;
-}
-.input-buscar{
-
-  height: auto;
-  display:flex;
-  justify-content: center;
-  padding: 200px;
-
-
-}
-.input-buscar{
-
-border: 2px rgb(8, 8, 8); }
-
-footer{
-  background-color:  rgb(247, 155, 64);
-  padding-top: .5em;
-  padding-bottom: 0%;
-  background-position-y: end;
-}
-*/

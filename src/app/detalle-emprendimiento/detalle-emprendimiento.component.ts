@@ -86,6 +86,8 @@ export class DetalleEmprendimientoComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('Donación realizada con éxito', response);
+          const donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+          donationModal.hide();
         }
       );
 
@@ -101,5 +103,5 @@ export class DetalleEmprendimientoComponent implements OnInit {
 
   actualizarTotal() {
     this.total = this.detalleEmprendimiento.montoManguito * this.cantidadManguitos;
- }
+}
 }

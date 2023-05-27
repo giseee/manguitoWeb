@@ -3,6 +3,15 @@ form {
   margin: 0 auto;
 }
 
+h2 {
+  color: #360246;
+  font-size: 24px;
+  margin-bottom: 20px;
+  justify-content: center;
+  width: 100%;
+  
+}
+
 .form-group {
   margin-bottom: 20px;
 }
@@ -24,18 +33,40 @@ input[type="password"] {
 
 button[type="submit"],
 a.btn {
-  display: inline-block;
+
   padding: 10px 20px;
   border-radius: 3px;
   font-size: 16px;
   color: #fff;
-  background-color: #007bff;
+  background-color: #c300ffe8;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;
+  margin-right: 10px;
 }
 
 button[type="submit"]:hover,
 a.btn:hover {
-  background-color: #0069d9;
+  background-color: #c18ac9;
+}
+.cambio {
+  padding: auto;
+  margin: auto;
+  width: 100%;
+}
+button.btn-secondary {
+  color: #333;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+}
+
+button.btn-secondary:hover {
+  background-color: #e9ecef;
+}
+.botones{
+
+  width: 100%;
+}
+.active {
+  font-weight: bold;
 }

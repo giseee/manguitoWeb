@@ -6,6 +6,7 @@ import { Emprendimiento } from '../_models/emprendimiento';
 import { environment as env } from 'src/environments/environments';
 //import { Categorias } from '../_models/categorias';
 import { AuthenticationService } from './authentication.service';
+import { Donaciones } from '../_models/donaciones';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +25,7 @@ export class EmprendimientoService {
   crearEmprendimiento(emprendimiento: Emprendimiento) {
     return this.http.post<Emprendimiento>(`${env.url}/api/emprendimientos`,emprendimiento);
   }
-  
+
   create(formData: FormData){
     return this.http.post<Emprendimiento>(`${env.url}/api/emprendimientos`,formData);
   }
@@ -47,7 +48,7 @@ export class EmprendimientoService {
   getCategoria(id: Number) {
     return this.http.get<Categoria[]>(`${env.url}/api/categorias/` + id);
 }
-getUsuarios(): Observable<Usuario[]> {
+  getUsuarios(): Observable<Usuario[]> {
   return this.http.get<Usuario[]>(`${env.url}/api/usuarios`);
 }
   updateEmprendimiento(emprendimiento: Emprendimiento): Observable<Emprendimiento> {
@@ -55,7 +56,7 @@ getUsuarios(): Observable<Usuario[]> {
 
   }
 
-  getEmprendimientoById(id: number): Observable<any> {    
+  getEmprendimientoById(id: number): Observable<any> {
     return this.http.get(`${env.url}/api/emprendimientos/${id}`);
   }
   getEmprendimientos(): Observable<Emprendimiento[]> {
@@ -87,7 +88,10 @@ obtenerEmprendimientosPorCategoria(nombreCategoria: string): Observable<Emprendi
   return this.http.get<Emprendimiento[]>(endpoint);
 }
 
-  // Resto de métodos
+getDonacionesRecibidas(idEmprendimiento: number): Observable<Donaciones[]> {
+  const url = `${env.url}/api/donacion/emprendimiento/${idEmprendimiento}`;
+  return this.http.get<Donaciones[]>(url);
+}
 }
 
 
