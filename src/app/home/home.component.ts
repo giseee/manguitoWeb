@@ -11,14 +11,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit{
-  mostrarDetalle = false;
-  @Input() emprendimiento!:Emprendimiento;
-  @Output() showEmp= new EventEmitter<number>();
   nombre!: string;
   categoria!: string;
   emprendimientoss!: Observable<Emprendimiento[]>;
   noResultsFound:boolean=false;
-  resultados!: Emprendimiento[];
+  resultados: Emprendimiento[]=[];
   constructor(
     private emprendimientoService:EmprendimientoService,
     private router: Router,
@@ -40,12 +37,18 @@ export class HomeComponent implements OnInit{
         localStorage.removeItem('nombreBusqueda');
       }
     }
-
     buscarPorNombre() {
       localStorage.setItem('nombreBusqueda', this.nombre);
-      window.location.reload();
+      this.emprendimientoss = this.emprendimientoService.buscarPorNombre(this.nombre);
+      this.emprendimientoss.subscribe(
+        resultados => {
+          this.resultados = resultados;
+          this.noResultsFound = (this.resultados.length === 0);
+        }
+      );
     }
-  
+
+
   //buscarPorCategoria() {
   // this.emprendimientoService.buscarPorCategoria(this.categoria).subscribe(
   //      emprendimientos => this.emprendimientos = emprendimientos
