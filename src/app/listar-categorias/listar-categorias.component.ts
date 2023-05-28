@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Categoria } from '../_models/categoria';
 import { CategoriasService } from '../_services/categoria.service'
 import { Emprendimiento } from '../_models/emprendimiento';
@@ -11,7 +11,7 @@ import { EmprendimientoService } from '../_services/emprendimiento.service';
   templateUrl: './listar-categorias.component.html',
   styleUrls: ['./listar-categorias.component.scss']
 })
-export class ListarCategoriasComponent {
+export class ListarCategoriasComponent implements OnInit {
   categorias: Categoria[] = [];
   emprendimientos: Emprendimiento[] = [];
   //newCategory: Categoria = new Categoria();

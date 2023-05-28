@@ -84,7 +84,7 @@ p {
     background:url('/assets/img/pexels-jess-bailey-designs-876467.jpg');
     background-blend-mode: color;
     box-sizing: border-box;
-    height: 70vh;
+    height: 80vh;
     background-size:cover;
     background-repeat: no-repeat;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -96,7 +96,7 @@ p {
 }
 
 .info-foto {
-  max-width: 600px;
+  max-width: 300px;
   margin: 0 auto;
 }
 
@@ -104,6 +104,7 @@ p {
 .emprendimientos {
   padding: 48px 16px;
   text-align: center;
+  border: 2px solid rgb(250, 218, 248);
 }
 
 .emprendimientos-list {
@@ -111,11 +112,11 @@ p {
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 24px;
+
 }
 
 /* Estilos de la sección de categorías */
 .categorias {
-  background-color:  #c300ffe8;
   padding: 48px 16px;
   text-align: center;
 }

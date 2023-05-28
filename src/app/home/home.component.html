@@ -4,10 +4,11 @@
       <form (ngSubmit)="buscarPorNombre()">
         <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Buscar emprendimientos">
         <button type="submit" class="search-button">Buscar</button>
+        <div *ngIf="noResultsFound" class="no-results-message">
+          No se encontraron resultados para la búsqueda.
+        </div>
       </form>
-      <div *ngIf="noResultsFound" class="no-results-message">
-        No se encontraron resultados para la búsqueda.
-      </div>
+
     </div>
   </section>
 
@@ -20,10 +21,14 @@
 
     <section class="emprendimientos">
       <div class="emprendimientos-list">
-        <app-emprendimiento [emprendimiento]="emprendimiento"
-          *ngFor="let emprendimiento of emprendimientoss"></app-emprendimiento>
+        <app-emprendimiento [emprendimiento]="emprendimiento" *ngFor="let emprendimiento of emprendimientoss | async as resultados">
+        </app-emprendimiento>
+        <div *ngIf="resultados.length === 0 && noResultsFound" class="no-results-message">
+          No se encontraron resultados para la búsqueda.
+        </div>
       </div>
     </section>
+
 
     <section class="banner-principal">
       <div class="info-foto">
