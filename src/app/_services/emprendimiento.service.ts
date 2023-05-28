@@ -92,6 +92,10 @@ getDonacionesRecibidas(idEmprendimiento: number): Observable<Donaciones[]> {
   const url = `${env.url}/api/donacion/emprendimiento/${idEmprendimiento}`;
   return this.http.get<Donaciones[]>(url);
 }
+
+obtenerTopDonadores() {
+  return this.http.get<any[]>(`${env.url}/api/donacion/top`);
+}
 }
 
 

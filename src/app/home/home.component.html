@@ -1,18 +1,15 @@
 <body>
-  <header>
+  <section class="buscar">
     <div class="search-bar">
       <form (ngSubmit)="buscarPorNombre()">
         <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Buscar emprendimientos">
-        <button type="submit" class="search-button">
-          Buscar
-        </button>
+        <button type="submit" class="search-button">Buscar</button>
       </form>
       <div *ngIf="noResultsFound" class="no-results-message">
         No se encontraron resultados para la búsqueda.
       </div>
     </div>
-
-  </header>
+  </section>
 
   <main>
     <div>
@@ -20,23 +17,19 @@
         <app-listar-categorias></app-listar-categorias>
       </section>
     </div>
+
     <section class="emprendimientos">
       <div class="emprendimientos-list">
         <app-emprendimiento [emprendimiento]="emprendimiento"
           *ngFor="let emprendimiento of emprendimientoss"></app-emprendimiento>
       </div>
     </section>
+
     <section class="banner-principal">
       <div class="info-foto">
         <p>¡Podemos avanzar juntos!</p>
         <br><br>
         Apoyá a emprendedores de todo el país y sumate a nuestra comunidad con tu proyecto.
-      </div>
-    </section>
-    <section class="emprendimientos">
-      <div class="emprendimientos-list">
-        <app-emprendimiento [emprendimiento]="emprendimiento"
-          *ngFor="let emprendimiento of emprendimientoss"></app-emprendimiento>
       </div>
     </section>
   </main>

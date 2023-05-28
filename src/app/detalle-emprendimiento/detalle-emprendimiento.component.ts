@@ -6,7 +6,7 @@ import { RedSocial } from '../_models/redSocial';
 import { Usuario } from '../_models/usuario';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
 import { environment as env } from 'src/environments/environments';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Donaciones } from '../_models/donaciones';
 
 declare var bootstrap: any; // Agrega esta línea para evitar errores de TypeScript
@@ -30,7 +30,7 @@ export class DetalleEmprendimientoComponent implements OnInit {
   contacto: string = '';
   mensaje: string = '';
   total: number = 0;
-
+  donadores: Donaciones[]=[];
   constructor(
     private route: ActivatedRoute,
     private emprendimientoService: EmprendimientoService,
@@ -48,6 +48,10 @@ export class DetalleEmprendimientoComponent implements OnInit {
     this.emprendimientoService.getEmprendimiento(this.id).subscribe(
       (response: Emprendimiento) => {
         this.detalleEmprendimiento = response;
+        this.emprendimientoService.getDonacionesRecibidas(this.detalleEmprendimiento.id)
+        .subscribe((donadoresResponse: Donaciones[]) => {
+          this.donadores = donadoresResponse.sort((a, b) => b.cantidadManguitos - a.cantidadManguitos);
+          });
       }
     );
   }

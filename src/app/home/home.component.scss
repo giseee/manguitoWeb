@@ -3,7 +3,7 @@
   width: 5em;
 }
 .navbar-nav .disabled{
-  color:rgb(8, 80, 8);
+  color:rgb(216, 207, 215);
 
 }
 /* Estilos generales */
@@ -26,20 +26,26 @@ p {
 }
 
 /* Estilos de la cabecera */
-header {
-  background-color: #fff;
+.buscar {
+  border-radius: 10px;
+  border-color: #e5dfe6;;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  padding: 10px;
+  text-align: center;
 }
+
 
 .logo img {
   height: 40px;
 }
 
 .search-bar {
+  border-radius: 10px;
   display: flex;
   flex-grow: 1;
   margin-left: 16px;
