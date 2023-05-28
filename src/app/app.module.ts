@@ -31,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ImageModule } from 'primeng/image';
     AlertModule,
     MultiSelectModule,
     FileUploadModule,
-    ImageModule
+    ImageModule,
+    DropdownModule
   ],
   providers: [authTokeninterceptorProvider,AuthenticationService],
   bootstrap: [AppComponent]

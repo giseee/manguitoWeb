@@ -1,3 +1,4 @@
+import { RedSocialDTO } from "../_models/redSocialDTO";
 import { Donaciones } from "../_models/donaciones";
 
 
@@ -8,7 +9,7 @@ export interface Emprendimiento {
   nombreEmprendimiento: string;
   descripcion: string;
   categorias: Categoria[];
-  redeSociales:RedSocial [];
+  redeSociales:RedSocialDTO [];
   manguitosRecibidos:number;
   donaciones:Donaciones[];
   banner: string;

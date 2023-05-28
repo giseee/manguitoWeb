@@ -2,6 +2,7 @@ import { Usuario } from "./usuario";
 import { RedSocial } from "./redSocial";
 import { Categoria } from "./categoria";
 import { Donaciones } from "./donaciones";
+import { RedSocialDTO } from "./redSocialDTO";
 
 export class Emprendimiento {
   id: number;
@@ -12,7 +13,7 @@ export class Emprendimiento {
   manguitosRecibidos: number;
   mostrarManguitos: boolean;
   mostrarTopDonadores: boolean;
-  redeSociales: RedSocial[];
+  redeSociales: RedSocialDTO[];
   categorias: Categoria[];
   donaciones: Donaciones[];
   montoManguito: number;
@@ -28,7 +29,7 @@ export class Emprendimiento {
     mostrarTopDonadores: boolean = true,
     categorias: Categoria[] = [],
     donaciones: Donaciones[] = [],
-    redSocial: RedSocial[] = [],
+    redeSocial: RedSocialDTO[] = [],
     montoManguito:number = 0
   ) {
     this.id = id;
@@ -41,7 +42,7 @@ export class Emprendimiento {
     this.mostrarTopDonadores = mostrarTopDonadores;
     this.categorias = categorias;
     this.donaciones = donaciones;    
-    this.redeSociales = redSocial;        
+    this.redeSociales = redeSocial;        
     this.montoManguito = montoManguito;    
   }
 }

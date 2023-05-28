@@ -38,13 +38,23 @@
     </p-multiSelect>
   </label>
   <br>
-  <div *ngFor="let redSocial of redeSociales">
-    <label>
-      {{ redSocial.nombreRed }}
-      <input type="text"  [value]="redSocial.url" formControlName="redeSociales" label="url" name="{{ redSocial.url }}">
-    </label>
-    <br>
-  </div>
+
+  <label>
+    Redes Sociales:
+  </label>
+  <ng-container formArrayName="redeSociales">
+    <ng-container *ngFor="let redSocialDTOForm of redeSociales.controls; let i = index">
+      <div [formGroupName]="i"><!--  [formGroup]="redSocialDTOForm"-->
+        <input id="url" type="text" formControlName="url" /> 
+        <p-dropdown formControlName="perfilSocial" [options]="dropdownListPerfilSocial" optionLabel="nombreRed"></p-dropdown> 
+        <button type="button" (click)="removeRedSocial(i)">Eliminar</button>                 
+      </div>
+    </ng-container>
+    <button type="button" (click)="addNewRedSocial()">Agregar Red Social</button>
+  </ng-container>
+  
+  
+
   <label>
     Monto del manguito:
     <input type="number" formControlName="montoManguito" name="montoManguito" required>
@@ -64,6 +74,6 @@
   <button *ngIf="formEmprendimiento.get('id')!.value else crearEmprendimiento" type="submit">Actualizar
     emprendimiento</button>
   <ng-template #crearEmprendimiento>
-    <button (click)="onCreateEmprendimiento()" type="button">Crear emprendimiento</button>
+    <button (click)="onCreateEmprendimiento()" type="button" [disabled]="formEmprendimiento.invalid || editing">Crear emprendimiento</button>
   </ng-template>
 </form>

@@ -12,6 +12,7 @@ import { UsuarioService } from './usuario.service';
   providedIn: 'root'
 })
 export class AuthenticationService {
+
   private static USER_KEY_LOCALSTORE = 'User';
   private readonly TOKEN_KEY = 'access_token';
   private currentUsuarioSubject = new BehaviorSubject<Usuario | null>(null);
@@ -111,5 +112,14 @@ export class AuthenticationService {
   }
   getCurrentUserId(): number {
     return this.id
+  }
+
+  updateUsuario(id: number) {
+    const userFromSession = sessionStorage.getItem(AuthenticationService.USER_KEY_LOCALSTORE) as string;
+    if(userFromSession){
+      let usuario:Usuario = JSON.parse(userFromSession);      
+      usuario.id_emprendimiento = id;
+      this.setUserToSessionStorage(usuario);
+    }
   }
 }

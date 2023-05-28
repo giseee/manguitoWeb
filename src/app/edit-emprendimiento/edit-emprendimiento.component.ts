@@ -11,10 +11,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Categoria } from '../_models/categoria'
 import { RedSocial } from '../_models/redSocial';
 import { environment } from 'src/environments/environments';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { CategoriasService } from '../_services/categoria.service';
 import { AlertService } from '../_alert';
 import { RedSocialService } from '../_services/redSocial.service';
+import { RedSocialDTO } from '../_models/redSocialDTO';
+import { PerfilSocialDTO } from '../_models/perfilSocial';
 
 @Component({
   selector: 'app-edit-emprendimiento',
@@ -25,11 +27,11 @@ import { RedSocialService } from '../_services/redSocial.service';
 export class EditEmprendimientoComponent implements OnInit {
 
   dropdownListCategorias: any;
+  dropdownListPerfilSocial: any;
   editing: boolean = false;
   mensaje: string = '';
   formData = new FormData();
   imageURL: any;
-  redeSociales: any;
 
   formEmprendimiento = new FormGroup({
     id: new FormControl(null, {
@@ -48,25 +50,25 @@ export class EditEmprendimientoComponent implements OnInit {
     banner: new FormControl('', {
       nonNullable: false,
     }),
-    manguitosRecibidos: new FormControl( 0 , {
+    manguitosRecibidos: new FormControl(0, {
       nonNullable: false,
     }),
-    mostrarManguitos: new FormControl( false , {
+    mostrarManguitos: new FormControl(false, {
       nonNullable: false,
     }),
-    mostrarTopDonadores: new FormControl( false , {
+    mostrarTopDonadores: new FormControl(false, {
       nonNullable: false,
     }),
-    redeSociales: new FormControl( [] , {
+
+    redeSociales: this.fb.array([]),
+
+    categorias: new FormControl([], {
       nonNullable: false,
     }),
-    categorias: new FormControl( [] , {
+    donaciones: new FormControl([], {
       nonNullable: false,
     }),
-    donaciones: new FormControl( [] , {
-      nonNullable: false,
-    }),
-    montoManguito: new FormControl( 0 , {
+    montoManguito: new FormControl(0, {
       validators: [Validators.required],
       nonNullable: true,
     })
@@ -76,16 +78,17 @@ export class EditEmprendimientoComponent implements OnInit {
     private authService: AuthenticationService,
     private emprendimientoService: EmprendimientoService,
     private categoriasService: CategoriasService,
-    private redSocialService:  RedSocialService,
+    private redSocialService: RedSocialService,
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
     public alertService: AlertService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     //Cargo las categorías
     this.getCategorias();
-    this.getRedSocial();
+    this.getPerfilesSociales();
     //Cargo el emprendimiento si lo tiene
     this.authService.currentUsuario$.pipe(
       map((user) => {
@@ -95,16 +98,25 @@ export class EditEmprendimientoComponent implements OnInit {
             map((emprendimiento) => {
               this.imageURL = emprendimiento.banner;
               this.formEmprendimiento.patchValue(emprendimiento as any);
+              //Agrego las redes sociales
+              emprendimiento.redeSociales.forEach((redSocial: { id: any; url: any; perfilSocial: { id: any; nombreRed: any; }; }) => {
+                this.redeSociales.push(this.fb.group({
+                  id: new FormControl(redSocial.id),
+                  url: new FormControl(redSocial.url, [Validators.required]),
+                  perfilSocial: redSocial.perfilSocial
+                }));
+              });
             })
           ).subscribe();
         }
       })
     ).subscribe();
   }
-  getRedSocial(): void {
+
+  getPerfilesSociales(): void {
     this.redSocialService.getAll().pipe(
-      map((redeSociales) =>{
-        this.redeSociales=redeSociales
+      map((perfilesSociales) => {
+        this.dropdownListPerfilSocial = perfilesSociales
       }),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
@@ -113,11 +125,12 @@ export class EditEmprendimientoComponent implements OnInit {
         }
         throw error;
       })
-      ).subscribe();
-    }
+    ).subscribe();
+  }
+
   getCategorias(): void {
     this.categoriasService.getAll().pipe(
-      map((categorias) =>{
+      map((categorias) => {
         this.dropdownListCategorias = categorias
       }),
       catchError((error: HttpErrorResponse) => {
@@ -132,8 +145,13 @@ export class EditEmprendimientoComponent implements OnInit {
 
   onCreateEmprendimiento() {
     this.editing = true;
-    this.formData.append('emprendimiento', new Blob([JSON.stringify(this.formEmprendimiento.value)], {type: "application/json"}));
+    this.formData.append('emprendimiento', new Blob([JSON.stringify(this.formEmprendimiento.value)], { type: "application/json" }));
     this.emprendimientoService.create(this.formData).pipe(
+      map((emprendimiento) => {
+        //Obtengo el usuario, le seteo el id del emprendimiento y guardo al usuario en la sesion.
+        this.authService.updateUsuario(emprendimiento.id);
+      }
+      ),
       finalize(() => {
         this.editing = false;
         this.router.navigateByUrl('/');
@@ -157,8 +175,8 @@ export class EditEmprendimientoComponent implements OnInit {
     this.editing = true;
     var emprendimiento = JSON.parse(JSON.stringify(this.formEmprendimiento.value)) as Emprendimiento;
     let text = emprendimiento.id.toString();
-    this.formData.append('id',text);
-    this.formData.append('emprendimiento', new Blob([JSON.stringify(this.formEmprendimiento.value)], {type: "application/json"}));
+    this.formData.append('id', text);
+    this.formData.append('emprendimiento', new Blob([JSON.stringify(this.formEmprendimiento.value)], { type: "application/json" }));
     this.emprendimientoService.putEmprendimiento(this.formData).pipe(
       finalize(() => {
         this.editing = false;
@@ -183,7 +201,7 @@ export class EditEmprendimientoComponent implements OnInit {
     let options = {
       autoClose: true,
       keepAfterRouteChange: false
-  };
+    };
     this.alertService.error('No se pudo actualizar el emprendimiento.', options);
   }
 
@@ -191,7 +209,7 @@ export class EditEmprendimientoComponent implements OnInit {
     let options = {
       autoClose: true,
       keepAfterRouteChange: false
-  };
+    };
     this.alertService.success('El emprendimiento se ha actualizado de forma exitosa.', options);
   }
 
@@ -200,14 +218,14 @@ export class EditEmprendimientoComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  loadImage(event: any){
+  loadImage(event: any) {
     const file = event.files[0];
     if (file) {
       this.formData.append('archivoImagen', file);
     }
   }
 
-  clearImage(){
+  clearImage() {
     this.formData.delete('archivoImagen');
   }
 
@@ -226,7 +244,7 @@ export class EditEmprendimientoComponent implements OnInit {
     reader.readAsDataURL(file)
   }
 
-  hidePreview(){
+  hidePreview() {
     this.imageURL = null;
     this.formEmprendimiento.get('banner')?.setValue(null);
   }
@@ -242,7 +260,25 @@ export class EditEmprendimientoComponent implements OnInit {
     }
   }
 
-  get banner() { return this.formEmprendimiento.get('banner')}
+  get banner() { return this.formEmprendimiento.get('banner') }
+
+  get redeSociales() { return this.formEmprendimiento.controls["redeSociales"] as FormArray; }
+
+  addNewRedSocial() {
+    //Necesito insertar un perfil social por defecto porque no toma nada en caso de no tocar el control.
+    const perfil = JSON.parse(JSON.stringify(this.dropdownListPerfilSocial[0])) as PerfilSocialDTO;
+    const redSocialDTOForm = this.fb.group({
+      id: new FormControl(''),
+      url: new FormControl('', [Validators.required]),
+      perfilSocial: perfil
+    });
+    this.redeSociales.push(redSocialDTOForm);
+  }
+
+  removeRedSocial(index: any){
+    console.log(index);
+    this.redeSociales.removeAt(index);
+  }
 }
 
 
