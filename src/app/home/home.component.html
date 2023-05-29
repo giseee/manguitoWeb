@@ -4,12 +4,8 @@
       <form (ngSubmit)="buscarPorNombre()">
         <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Buscar emprendimientos">
         <button type="submit" class="search-button">Buscar</button>
-        <div *ngIf="noResultsFound" class="no-results-message">
-          No se encontraron resultados para la búsqueda.
-        </div>
       </form>
-    </div>
-
+      </div>
   </section>
   <main>
     <div>
@@ -17,15 +13,25 @@
         <app-listar-categorias></app-listar-categorias>
       </section>
     </div>
-
     <section class="emprendimientos">
-      <div class="emprendimientos-list">
-        <app-emprendimiento [emprendimiento]="emprendimiento" *ngFor="let emprendimiento of emprendimientoss | async as resultados">
-        </app-emprendimiento>
-        <div *ngIf="resultados.length === 0 && noResultsFound" class="no-results-message">
-          No se encontraron resultados para la búsqueda.
+        <div class="emprendimientos-list" *ngIf="emprendimientos && mostrarResultadosCategorias; else noResults">
+          <app-emprendimiento [emprendimiento]="emprendimiento" *ngFor="let emprendimiento of emprendimientos"></app-emprendimiento>
         </div>
+        <ng-template #noResults>
+          <div class="no-results-message"*ngIf="mostrarResultadosCategorias">
+            No se encontraron resultados para la categoría seleccionada.
+          </div>
+        </ng-template>
+
+      <div class="emprendimientos-list" *ngIf="mostrarResultadosBusqueda; else noResult">
+        <app-emprendimiento [emprendimiento]="emprendimiento" *ngFor="let emprendimiento of resultados">
+        </app-emprendimiento>
       </div>
+      <ng-template #noResult>
+        <div class="no-results-message"*ngIf="mostrarResultadosBusqueda">
+          No se encontraron resultados para la busqueda ingresada.
+        </div>
+      </ng-template>
     </section>
 
     <section class="banner-principal">

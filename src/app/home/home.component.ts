@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
 import { Emprendimiento } from '../_models/emprendimiento';
 import { Router } from '@angular/router';
@@ -10,35 +10,38 @@ import { Observable } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit,OnChanges{
   nombre!: string;
   categoria!: string;
   emprendimientoss!: Observable<Emprendimiento[]>;
+  @Input() emprendimientos: any[]=[];
   noResultsFound:boolean=false;
   resultados: Emprendimiento[]=[];
+  mostrarResultadosBusqueda:boolean=false;
+  mostrarResultadosCategorias:boolean=false;
   constructor(
     private emprendimientoService:EmprendimientoService,
-    private router: Router,
     public alertService: AlertService
     ){}
 
+    ngOnChanges(changes: SimpleChanges): void {
 
-    ngOnInit() {
-      const nombreBusqueda = localStorage.getItem('nombreBusqueda');
-      if (nombreBusqueda) {
-        this.nombre = nombreBusqueda;
-        this.emprendimientoss = this.emprendimientoService.buscarPorNombre(nombreBusqueda); // Asignar directamente el Observable devuelto por el servicio
-        this.emprendimientoss.subscribe(
-          resultados => {
-            this.resultados = resultados;
-            this.noResultsFound = (this.resultados.length === 0);
-          }
-        );
-        localStorage.removeItem('nombreBusqueda');
+      if (changes['emprendimientos']) {
+        this.emprendimientos;
+        this.resultados=[];
+        this.nombre='';
+        this.mostrarResultadosCategorias=!this.mostrarResultadosCategorias;
       }
+      if (this.emprendimientos.length>0){
+        this.mostrarResultadosCategorias=true;
+        this.resultados=[];}
+
+    }
+    ngOnInit() {
     }
     buscarPorNombre() {
-      localStorage.setItem('nombreBusqueda', this.nombre);
+      this.mostrarResultadosCategorias=false;
+      this.mostrarResultadosBusqueda=true;
       this.emprendimientoss = this.emprendimientoService.buscarPorNombre(this.nombre);
       this.emprendimientoss.subscribe(
         resultados => {
@@ -46,13 +49,9 @@ export class HomeComponent implements OnInit{
           this.noResultsFound = (this.resultados.length === 0);
         }
       );
+      this.nombre='';
+      }
+      mod(){
+        this.mostrarResultadosCategorias=true;
+      }
     }
-
-
-  //buscarPorCategoria() {
-  // this.emprendimientoService.buscarPorCategoria(this.categoria).subscribe(
-  //      emprendimientos => this.emprendimientos = emprendimientos
-   // );}
-
-
-}

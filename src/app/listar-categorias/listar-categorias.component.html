@@ -7,13 +7,6 @@
     </ul>
   </nav>
 </div>
-<div *ngIf="emprendimientos.length > 0">
 
-    <app-emprendimiento
-    [emprendimiento]="emprendimiento"
-     *ngFor="let emprendimiento of emprendimientos">
-</app-emprendimiento>
-</div>
-<div *ngIf="emprendimientos.length == 0 && categoriaSeleccionada !== ''">
-  <p>No hay emprendimientos con esa categoría</p>
-</div>
+
+

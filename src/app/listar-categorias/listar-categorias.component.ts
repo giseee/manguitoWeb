@@ -4,6 +4,7 @@ import { Categoria } from '../_models/categoria';
 import { CategoriasService } from '../_services/categoria.service'
 import { Emprendimiento } from '../_models/emprendimiento';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
+import { HomeComponent } from '../home';
 
 
 @Component({
@@ -13,9 +14,8 @@ import { EmprendimientoService } from '../_services/emprendimiento.service';
 })
 export class ListarCategoriasComponent implements OnInit {
   categorias: Categoria[] = [];
-  emprendimientos: Emprendimiento[] = [];
   //newCategory: Categoria = new Categoria();
-  constructor(private categoriaService: CategoriasService,private emprendimientoService: EmprendimientoService) { }
+  constructor(private categoriaService: CategoriasService,private emprendimientoService: EmprendimientoService, private home: HomeComponent) { }
   categoriaSeleccionada: string = '';
 
   ngOnInit() {
@@ -27,9 +27,11 @@ export class ListarCategoriasComponent implements OnInit {
       .subscribe(categorias => this.categorias = categorias);
   }
   obtenerEmprendimientosPorCategoria(nombreCategoria: string): void {
+    this.home.mostrarResultadosCategorias=true;
+    this.home.mostrarResultadosBusqueda=false;
     this.categoriaSeleccionada = nombreCategoria;
     this.emprendimientoService.obtenerEmprendimientosPorCategoria(nombreCategoria)
-      .subscribe(emprendimientos => this.emprendimientos = emprendimientos);
+      .subscribe(emprendimientos =>  this.home.emprendimientos= emprendimientos);
   }
 
 }
