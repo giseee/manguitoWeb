@@ -1,13 +1,11 @@
 <div class="contenedor_principal" align="center">
   <div>
-      <div class="conteiner">
+      <div class="conteiner card-body">
           <div class="contenedor_titulo">
             <h1>{{detalleEmprendimiento.nombreEmprendimiento}}</h1>
           </div>
           <img [src]="detalleEmprendimiento.banner" alt="image">
           <br>
-
-
             <!--<h2>{{detalleEmprendimiento.id}}</h2>-->
           <h2>{{detalleEmprendimiento.descripcion}}</h2>
           <h3>{{detalleEmprendimiento.manguitosRecibidos}}</h3>
@@ -28,6 +26,23 @@
                 routerLink="/">Salir</button>
                 <button class="btn btn-primary active boton" data-bs-toggle="modal" data-bs-target="#donationModal">Donar</button>
         </div>
+        <div *ngIf="detalleEmprendimiento.mostrarTopDonadores && donadores.length >0">
+        <h4 class="pt-5">Top donadores</h4>
+        <table class="top-donadores">
+          <thead>
+            <tr>
+              <th>Donador</th>
+              <th>Manguitos Donados</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let donador of donadores; let i = index" [hidden]="i >= 10">
+              <td>{{ donador.nombreDonador }}</td>
+              <td>{{ donador.cantidadManguitos }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 <!-- Ventana emergente para la donación -->
@@ -57,7 +72,7 @@
         <input type="number" class="form-control" id="total" [(ngModel)]="total" disabled="true">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" routerLink="/">Cancelar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" routerLink="#">Cancelar</button>
         <button type="button" class="btn btn-primary" (click)="confirmarDonacion()">Confirmar</button>
       </div>
     </div>

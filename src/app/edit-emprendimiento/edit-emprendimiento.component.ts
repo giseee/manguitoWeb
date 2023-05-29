@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, catchError, finalize, map, switchMap } from 'rxjs';
-//import { Emprendimiento } from '../_interfaces/emprendimiento';
+import { Emprendimiento } from '../_interfaces/emprendimiento';
 import { AuthenticationService } from '../_services';
 import { EmprendimientoService } from '../_services/emprendimiento.service';
 import { UsuarioService } from '../_services/usuario.service';
 import { Router } from '@angular/router';
-import { Emprendimiento } from '../_models/emprendimiento';
+//import { Emprendimiento } from '../_models/emprendimiento';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Categoria } from '../_models/categoria'
 import { RedSocial } from '../_models/redSocial';
@@ -17,6 +17,8 @@ import { AlertService } from '../_alert';
 import { RedSocialService } from '../_services/redSocial.service';
 import { RedSocialDTO } from '../_models/redSocialDTO';
 import { PerfilSocialDTO } from '../_models/perfilSocial';
+import { Donaciones } from '../_models/donaciones';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-edit-emprendimiento',
@@ -25,14 +27,16 @@ import { PerfilSocialDTO } from '../_models/perfilSocial';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditEmprendimientoComponent implements OnInit {
-
   dropdownListCategorias: any;
   dropdownListPerfilSocial: any;
   editing: boolean = false;
   mensaje: string = '';
   formData = new FormData();
   imageURL: any;
-
+  id!:number;
+  resumenModal: any;
+  manguitosRecibidos:number = 0;
+  donacionesRecibidas:Donaciones[]=[];
   formEmprendimiento = new FormGroup({
     id: new FormControl(null, {
       nonNullable: false,
@@ -74,6 +78,7 @@ export class EditEmprendimientoComponent implements OnInit {
     })
   });
 
+
   constructor(private router: Router,
     private authService: AuthenticationService,
     private emprendimientoService: EmprendimientoService,
@@ -106,11 +111,18 @@ export class EditEmprendimientoComponent implements OnInit {
                   perfilSocial: redSocial.perfilSocial
                 }));
               });
+              
+              this.manguitosRecibidos=emprendimiento.manguitosRecibidos;
+              this.emprendimientoService.getDonacionesRecibidas(emprendimiento.id)
+              .subscribe(donaciones => {
+                this.donacionesRecibidas = donaciones;
+              });
             })
           ).subscribe();
         }
       })
     ).subscribe();
+
   }
 
   getPerfilesSociales(): void {
@@ -195,6 +207,7 @@ export class EditEmprendimientoComponent implements OnInit {
         throw error;
       })
     ).subscribe();
+
   }
 
   handleServerError() {
@@ -254,9 +267,6 @@ export class EditEmprendimientoComponent implements OnInit {
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
-      //en el response tengo el link que permite ver la imagen.
-      //ese link tendria que estar en el emprendimiento
-      //https://www.youtube.com/watch?v=oruiytokUwo
     }
   }
 
@@ -278,6 +288,19 @@ export class EditEmprendimientoComponent implements OnInit {
   removeRedSocial(index: any){
     console.log(index);
     this.redeSociales.removeAt(index);
+  }
+
+  openResumenModal() {
+    console.log('estoy en openresumenmodel');
+    const resumenModalElement = document.getElementById('resumenModal');
+    if (resumenModalElement) {
+      const resumenModal = new bootstrap.Modal(resumenModalElement);
+      resumenModal.show();
+    }
+  }
+
+  closeResumenModal() {
+    this.resumenModal.hide();
   }
 }
 

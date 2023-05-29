@@ -63,6 +63,7 @@ export class RedesSocialesComponent {
     this.redService.addRedSocial(this.newRedSocial).subscribe((redSocial) => {
       this.newRedSocial = new RedSocial();
       redSocialForm.resetForm();
+      this.getRedSocial(); 
     });
   }
 }

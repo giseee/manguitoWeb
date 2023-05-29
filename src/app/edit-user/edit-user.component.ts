@@ -6,6 +6,7 @@ import { Usuario } from '../_models/usuario';
 import { catchError, EMPTY, finalize, map } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from '../_alert';
 
 @Component({
   selector: 'app-edit-user',
@@ -19,6 +20,9 @@ export class EditUserComponent implements OnInit {
 
   formUsuario = new FormGroup({
     id: new FormControl('', {      
+      nonNullable: true,
+    }),
+    id_emprendimiento: new FormControl('', {      
       nonNullable: true,
     }),
     nombre: new FormControl('', {
@@ -41,7 +45,8 @@ export class EditUserComponent implements OnInit {
     private router: Router,
     private usuarioService: UsuarioService,
     private authService: AuthenticationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public alertService: AlertService,
   ) { }
 
   ngOnInit() {
@@ -64,7 +69,8 @@ export class EditUserComponent implements OnInit {
         // Sincronizo el usuario gaurdado en el navegador con el de la base. 
         this.authService.setUserToSessionStorage(usuario);
         this.editing = false; 
-        this.router.navigateByUrl('/dashboard')
+        this.router.navigateByUrl('/');
+        this.handleSucceed();
       }),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
@@ -74,6 +80,14 @@ export class EditUserComponent implements OnInit {
         throw error;
       })
     ).subscribe();    
+  }
+
+  handleSucceed() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.success('El usuario se ha actualizado de forma exitosa.', options);
   }
 
   handleUnauthorized() {    

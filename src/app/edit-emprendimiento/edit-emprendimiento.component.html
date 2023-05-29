@@ -1,35 +1,38 @@
-<form [formGroup]="formEmprendimiento" (ngSubmit)="onUpdateEmprendimiento()">
-  <label>
-    Nombre del emprendimiento:
-    <input type="text" name="nombreEmprendimiento" formControlName="nombreEmprendimiento">
-  </label>
-  <br>
-  <label>
-    Descripción:
-    <textarea formControlName="descripcion" name="descripcion"></textarea>
-  </label>
-  <br>
-  <label>
-    Banner:
-  </label>
-  <!-- Image Preview -->
-  <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
-    <!--<img [src]="imageURL" width="200" height="300">-->
+<div class="miProyecto">
+  <form [formGroup]="formEmprendimiento" (ngSubmit)="onUpdateEmprendimiento()">
+    <label>
+      Nombre del emprendimiento:
+      <input
+        type="text"
+        name="nombreEmprendimiento"
+        formControlName="nombreEmprendimiento"
+      />
+    </label>
+    <br />
+    <label>
+      Descripción:
+      <textarea formControlName="descripcion" name="descripcion"></textarea>
+    </label>
+    <br />
+    <label> Banner: </label>
+    <!-- Image Preview -->
+    <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+      <!--<img [src]="imageURL" width="200" height="300">-->
 
-    <p-image [src]="imageURL" alt="Image" width="250"></p-image>
-  </div>
-  <p-fileUpload
-    name="myfile[]"
-    url="formEmprendimiento.banner"
-    (onSelect)="loadImage($event)"
-    (onClear)="clearImage()"
-    (onRemove)="clearImage()"
-    [multiple]="false"
-    [showUploadButton]="false"
-    accept="image/*">
-    <ng-template pTemplate="content" let-files>
-    </ng-template>
-  </p-fileUpload>
+      <p-image [src]="imageURL" alt="Image" width="250"></p-image>
+    </div>
+    <p-fileUpload
+      name="myfile[]"
+      url="formEmprendimiento.banner"
+      (onSelect)="loadImage($event)"
+      (onClear)="clearImage()"
+      (onRemove)="clearImage()"
+      [multiple]="false"
+      [showUploadButton]="false"
+      accept="image/*"
+    >
+      <ng-template pTemplate="content" let-files> </ng-template>
+    </p-fileUpload>
 
 
   <label>
@@ -77,3 +80,56 @@
     <button (click)="onCreateEmprendimiento()" type="button" [disabled]="formEmprendimiento.invalid || editing">Crear emprendimiento</button>
   </ng-template>
 </form>
+
+  <button  *ngIf="formEmprendimiento.get('id')!.value"  (click)="openResumenModal()" type="button" class="btn btn-primary active boton">
+    Ver resumen
+  </button>
+
+  <!-- Ventana emergente para la donación -->
+  <div
+    class="modal fade"
+    id="resumenModal"
+    tabindex="-1"
+    aria-labelledby="resumenModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resumenModalLabel">Resumen de ganancias</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <h2>Resumen de ganancias</h2>
+        <ul>
+          <li>
+            Total Manguitos recibidos:{{ manguitosRecibidos }}
+          </li>
+        </ul>
+        <h3>Donaciones Recibidas</h3>
+        <ul *ngIf="donacionesRecibidas && donacionesRecibidas.length > 0">
+          <li *ngFor="let donacion of donacionesRecibidas">
+            {{ donacion.nombreDonador }} - {{ donacion.cantidadManguitos }}
+          </li>
+        </ul>
+        <p *ngIf="!donacionesRecibidas || donacionesRecibidas.length === 0">
+          No se encontraron donaciones recibidas.
+        </p>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            routerLink="/dashboard"
+          >
+            Volver
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,7 +9,6 @@ import { RedesSocialesComponent } from './redes-sociales';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { RegistroUserComponent } from './registro-user/registro-user.component';
-import { RegEmprendimientoComponent } from './reg-emprendimiento/reg-emprendimiento.component';
 import { DetalleEmprendimientoComponent } from './detalle-emprendimiento/detalle-emprendimiento.component';
 import { CommonModule } from '@angular/common';
 import { EditUserComponent } from './edit-user';
@@ -51,10 +50,6 @@ const routes: Routes = [
   {
     path: 'registro',
     component: RegistroUserComponent
-  },
-  {
-  path: 'register',
-  component: RegEmprendimientoComponent
   },
   {
   path: 'editEmp',

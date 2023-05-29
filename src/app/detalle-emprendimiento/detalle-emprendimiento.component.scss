@@ -1,3 +1,6 @@
+.contenedor_principal{
+  padding-bottom:  10em; ;
+}
 .proyectos {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -24,7 +27,10 @@
   background-color:  rgb(247, 155, 64);
 
 }
-
+.btn{
+  background-color: #c300ffe8;
+  border-color: #c300ffe8;;
+}
 ul li{
   font-size: 20px;
   text-decoration: none;
@@ -40,3 +46,42 @@ ul > li>a {
 header .name h2 {
   font-family:Oswald;
 }
+/* Estilos para la tabla */
+table {
+  padding: auto;
+  width: 25%;
+  margin: 5px auto;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+table.top-donadores tr:nth-child(-n+10) {
+  background-color: #994aa0a4;
+}
+
+table.top-donadores tr.selected {
+  background-color: #a9a9a9;
+  color: #fff;
+}
+table.top-donadores {
+  font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+table.top-donadores th,
+table.top-donadores td {
+  padding: 10px;
+}
+

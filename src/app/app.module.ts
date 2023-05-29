@@ -18,7 +18,6 @@ import { ListarCategoriasComponent } from './listar-categorias/listar-categorias
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistroUserComponent } from './registro-user/registro-user.component';
 import { authTokeninterceptorProvider } from './interceptors';
-import { RegEmprendimientoComponent } from './reg-emprendimiento/reg-emprendimiento.component';
 import { DetalleEmprendimientoComponent } from './detalle-emprendimiento/detalle-emprendimiento.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { RedesSocialesComponent } from './redes-sociales/redes-sociales.component';
@@ -33,6 +32,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { DropdownModule } from 'primeng/dropdown';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,16 +45,15 @@ import { DropdownModule } from 'primeng/dropdown';
     ListarCategoriasComponent,
     DashboardComponent,
     RegistroUserComponent,
-    RegEmprendimientoComponent,
     DetalleEmprendimientoComponent,
     EditUserComponent,
     RedesSocialesComponent,
     EmprendimientosComponent,
     EditEmprendimientoComponent,
     ShowForRolesDirective,
-    EditPasswordComponent    
+    EditPasswordComponent,
   ],
-  imports: [    
+  imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

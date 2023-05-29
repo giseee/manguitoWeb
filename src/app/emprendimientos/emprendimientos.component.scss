@@ -1,11 +1,11 @@
 .proyectos {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px; /* Espacio entre los elementos */
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
+   /* Espacio entre los elementos */
 }
 
 .app-emprendimiento {
-  /* Ajusta el tamaño y los márgenes de cada emprendimiento */
   width: 100%;
   margin-bottom: 20px;
 }
@@ -15,7 +15,7 @@
   left: 50%;
   bottom: 0;
   right: 0;
-  background-color: white;
+  background-color:(195, 0, 255, 0.9098039216);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
