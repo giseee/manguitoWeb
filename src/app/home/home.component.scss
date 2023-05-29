@@ -106,14 +106,15 @@ p {
   text-align: center;
   border: 2px solid rgb(250, 218, 248);
 }
-
 .emprendimientos-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 24px;
-
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
 }
+
+
+
+
 
 /* Estilos de la sección de categorías */
 .categorias {

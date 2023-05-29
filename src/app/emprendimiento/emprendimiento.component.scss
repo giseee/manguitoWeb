@@ -6,7 +6,13 @@
   width: 400px;
   height: 400px;
   margin-bottom: 15px;
-
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  border:5px solid rgba(220, 107, 243, 0.91);;
 
 }
 

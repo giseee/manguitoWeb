@@ -1,27 +1,7 @@
 .proyectos {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
-   /* Espacio entre los elementos */
 }
 
-.app-emprendimiento {
-  width: 100%;
-  margin-bottom: 20px;
-}
-.product-detail {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  bottom: 0;
-  right: 0;
-  background-color:(195, 0, 255, 0.9098039216);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  transition: all ease-out .5s;
-  transform: translateX(100%);
-  &.active{
-    transform: translateX(0);
-  }
-}
+

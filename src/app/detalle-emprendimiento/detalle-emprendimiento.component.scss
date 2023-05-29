@@ -1,10 +1,8 @@
 .contenedor_principal{
-  padding-bottom:  10em; ;
+  padding-bottom:  10em;
+  
 }
 .proyectos {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap:15px;
   div {
     img {
       width: 100%;
