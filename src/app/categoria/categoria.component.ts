@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Categoria } from '../_models/categoria';
 import { CategoriasService } from '../_services/categoria.service'
+import { EMPTY, catchError, finalize, map } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AlertService } from '../_alert';
 
 
 @Component({
@@ -16,7 +19,10 @@ export class CategoriaComponent {
   editing: boolean = false;
   categoryToEdit: Categoria = new Categoria();
 
-  constructor(private categoriaService: CategoriasService) { }
+  constructor(
+    private categoriaService: CategoriasService,
+    public alertService: AlertService,
+    ) { }
 
   ngOnInit() {
     this.getCategorias();
@@ -30,11 +36,52 @@ export class CategoriaComponent {
 
   onSubmit(categoryForm: NgForm): void {
     this.categoriaService.postCategoria(this.newCategory)
-      .subscribe(categoria => {
-        this.categorias.push(categoria);
-        this.newCategory = new Categoria();
-        categoryForm.resetForm();
-      });
+    .pipe(
+      map((categoria) => {
+          this.categorias.push(categoria);
+          this.newCategory = new Categoria();
+          categoryForm.resetForm();
+        }
+      ),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.handleUnauthorized();
+          return EMPTY;
+        }
+        if (error.status === 409) {
+          this.handleConflict();
+          return EMPTY;
+        }
+        if (error.status === 500) {
+          this.handleServerError();
+          return EMPTY;
+        }
+        throw error;
+      })
+    ).subscribe();
+  }
+  handleConflict() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.error('La categoría ya existe.', options);
+  }
+
+  handleUnauthorized() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.error('No tiene permiso para gestionar categorías.', options);
+  }
+
+  handleServerError() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.error('No se pudo crear la categoría debido a un error en el servidor.', options);
   }
 
   deleteCategory(categoria: Categoria): void {
@@ -65,12 +112,31 @@ export class CategoriaComponent {
 
   onUpdateCategory(): void {
     this.categoriaService.updateCategory(this.categoryToEdit)
-      .subscribe(() => {
-        const index = this.categorias.findIndex(c => c.id === this.categoryToEdit.id);
-        this.categorias[index] = this.categoryToEdit;
-        this.editing = false;
-        this.categoryToEdit = new Categoria();
-      });
+    .pipe(
+      map(() => {
+          const index = this.categorias.findIndex(c => c.id === this.categoryToEdit.id);
+          this.categorias[index] = this.categoryToEdit;
+          this.editing = false;
+          this.categoryToEdit = new Categoria();
+        }
+      ),      
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.handleUnauthorized();
+          return EMPTY;
+        }
+        if (error.status === 409) {
+          this.handleConflict();
+          return EMPTY;
+        }
+        if (error.status === 500) {
+          this.handleServerError();
+          return EMPTY;
+        }
+        throw error;
+      })
+    )
+      .subscribe();
   }
 }
 

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RedSocial } from '../_models/redSocial';
 import { RedSocialService } from '../_services/redSocial.service';
+import { EMPTY, catchError, finalize, map } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AlertService } from '../_alert';
 
 @Component({
   selector: 'app-redes-sociales',
@@ -14,7 +17,10 @@ export class RedesSocialesComponent {
   editing: boolean = false;
   redSocialToEdit: RedSocial = new RedSocial();
 
-  constructor(private redService: RedSocialService) {}
+  constructor(
+    private redService: RedSocialService,
+    public alertService: AlertService,
+    ) {}
 
   ngOnInit() {
     this.getRedSocial();
@@ -51,20 +57,84 @@ export class RedesSocialesComponent {
   }
 
   onUpdateRedSocial(): void {
-    this.redService.updateRedSocial(this.redSocialToEdit).subscribe(() => {
-      const index = this.redSocial.findIndex((c) => c.id === this.redSocialToEdit.id);
-      this.redSocial[index] = this.redSocialToEdit;
-      this.editing = false;
-      this.redSocialToEdit = new RedSocial();
-    });
+    this.redService.updateRedSocial(this.redSocialToEdit)
+    .pipe(
+      map(() => {
+          const index = this.redSocial.findIndex((c) => c.id === this.redSocialToEdit.id);
+          this.redSocial[index] = this.redSocialToEdit;
+          this.editing = false;
+          this.redSocialToEdit = new RedSocial();
+        }
+      ),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.handleUnauthorized();
+          return EMPTY;
+        }
+        if (error.status === 409) {
+          this.handleConflict();
+          return EMPTY;
+        }
+        if (error.status === 500) {
+          this.handleServerError();
+          return EMPTY;
+        }
+        throw error;
+      })
+    )
+    .subscribe();
   }
 
   onSubmit(redSocialForm: NgForm): void {
-    this.redService.addRedSocial(this.newRedSocial).subscribe((redSocial) => {
-      this.newRedSocial = new RedSocial();
-      redSocialForm.resetForm();
-      this.getRedSocial(); 
-    });
+    this.redService.addRedSocial(this.newRedSocial)
+    .pipe(
+      map((redSocial) => {
+          this.newRedSocial = new RedSocial();
+          redSocialForm.resetForm();
+          this.getRedSocial(); 
+        }
+      ),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.handleUnauthorized();
+          return EMPTY;
+        }
+        if (error.status === 409) {
+          this.handleConflict();
+          return EMPTY;
+        }
+        if (error.status === 500) {
+          this.handleServerError();
+          return EMPTY;
+        }
+        throw error;
+      })
+    )
+    .subscribe();
+  }
+
+  handleConflict() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.error('La red social ya existe.', options);
+  }
+
+  handleUnauthorized() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.error('No tiene permiso para gestionar redes sociales.', options);
+  }
+
+  handleServerError() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.error('No se pudo crear la red social debido a un error en el servidor.', options);
   }
 }
 
