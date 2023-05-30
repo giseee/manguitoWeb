@@ -1,6 +1,17 @@
 .contenedor_principal{
   padding-bottom:  10em;
-  
+  border-radius: 10px;
+
+
+}
+.card-body{
+  width: 400px;
+  img {
+        border-radius: 10px;
+        height: 400px;
+        width: 400px;
+        padding-bottom: 5px;
+      }
 }
 .proyectos {
   div {
