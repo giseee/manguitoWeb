@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RedSocial } from '../_models/redSocial';
 import { RedSocialService } from '../_services/redSocial.service';
-import { EMPTY, catchError, finalize, map } from 'rxjs';
+import { EMPTY, catchError, finalize, map, pipe } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AlertService } from '../_alert';
 
@@ -20,7 +20,7 @@ export class RedesSocialesComponent {
   constructor(
     private redService: RedSocialService,
     public alertService: AlertService,
-    ) {}
+  ) { }
 
   ngOnInit() {
     this.getRedSocial();
@@ -30,10 +30,50 @@ export class RedesSocialesComponent {
     this.redService.getAll().subscribe((redSocial) => (this.redSocial = redSocial));
   }
 
- deleteRedSocial(redSocial: RedSocial): void {
-   this.redService.delRedSocialById(redSocial.id!).subscribe(() => {
-    this.redSocial = this.redSocial.filter((c: RedSocial) => c !== redSocial);
-    });}
+  deleteRedSocial(redSocial: RedSocial): void {
+    this.redService.delRedSocialById(redSocial.id!)
+    .pipe(
+      map(() => {
+        this.redSocial = this.redSocial.filter((c: RedSocial) => c !== redSocial);
+      }
+      ),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.handleUnauthorized();
+          return EMPTY;
+        }
+        if (error.status === 404) {
+          this.handleNotFound();
+          return EMPTY;
+        }
+        if (error.status === 409) {
+          this.handleRestriction();
+          return EMPTY;
+        }
+        if (error.status === 500) {
+          this.handleServerError();
+          return EMPTY;
+        }
+        throw error;
+      })
+    ).subscribe();
+  }
+
+  handleRestriction() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.error('La red social que intenta eliminar se encuentra en uso', options);
+  }
+
+  handleNotFound() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.error('La red social que intenta eliminar no se ha encuentrado en la base de datos.', options);
+  }
 
   add(name: string): void {
     name = name.trim();
@@ -58,59 +98,59 @@ export class RedesSocialesComponent {
 
   onUpdateRedSocial(): void {
     this.redService.updateRedSocial(this.redSocialToEdit)
-    .pipe(
-      map(() => {
+      .pipe(
+        map(() => {
           const index = this.redSocial.findIndex((c) => c.id === this.redSocialToEdit.id);
           this.redSocial[index] = this.redSocialToEdit;
           this.editing = false;
           this.redSocialToEdit = new RedSocial();
         }
-      ),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.handleUnauthorized();
-          return EMPTY;
-        }
-        if (error.status === 409) {
-          this.handleConflict();
-          return EMPTY;
-        }
-        if (error.status === 500) {
-          this.handleServerError();
-          return EMPTY;
-        }
-        throw error;
-      })
-    )
-    .subscribe();
+        ),
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.handleUnauthorized();
+            return EMPTY;
+          }
+          if (error.status === 409) {
+            this.handleConflict();
+            return EMPTY;
+          }
+          if (error.status === 500) {
+            this.handleServerError();
+            return EMPTY;
+          }
+          throw error;
+        })
+      )
+      .subscribe();
   }
 
   onSubmit(redSocialForm: NgForm): void {
     this.redService.addRedSocial(this.newRedSocial)
-    .pipe(
-      map((redSocial) => {
+      .pipe(
+        map((redSocial) => {
           this.newRedSocial = new RedSocial();
           redSocialForm.resetForm();
-          this.getRedSocial(); 
+          this.getRedSocial();
         }
-      ),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.handleUnauthorized();
-          return EMPTY;
-        }
-        if (error.status === 409) {
-          this.handleConflict();
-          return EMPTY;
-        }
-        if (error.status === 500) {
-          this.handleServerError();
-          return EMPTY;
-        }
-        throw error;
-      })
-    )
-    .subscribe();
+        ),
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.handleUnauthorized();
+            return EMPTY;
+          }
+          if (error.status === 409) {
+            this.handleConflict();
+            return EMPTY;
+          }
+          if (error.status === 500) {
+            this.handleServerError();
+            return EMPTY;
+          }
+          throw error;
+        })
+      )
+      .subscribe();
   }
 
   handleConflict() {

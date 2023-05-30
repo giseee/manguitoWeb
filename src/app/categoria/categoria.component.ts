@@ -86,10 +86,49 @@ export class CategoriaComponent {
 
   deleteCategory(categoria: Categoria): void {
       this.categoriaService.delCategoriaById(categoria.id!)
-      .subscribe(() => {
-        this.categorias= this.categorias.filter((c: Categoria) => c !== categoria);
-      });
+      .pipe(
+        map(() => {
+          this.categorias= this.categorias.filter((c: Categoria) => c !== categoria);
+        }
+        ),
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.handleUnauthorized();
+            return EMPTY;
+          }
+          if (error.status === 404) {
+            this.handleNotFound();
+            return EMPTY;
+          }
+          if (error.status === 409) {
+            this.handleRestriction();
+            return EMPTY;
+          }
+          if (error.status === 500) {
+            this.handleServerError();
+            return EMPTY;
+          }
+          throw error;
+        })        
+      )
+      .subscribe();
   }
+  handleNotFound() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.error('La categoría que intenta eliminar no se ha encuentrado en la base de datos.', options);
+  }
+
+  handleRestriction() {
+    let options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+    this.alertService.error('La categoría que intenta eliminar se encuentra en uso.', options);
+  }
+
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
