@@ -34,12 +34,14 @@
             <tr>
               <th>Donador</th>
               <th>Manguitos Donados</th>
+              <th>Mensaje</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let donador of donadores; let i = index" [hidden]="i >= 10">
               <td>{{ donador.nombreDonador }}</td>
               <td>{{ donador.cantidadManguitos }}</td>
+              <td>{{ donador.mensaje }}</td>
             </tr>
           </tbody>
         </table>
