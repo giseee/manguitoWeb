@@ -92,6 +92,7 @@ export class DetalleEmprendimientoComponent implements OnInit {
           console.log('Donación realizada con éxito', response);
           const donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
           donationModal.hide();
+          location.reload();
         }
       );
 
