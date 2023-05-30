@@ -4,8 +4,8 @@
   <div *ngIf="mostrarDetalle">
     <app-detalle-emprendimiento [emprendimiento]="emprendimiento"></app-detalle-emprendimiento>
   </div>
-
-  <h4>{{emprendimiento.descripcion}}</h4>
+  <h3>{{emprendimiento.nombreEmprendimiento}}</h3>
+  <p>{{emprendimiento.descripcion}}</p>
   <small *ngIf="emprendimiento.categorias.length > 0">{{emprendimiento.categorias[0].nombreCategoria}}</small>
   <!--<small *ngIf="emprendimiento.redeSociales.length > 0">{{emprendimiento.redeSociales[0].url}}</small>-->
   <h3>{{emprendimiento.manguitosRecibidos}}</h3>
