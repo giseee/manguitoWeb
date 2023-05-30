@@ -8,5 +8,6 @@
   <p>{{emprendimiento.descripcion}}</p>
   <small *ngIf="emprendimiento.categorias.length > 0">{{emprendimiento.categorias[0].nombreCategoria}}</small>
   <!--<small *ngIf="emprendimiento.redeSociales.length > 0">{{emprendimiento.redeSociales[0].url}}</small>-->
-  <h3>{{emprendimiento.manguitosRecibidos}}</h3>
+  <div *ngIf="emprendimiento.mostrarManguitos">
+  <h3>{{emprendimiento.manguitosRecibidos}}</h3></div>
 </div>

@@ -1,82 +1,166 @@
 <div class="contenedor_principal" align="center">
   <div>
-      <div class="conteiner card-body">
-          <div class="contenedor_titulo">
-            <h1>{{detalleEmprendimiento.nombreEmprendimiento}}</h1>
-          </div>
-          <img width="400" height="400" [src]="detalleEmprendimiento.banner" alt="image">
-          <br>
-            <!--<h2>{{detalleEmprendimiento.id}}</h2>-->
-          <h3>{{detalleEmprendimiento.descripcion}}</h3>
-          <p>Manguitos recibidos</p>
-          <h3>{{detalleEmprendimiento.manguitosRecibidos}}</h3>
-            <label *ngIf="detalleEmprendimiento.categorias.length > 0" for="categorias">Categorías:</label>
-            <div *ngFor="let categoria of detalleEmprendimiento.categorias">
-                <p>{{categoria.nombreCategoria}}</p>
-            </div>
-
-            <label for="redes">Redes Sociales:</label>
-            <div *ngFor="let redSocial of detalleEmprendimiento.redeSociales">
-                <p>{{redSocial.perfilSocial.nombreRed}}</p>
-                <p>{{redSocial.url}}</p>
-            </div>
-
+    <div class="conteiner card-body">
+      <div class="contenedor_titulo">
+        <h1>{{ detalleEmprendimiento.nombreEmprendimiento }}</h1>
+      </div>
+      <img
+        width="400"
+        height="400"
+        [src]="detalleEmprendimiento.banner"
+        alt="image"
+      />
+      <br />
+      <!--<h2>{{detalleEmprendimiento.id}}</h2>-->
+      <h3>{{ detalleEmprendimiento.descripcion }}</h3>
+      <div *ngIf="detalleEmprendimiento.mostrarManguitos">
+        <p>Manguitos recibidos</p>
+        <h3>{{ detalleEmprendimiento.manguitosRecibidos }}</h3>
+      </div>
+      <div *ngIf="detalleEmprendimiento.categorias.length > 0">
+        <label for="categorias">Categorías:</label>
+        <div *ngFor="let categoria of detalleEmprendimiento.categorias">
+          <p>{{ categoria.nombreCategoria }}</p>
         </div>
-        <div class="boton_atras d-grid gap-2 col-3 mx-auto">
-                <button class="btn btn-primary active boton" data-bs-toggle="modal" data-bs-target="#donationModal">Donar</button>
-                <button class="btn btn-primary active boton" data-bs-toggle="button" autocomplete="off" aria-pressed="true"
-                routerLink="/">Salir</button>
-              </div>
-        <div *ngIf="detalleEmprendimiento.mostrarTopDonadores && donadores.length >0">
-        <h4 class="pt-5">Top donadores</h4>
-        <table class="top-donadores">
-          <thead>
-            <tr>
-              <th>Donador</th>
-              <th>Manguitos Donados</th>
-              <th>Mensaje</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let donador of donadores; let i = index" [hidden]="i >= 10">
-              <td>{{ donador.nombreDonador }}</td>
-              <td>{{ donador.cantidadManguitos }}</td>
-              <td>{{ donador.mensaje }}</td>
-            </tr>
-          </tbody>
-        </table>
+      </div>
+      <div *ngIf="detalleEmprendimiento.redeSociales.length > 0">
+        <label for="redes">Redes Sociales</label>
+        <div *ngFor="let redSocial of detalleEmprendimiento.redeSociales">
+          <p>{{ redSocial.perfilSocial.nombreRed }}: {{ redSocial.url }}</p>
+        </div>
       </div>
     </div>
+    <div class="boton_atras d-grid gap-2 col-3 mx-auto">
+      <button
+        class="btn btn-primary active boton"
+        data-bs-toggle="modal"
+        data-bs-target="#donationModal"
+      >
+        Donar
+      </button>
+      <button
+        class="btn btn-primary active boton"
+        data-bs-toggle="button"
+        autocomplete="off"
+        aria-pressed="true"
+        routerLink="/"
+      >
+        Salir
+      </button>
+    </div>
+    <div
+      *ngIf="detalleEmprendimiento.mostrarTopDonadores && donadores.length > 0"
+    >
+      <h4 class="pt-5">Top donadores</h4>
+      <table class="top-donadores">
+        <thead>
+          <tr>
+            <th>Donador</th>
+            <th>Manguitos Donados</th>
+            <th>Mensaje</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let donador of donadores; let i = index"
+            [hidden]="i >= 10"
+          >
+            <td>{{ donador.nombreDonador }}</td>
+            <td>{{ donador.cantidadManguitos }}</td>
+            <td>{{ donador.mensaje }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+</div>
 <!-- Ventana emergente para la donación -->
-<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="donationModal"
+  tabindex="-1"
+  aria-labelledby="donationModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="donationModalLabel">Donar Manguitos</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <label for="nombreInput" class="form-label">Nombre del Donador:</label>
-        <input type="text" class="form-control" id="nombreInput" [(ngModel)]="nombreDonador">
+        <input
+          type="text"
+          class="form-control"
+          id="nombreInput"
+          [(ngModel)]="nombreDonador"
+        />
 
         <label for="emailInput" class="form-label">Correo Electrónico:</label>
-        <input type="email" class="form-control" id="emailInput" [(ngModel)]="contacto">
+        <input
+          type="email"
+          class="form-control"
+          id="emailInput"
+          [(ngModel)]="contacto"
+        />
 
         <label for="mensajeInput" class="form-label">Mensaje:</label>
-        <input type="text" class="form-control" id="mensajeInput" [(ngModel)]="mensaje">
+        <input
+          type="text"
+          class="form-control"
+          id="mensajeInput"
+          [(ngModel)]="mensaje"
+        />
 
-        <label for="manguitosInput" class="form-label">Cantidad de Manguitos:</label>
-        <input type="number" step="1" min="1" class="form-control" id="manguitosInput"  (click)="actualizarTotal()"  [(ngModel)]="cantidadManguitos">
+        <label for="manguitosInput" class="form-label"
+          >Cantidad de Manguitos:</label
+        >
+        <input
+          type="number"
+          step="1"
+          min="1"
+          class="form-control"
+          id="manguitosInput"
+          (click)="actualizarTotal()"
+          [(ngModel)]="cantidadManguitos"
+        />
 
-        <label for="manguitosMonto" class="form-label">Monto Manguito: ${{detalleEmprendimiento.montoManguito}}</label> <br/>
+        <label for="manguitosMonto" class="form-label"
+          >Monto Manguito: ${{ detalleEmprendimiento.montoManguito }}</label
+        >
+        <br />
 
         <label class="form-label">Total:</label>
-        <input type="number" class="form-control" id="total" [(ngModel)]="total" disabled="true">
+        <input
+          type="number"
+          class="form-control"
+          id="total"
+          [(ngModel)]="total"
+          disabled="true"
+        />
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" routerLink="#">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="confirmarDonacion()">Confirmar</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          routerLink="#"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="confirmarDonacion()"
+        >
+          Confirmar
+        </button>
       </div>
     </div>
   </div>
